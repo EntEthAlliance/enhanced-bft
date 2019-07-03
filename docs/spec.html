@@ -204,6 +204,40 @@ If `latestProposedBlock` is not nil, then the digest of `signedPartOfProposalMes
 
     <h3>Protocol Description</h3>
 
+Insert state diagram here.
+
+The actors in the system are:
+
+    - Proposer - only one node acts in this role at any given time.
+	- Validator - multiple nodes other than the proposer.
+
+The operation of the protocol is described as follows.
+
+Q- what does the green background mean on the sequence diagram?
+
+Proposer
+
+The Proposer generates the block in ethereum format and sends a Proposal message as a mutlicast to all other nodes. 
+
+Validator
+
+A Validator awaits a Proposal message from the Proposer for the round. 
+When a Proposal message is received, the Validator first checks the block in the message is valid, and if not, discards the Proposal message and returns to await another Proposal message.
+
+If a Validator receives a Proposal message containing a valid block, it generates a Prepare message containing the ... and sends this via multicast to all other Validators (nodes?). 
+
+
+The Proposer (or Validator? or both?) then waits for Prepare messages from other Validators. When Prepare messages from two thirds of the Validators have been received, the Proposer generates a Commit message and sends this via multicast to all other Validators. 
+
+The Proposer then waits for Commit messages from the Validators. Once two thirds of the Validators have sent Commit messages, the Proposer goes ahead and imports (adds?) the block to the chain. 
+
+Following successful addition of the block to the chain, the Proposer sends a Round Change message to all validators with preparedCertificate as `nil` signalling the last block was added successfully. The protocol then repeats as described above in this section.
+
+
+If the Proposer detected a timeout (how ?) before two thirds of the Commit messages were received, the Proposer generates a Round Change message with the preparedCertificate set to ...
+The protocol then repeats as described above in this section.
+
+
 
     </section>
 
