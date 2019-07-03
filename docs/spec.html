@@ -141,11 +141,55 @@ For any type of message, the signature corresponds to the hash over the message 
       - `height` QUANTITY, 8 bytes – The <a>height</a> of the block being prepared, as an integer.
       - `round` QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
       - `digest` DATA, 32 bytes – The <a>digest</a> of the prepared block?
-      - `commitSeal` DATA, 32 bytes – The signature of the validator over the proposed block included in the <a>Proposal</a> or <a>New-Round</a> message received by the designated proposer of the round.
+      - `commitSeal` DATA, 32 bytes – The signature of the validator over the proposed block included in the <a>Proposal</a> message received by the designated proposer of the round.
   - `signature` DATA, 65 bytes – The <a>signature</a> of the payload.
 
           </section>
- 		 				    
+ 		 		
+				
+          <section id="sec-msg-round-change">
+
+          <h4>Round Change</h4>
+
+  A <a>Round Change</a> message MUST be sent by a validator when they suspect that no agreement on the block to be added to the blockchain with the given height will be reached in this round.
+  
+  **Message content**
+
+  The <a>Round Change</a> message contains the following fields:
+
+  - `0x03` DATA, x? bytes – The message id for the <a>Round Change</a> message type.
+  - `payload` – An array of one or more of the following:
+  
+      - `height` QUANTITY, 8 bytes – The <a>height</a> of the block for which the validator is trying to reach agreement, as an integer.
+      - `round` QUANTITY, 4 bytes – The <a>round</a> number to which the validator intends to move to, as an integer.
+      - `preparedCertificate` DATA – See below.
+	  
+  - `signature` DATA, 65 bytes – The <a>signature</a> of the payload.
+  - `latestProposedBlock` DATA - `nil` or the content of the latest proposed block in ethereum block format. Should be `nil` if preparedCertificate is nil.
+
+The `preparedCertificate` may be `nil` or a list of: 
+
+  - `signedPartOfProposalMessage` – An array of one or more of the following:
+  
+      - `height` QUANTITY, 8 bytes – The <a>height</a> of the block being proposed, as an integer.
+      - `round` QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
+      - `digest` DATA, 32 bytes – The <a>digest</a> of the proposed block?
+      
+  - `signature` DATA, 65 bytes – The <a>signature</a> of the above Propose message payload.
+  - `signedPartOfPrepareMessages` – An array of one or more of the following:
+  
+      - `height` QUANTITY, 8 bytes – The <a>height</a> of the block being prepated, as an integer.
+      - `round` QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
+      - `digest` DATA, 32 bytes – The <a>digest</a> of the prepared block?
+      
+  - `signature` DATA, 65 bytes – The <a>signature</a> of the above Prepare message payload.
+
+The `signedPartOfProposalMessage` is the signed part (payload?) and related signature of the Proposal message received in the current round. The `signedPartOfPrepareMessages` is a list of the signed part (payload?) and related signature of Prepare messages matching the Proposal message received at the current round. 
+If `latestProposedBlock` is not nil, then the digest of `signedPartOfProposalMessage` and all messages included in `signedPartOfPrepareMessages` should match the Keccack hash of `proposedBlock`.
+
+          </section>
+				
+						    
 
     </section>
 
