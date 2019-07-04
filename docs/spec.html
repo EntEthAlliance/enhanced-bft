@@ -233,7 +233,7 @@ block finalization. All of the Enhanced BFT messages described below are always
 signed by the sender.
 
 Initially, the selected block proposer sends a Proposal message
-(`<PROPOSAL_MSG_CODE, r, s, PB>`) to all other validators, where:
+(`PROPOSAL_MSG_CODE, r, s, PB`) to all other validators, where:
 
 - `r` is the current round (initially 0) of the Enhanced BFT consensus protocol
 - `s` is the height (called the sequence in Enhance BFT terminology) of the
@@ -242,14 +242,14 @@ proposed block
 calculated as described in Proposer seal calculation.
 
 When a validator receives a Preposer message for round 0 and sequence `s`, it
-broadcasts a Prepare message (`<PREPARE_MSG_CODE, r = 0, s, Hash(PB)>`) to all
+broadcasts a Prepare message (`PREPARE_MSG_CODE, r = 0, s, Hash(PB)`) to all
 other validators. A validator is said to be prepared on round `r`, sequence `s`,
 and proposed block `PB` if it had received (`QUORUM(NV)-1`) Prepare messages
 with the propose-block-hash matching the hash of the proposed block `PB`
 included in the Proposal message received previously.
 
 When a validator `v` is prepared, it broadcasts a Commit message
-(`<COMMIT_MSG_CODE, r, s, Hash(PB), Commit-Seal>`) to all other validators
+(`COMMIT_MSG_CODE, r, s, Hash(PB), Commit-Seal`) to all other validators
 where `Commit-Seal` is calculated as described in Committed seal calculation.
 
 When a validator receives `QUORUM(NV)` commit messages for the same `r`, `s`,
@@ -264,7 +264,7 @@ finalization protocol from reaching consensus on the next block to add to the
 blockchain. To solve this liveness issue, every time a validator receives a new
 valid block, it starts a new round timer. When the round timer for a validator
 expires, the validator broadcasts a Round-Change message
-(`<ROUND_CHANGE_MSG_CODE, r+1, s, Proposal/Prepare-Certificate>`) to all
+(`ROUND_CHANGE_MSG_CODE, r+1, s, Proposal/Prepare-Certificate`) to all
 validators. The content of the Proposal/Prepare-Certificate is empty if the
 validator is not prepared on any proposed block for sequence `s`, otherwise
 the Proposal/Prepare-Certificate contains the set of Proposal and Prepare
@@ -279,9 +279,9 @@ the Proposal and Prepare messages that caused validator `v` to be prepared at
 round 3 on proposed block `PB2`. When the proposer for round `r`+1 receives
 `QUORUM(NV)` Round-Change messages for the same `r`+1 round and sequence `s`, it
 broadcasts a New-Round message
-(`<NEW_ROUND_MSG_CODE, r+1, h, Round-Change-Certificate, Proposal-message>`) to
+(`NEW_ROUND_MSG_CODE, r+1, h, Round-Change-Certificate, Proposal-message`) to
 all validators. The Round-Change certificate contains the `QUORUM(NV)`
-Round-Change messages received and the Proposal-message field contains the
+Round-Change messages received and the `Proposal-message` field contains the
 Proposal message for round `r`+1.
 
 The Proposal message is determined in the following way. If the proposer for
@@ -292,15 +292,16 @@ number. Otherwise, the Proposal message is a Proposal message signed by the
 validator for any valid block.
 
 When a validator receives a New-Round message, it verifies that the
-Round-Change-Certificate field contains `QUORUM(NV)` valid Round-Change messages
-and then verifies the Proposal message included in the New-Round message by
-performing a computation similar to the one used by the sender of the New-Round
-message. If no Round-Change message included in the Round-Change-Certificate
-includes a Proposal/Prepare certificate, then any Proposal message for a valid
-block included in the New-Round message is accepted.
+`Round-Change-Certificate` field contains `QUORUM(NV)` valid Round-Change
+messages and then verifies the Proposal message included in the New-Round
+message by performing a computation similar to the one used by the sender of the
+New-Round message. If no Round-Change message included in the
+Round-Change-Certificate includes a Proposal/Prepare certificate, then any
+Proposal message for a valid block included in the New-Round message is
+accepted.
 
 If validation of the New-Round message is successful, the validator will act as
-if it has received the Proposal-message from the proposer and hence will
+if it has received the Proposal message from the proposer and hence will
 broadcast a Prepare message as described above.
 
     </section>
