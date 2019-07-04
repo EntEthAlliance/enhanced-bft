@@ -55,6 +55,42 @@ enhancements to the BFT algorithm including liveness and security.
 
 The following sections describe the ...
 
+Insert state diagram here.
+
+The actors in the system are:
+	
+    - Validator - multiple nodes that participate in the consensus protocol to finalise blocks.
+
+        - Proposer -  The proposer is a Validator that proposes a block. Only one node acts in this role for any given round.
+	
+    - Standard node - a node which does not propose or validate blocks.
+
+The finalization protocol described below is executed for each block height with the objective of creating a block at that block height.
+
+The finalization protocol is organised into rounds starting from round zero.
+The operation of the finalization protocol is described as follows.
+
+Proposer
+
+The Proposer generates the block in ethereum format and sends a Proposal message as a mutlicast to all other Validators. When using Gossip, the multicast message is sent to all nodes. It then behaves as a validator.
+
+Validator
+
+A Validator awaits a Proposal message from the Proposer for the round. 
+When a Proposal message is received, the Validator makes a number checks to determine if the Proposal message is valid. If not valid, it ignores the Proposal message and awaits another Proposal message.
+
+If a Validator receives a valid Proposal message containing a valid block, it generates a Prepare message for the same round and height containing the hash of the block included in the Proposal message and sends this via multicast to all other Validators. 
+
+The Validator then waits for Prepare messages from the other Validators. When Prepare messages matching the Proposal message have been received from at least two thirds minus one of the Validators, the Validator generates a Commit message for the same round and height containing the hash of the block included in the Proposal message and the Commit seal and sends this via multicast to all other Validators.
+
+The Validator then waits for Commit messages from the other Validators. When Commit messages matching the Proposal message have been received from at least two thirds of the Validators,
+the Validator goes ahead and imports the block to the chain. The Validator also adds the received Commit seals to the block to allow any other node to verify the block was produced correctly according to the protocol.
+
+Following successful addition of the block to the chain, a new Proposer is determined. The new Proposer then repeats the above process for the next block height.
+
+If the Validator detected a timeout before two thirds of the Commit messages were received, the Validator generates a Round Change message with sufficient information to safely move to the next round thus preventing a fork from being possible. The protocol then repeats as described above in this section.
+
+
     <section id="sec-terminology">
 
     <h3>Terminology</h3>
@@ -164,27 +200,14 @@ For any type of message, the signature corresponds to the hash over the message 
       - `round` QUANTITY, 4 bytes – The <a>round</a> number to which the validator intends to move to, as an integer.
       - `preparedCertificate` DATA – See below.
 	  
-  - `signature` DATA, 65 bytes – The <a>signature</a> of the payload.
-  - `latestProposedBlock` DATA - `nil` or the content of the latest proposed block in ethereum block format. Should be `nil` if preparedCertificate is nil.
+  - `signature` DATA, 65 bytes – The <a>signature</a> of the concatenation of the message id and the payload.
+  - `latestProposedBlock` DATA - `nil` or the content of the latest prepared block in ethereum block format. Should be `nil` if preparedCertificate is nil.
 
 The `preparedCertificate` may be `nil` or a list of: 
 
-  - `signedPartOfProposalMessage` – An array of one or more of the following:
-  
-      - `height` QUANTITY, 8 bytes – The <a>height</a> of the block being proposed, as an integer.
-      - `round` QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
-      - `digest` DATA, 32 bytes – The <a>digest</a> of the proposed block?
-      
-  - `signature` DATA, 65 bytes – The <a>signature</a> of the above Propose message payload.
-  - `signedPartOfPrepareMessages` – An array of one or more of the following:
-  
-      - `height` QUANTITY, 8 bytes – The <a>height</a> of the block being prepated, as an integer.
-      - `round` QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
-      - `digest` DATA, 32 bytes – The <a>digest</a> of the prepared block?
-      
-  - `signature` DATA, 65 bytes – The <a>signature</a> of the above Prepare message payload.
+  - `signedPartOfProposalMessage` – The payload and signature copied from the latest prepared Proposal message.
+  - `signedPartOfPrepareMessages` – The list of payloads and signatures copied from the latest prepared Prepare messages.
 
-The `signedPartOfProposalMessage` is the signed part (payload?) and related signature of the Proposal message received in the current round. The `signedPartOfPrepareMessages` is a list of the signed part (payload?) and related signature of Prepare messages matching the Proposal message received at the current round. 
 If `latestProposedBlock` is not nil, then the digest of `signedPartOfProposalMessage` and all messages included in `signedPartOfPrepareMessages` should match the Keccack hash of `proposedBlock`.
 
           </section>
@@ -204,38 +227,6 @@ If `latestProposedBlock` is not nil, then the digest of `signedPartOfProposalMes
 
     <h3>Protocol Description</h3>
 
-Insert state diagram here.
-
-The actors in the system are:
-
-    - Proposer - only one node acts in this role at any given time.
-	- Validator - multiple nodes other than the proposer.
-
-The operation of the protocol is described as follows.
-
-Q- what does the green background mean on the sequence diagram?
-
-Proposer
-
-The Proposer generates the block in ethereum format and sends a Proposal message as a mutlicast to all other nodes. 
-
-Validator
-
-A Validator awaits a Proposal message from the Proposer for the round. 
-When a Proposal message is received, the Validator first checks the block in the message is valid, and if not, discards the Proposal message and returns to await another Proposal message.
-
-If a Validator receives a Proposal message containing a valid block, it generates a Prepare message containing the ... and sends this via multicast to all other Validators (nodes?). 
-
-
-The Proposer (or Validator? or both?) then waits for Prepare messages from other Validators. When Prepare messages from two thirds of the Validators have been received, the Proposer generates a Commit message and sends this via multicast to all other Validators. 
-
-The Proposer then waits for Commit messages from the Validators. Once two thirds of the Validators have sent Commit messages, the Proposer goes ahead and imports (adds?) the block to the chain. 
-
-Following successful addition of the block to the chain, the Proposer sends a Round Change message to all validators with preparedCertificate as `nil` signalling the last block was added successfully. The protocol then repeats as described above in this section.
-
-
-If the Proposer detected a timeout (how ?) before two thirds of the Commit messages were received, the Proposer generates a Round Change message with the preparedCertificate set to ...
-The protocol then repeats as described above in this section.
 
 
 
