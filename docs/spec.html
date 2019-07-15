@@ -8,6 +8,7 @@
 src='https://www.w3.org/Tools/respec/respec-w3c-common'
 class='remove'></script>
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 <style>
 table, th, td {
@@ -130,14 +131,14 @@ For any type of message, the signature corresponds to the hash over the message 
 
   The <a>Proposal</a> message contains the following fields:
 
-  - `0x00` DATA, x? bytes – The message id for the <a>Proposal</a> message type.
-  - `payload` – A list containing each of the following:
+  - <code>0x00</code> DATA, x? bytes – The message id for the <a>Proposal</a> message type.
+  - <code>payload</code> – A list containing each of the following:
   
-      - `height` QUANTITY, 8 bytes – The <a>height</a> of the block being proposed, as an integer.
-      - `round` QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
-      - `digest` DATA, 32 bytes – The Keccak hash of the proposed block.
-  - `signature` DATA, 65 bytes – The <a>signature</a> of the payload.
-  - `proposedBlock` – The content of the proposed block in ethereum block format.
+      - <code>height</code> QUANTITY, 8 bytes – The <a>height</a> of the block being proposed, as an integer.
+      - <code>round</code> QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
+      - <code>digest</code> DATA, 32 bytes – The Keccak hash of the proposed block.
+  - <code>signature</code> DATA, 65 bytes – The <a>signature</a> of the payload.
+  - <code>proposedBlock</code> – The content of the proposed block in ethereum block format.
 
           </section>
 		  
@@ -151,13 +152,13 @@ For any type of message, the signature corresponds to the hash over the message 
 
   The <a>Prepare</a> message contains the following fields:
 
-  - `0x01` DATA, x? bytes – The message id for the <a>Prepare</a> message type.
-  - `payload` – A list containing each of the following:
+  - <code>0x01</code> DATA, x? bytes – The message id for the <a>Prepare</a> message type.
+  - <code>payload</code> – A list containing each of the following:
   
-      - `height` QUANTITY, 8 bytes – The <a>height</a> of the block being prepared, as an integer.
-      - `round` QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
-      - `digest` DATA, 32 bytes – The <a>digest</a> of the prepared block?
-  - `signature` DATA, 65 bytes – The <a>signature</a> of the payload.
+      - <code>height</code> QUANTITY, 8 bytes – The <a>height</a> of the block being prepared, as an integer.
+      - <code>round</code> QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
+      - <code>digest</code> DATA, 32 bytes – The <a>digest</a> of the prepared block?
+  - <code>signature</code> DATA, 65 bytes – The <a>signature</a> of the payload.
 
           </section>
 
@@ -171,18 +172,17 @@ For any type of message, the signature corresponds to the hash over the message 
 
   The <a>Commit</a> message contains the following fields:
 
-  - `0x02` DATA, x? bytes – The message id for the <a>Commit</a> message type.
-  - `payload` – An array of one or more of the following:
+  - <code>0x02</code> DATA, x? bytes – The message id for the <a>Commit</a> message type.
+  - <code>payload</code> – An array of one or more of the following:
   
-      - `height` QUANTITY, 8 bytes – The <a>height</a> of the block being prepared, as an integer.
-      - `round` QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
-      - `digest` DATA, 32 bytes – The <a>digest</a> of the prepared block?
-      - `commitSeal` DATA, 32 bytes – The signature of the validator over the proposed block included in the <a>Proposal</a> message received by the designated proposer of the round.
-  - `signature` DATA, 65 bytes – The <a>signature</a> of the payload.
+      - <code>height</code> QUANTITY, 8 bytes – The <a>height</a> of the block being prepared, as an integer.
+      - <code>round</code> QUANTITY, 4 bytes – The <a>round</a> number, as an integer.
+      - <code>digest</code> DATA, 32 bytes – The <a>digest</a> of the prepared block?
+      - <code>commitSeal</code> DATA, 32 bytes – The signature of the validator over the proposed block included in the <a>Proposal</a> message received by the designated proposer of the round.
+  - <code>signature</code> DATA, 65 bytes – The <a>signature</a> of the payload.
 
           </section>
- 		 		
-				
+
           <section id="sec-msg-round-change">
 
           <h4>Round Change</h4>
@@ -193,22 +193,25 @@ For any type of message, the signature corresponds to the hash over the message 
 
   The <a>Round Change</a> message contains the following fields:
 
-  - `0x03` DATA, x? bytes – The message id for the <a>Round Change</a> message type.
-  - `payload` – An array of one or more of the following:
+  - <code>0x03</code> DATA, x? bytes – The message id for the <a>Round Change</a> message type.
+  - <code>payload</code> – An array of one or more of the following:
   
-      - `height` QUANTITY, 8 bytes – The <a>height</a> of the block for which the validator is trying to reach agreement, as an integer.
-      - `round` QUANTITY, 4 bytes – The <a>round</a> number to which the validator intends to move to, as an integer.
-      - `preparedCertificate` DATA – See below.
+      - <code>height</code> QUANTITY, 8 bytes – The <a>height</a> of the block for which the validator is trying to reach agreement, as an integer.
+      - <code>round</code> QUANTITY, 4 bytes – The <a>round</a> number to which the validator intends to move to, as an integer.
+      - <code>preparedCertificate</code> DATA – See below.
 	  
-  - `signature` DATA, 65 bytes – The <a>signature</a> of the concatenation of the message id and the payload.
-  - `latestProposedBlock` DATA - `nil` or the content of the latest prepared block in ethereum block format. Should be `nil` if preparedCertificate is nil.
+  - <code>signature</code> DATA, 65 bytes – The <a>signature</a> of the concatenation of the message id and the payload.
+  - <code>latestProposedBlock</code> DATA - <code>nil</code> or the content of the latest prepared block in ethereum block format. Should be <code>nil</code> if preparedCertificate is nil.
 
-The `preparedCertificate` may be `nil` or a list of: 
+The <code>preparedCertificate</code> may be <code>nil</code> or a list of: 
 
-  - `signedPartOfProposalMessage` – The payload and signature copied from the latest prepared Proposal message.
-  - `signedPartOfPrepareMessages` – The list of payloads and signatures copied from the latest prepared Prepare messages.
+  - <code>signedPartOfProposalMessage</code> – The payload and signature copied from the latest prepared Proposal message.
+  - <code>signedPartOfPrepareMessages</code> – The list of payloads and signatures copied from the latest prepared Prepare messages.
 
-If `latestProposedBlock` is not nil, then the digest of `signedPartOfProposalMessage` and all messages included in `signedPartOfPrepareMessages` should match the Keccack hash of `proposedBlock`.
+If <code>latestProposedBlock</code> is not nil, then the digest of
+<code>signedPartOfProposalMessage</code> and all messages included in
+<code>signedPartOfPrepareMessages</code> should match the Keccack hash of
+<code>proposedBlock</code>.
 
           </section>
 				
@@ -222,6 +225,16 @@ If `latestProposedBlock` is not nil, then the digest of `signedPartOfProposalMes
 
     </section>
 
+    <section id="mathjax-sample" class="informative">
+
+    <h3>MathJax Sample</h3>
+
+    <p>
+When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+    </p>
+
+    </section>
 
     <section id="sec-protocol-description">
 
@@ -233,29 +246,29 @@ block finalization. All of the Enhanced BFT messages described below are always
 signed by the sender.
 
 Initially, the selected block proposer sends a Proposal message
-(`PROPOSAL_MSG_CODE, r, s, PB`) to all other validators, where:
+(<code>PROPOSAL_MSG_CODE, r, s, PB</code>) to all other validators, where:
 
-- `r` is the current round (initially 0) of the Enhanced BFT consensus protocol
-- `s` is the height (called the sequence in Enhance BFT terminology) of the
+- <code>r</code> is the current round (initially 0) of the Enhanced BFT consensus protocol
+- <code>s</code> is the height (called the sequence in Enhance BFT terminology) of the
 proposed block
--  `PB` is the proposed block with the `IstanbulData.Seal` (proposer seal)
+-  <code>PB</code> is the proposed block with the <code>IstanbulData.Seal</code> (proposer seal)
 calculated as described in Proposer seal calculation.
 
-When a validator receives a Preposer message for round 0 and sequence `s`, it
-broadcasts a Prepare message (`PREPARE_MSG_CODE, r = 0, s, Hash(PB)`) to all
-other validators. A validator is said to be prepared on round `r`, sequence `s`,
-and proposed block `PB` if it had received (`QUORUM(NV)-1`) Prepare messages
-with the propose-block-hash matching the hash of the proposed block `PB`
+When a validator receives a Preposer message for round 0 and sequence <code>s</code>, it
+broadcasts a Prepare message (<code>PREPARE_MSG_CODE, r = 0, s, Hash(PB)</code>) to all
+other validators. A validator is said to be prepared on round <code>r</code>, sequence <code>s</code>,
+and proposed block <code>PB</code> if it had received (<code>QUORUM(NV)-1</code>) Prepare messages
+with the propose-block-hash matching the hash of the proposed block <code>PB</code>
 included in the Proposal message received previously.
 
-When a validator `v` is prepared, it broadcasts a Commit message
-(`COMMIT_MSG_CODE, r, s, Hash(PB), Commit-Seal`) to all other validators
-where `Commit-Seal` is calculated as described in Committed seal calculation.
+When a validator <code>v</code> is prepared, it broadcasts a Commit message
+(<code>COMMIT_MSG_CODE, r, s, Hash(PB), Commit-Seal</code>) to all other validators
+where <code>Commit-Seal</code> is calculated as described in Committed seal calculation.
 
-When a validator receives `QUORUM(NV)` commit messages for the same `r`, `s`,
-and with the proposed-block-hash matching the hash of the proposed block `PB`
-received initially as part of the Proposal message, it adds the `QUORUM(NV)`
-received `Commit-Seal` values to the `IstanbulExtra.CommittedSeals` field and
+When a validator receives <code>QUORUM(NV)</code> commit messages for the same <code>r</code>, <code>s</code>,
+and with the proposed-block-hash matching the hash of the proposed block <code>PB</code>
+received initially as part of the Proposal message, it adds the <code>QUORUM(NV)</code>
+received <code>Commit-Seal</code> values to the <code>IstanbulExtra.CommittedSeals</code> field and
 sends the block to the other validators, including itself.
 
 However, a Byzantine block proposer could either never propose a valid block or
@@ -264,35 +277,35 @@ finalization protocol from reaching consensus on the next block to add to the
 blockchain. To solve this liveness issue, every time a validator receives a new
 valid block, it starts a new round timer. When the round timer for a validator
 expires, the validator broadcasts a Round-Change message
-(`ROUND_CHANGE_MSG_CODE, r+1, s, Proposal/Prepare-Certificate`) to all
+(<code>ROUND_CHANGE_MSG_CODE, r+1, s, Proposal/Prepare-Certificate</code>) to all
 validators. The content of the Proposal/Prepare-Certificate is empty if the
-validator is not prepared on any proposed block for sequence `s`, otherwise
+validator is not prepared on any proposed block for sequence <code>s</code>, otherwise
 the Proposal/Prepare-Certificate contains the set of Proposal and Prepare
-messages for the highest round at which validator `v` is prepared for sequence
-`s` on a valid proposed block `PB`.
+messages for the highest round at which validator <code>v</code> is prepared for sequence
+<code>s</code> on a valid proposed block <code>PB</code>.
 
-For example, if validator `v` prepared on proposed block `PB1` at round 0, it
-did not prepare on any block at round 2, it prepared on proposed block `PB2` at
+For example, if validator <code>v</code> prepared on proposed block <code>PB1</code> at round 0, it
+did not prepare on any block at round 2, it prepared on proposed block <code>PB2</code> at
 round 3, and it did not prepare on any block at round 4, then the
 Proposal/Prepare-Certificate included in the next Round-Change message includes
-the Proposal and Prepare messages that caused validator `v` to be prepared at
-round 3 on proposed block `PB2`. When the proposer for round `r`+1 receives
-`QUORUM(NV)` Round-Change messages for the same `r`+1 round and sequence `s`, it
+the Proposal and Prepare messages that caused validator <code>v</code> to be prepared at
+round 3 on proposed block <code>PB2</code>. When the proposer for round <code>r+1</code> receives
+<code>QUORUM(NV)</code> Round-Change messages for the same <code>r</code>+1 round and sequence <code>s</code>, it
 broadcasts a New-Round message
-(`NEW_ROUND_MSG_CODE, r+1, h, Round-Change-Certificate, Proposal-message`) to
-all validators. The Round-Change certificate contains the `QUORUM(NV)`
-Round-Change messages received and the `Proposal-message` field contains the
-Proposal message for round `r`+1.
+(<code>NEW_ROUND_MSG_CODE, r+1, h, Round-Change-Certificate, Proposal-message</code>) to
+all validators. The Round-Change certificate contains the <code>QUORUM(NV)</code>
+Round-Change messages received and the <code>Proposal-message</code> field contains the
+Proposal message for round <code>r+1</code>.
 
 The Proposal message is determined in the following way. If the proposer for
-round `r`+1 has received at least 1 Round-Change message with a valid and
+round <code>r+1</code> has received at least 1 Round-Change message with a valid and
 non-empty Preposal/Prepare-Certificate, then the Proposal message contains the
 Proposal message included in Proposal/Prepare-Certificate with the highest round
 number. Otherwise, the Proposal message is a Proposal message signed by the
 validator for any valid block.
 
 When a validator receives a New-Round message, it verifies that the
-`Round-Change-Certificate` field contains `QUORUM(NV)` valid Round-Change
+<code>Round-Change-Certificate</code> field contains <code>QUORUM(NV)</code> valid Round-Change
 messages and then verifies the Proposal message included in the New-Round
 message by performing a computation similar to the one used by the sender of the
 New-Round message. If no Round-Change message included in the
