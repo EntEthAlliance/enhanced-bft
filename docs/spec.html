@@ -8,6 +8,9 @@
 src='https://www.w3.org/Tools/respec/respec-w3c-common'
 class='remove'></script>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 <style>
@@ -234,6 +237,59 @@ When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
 $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
     </p>
 
+    </section>
+
+    <section id="math-in-tex-notation" class="informative">
+
+<h2>Math in TeX notation</h2>
+
+When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+$$ \begin{array}{rcll}
+y & = & x^{2}+bx+c\\
+  & = & x^{2}+2\times\dfrac{b}{2}x+c\\
+  & = & \underbrace{x^{2}+2\times\dfrac{b}{2}x+\left(\frac{b}{2}\right)^{2}}-
+      {\left(\dfrac{b}{2}\right)^{2}+c}\\
+  &  & \qquad\left(x+{\dfrac{b}{2}}\right)^{2}\\
+  & = & \left(x+\dfrac{b}{2}\right)^{2}-\left(\dfrac{b}{2}\right)^{2}+c 
+  & \left|+\left({\dfrac{b}{2}}\right)^{2}-c\right.\\
+    y+\left(\dfrac{b}{2}\right)^{2}-c & = & \left(x+
+    \dfrac{b}{2}\right)^{2} & \left|\strut(\textrm{vertex form})\right.\\
+y-y_{S} & = & (x-x_{S})^{2}\\
+S(x_{S};y_{S}) & \,\textrm{or}\, 
+    & S\left(-\dfrac{b}{2};\,\left(\dfrac{b}{2}\right)^{2}-c\right)
+\end{array} $$
+    </section>
+
+    <section id="math-in-mathml-notation" class="informative">
+
+<h2>Math in MathML notation</h2>
+
+When <math><mi>a</mi><mo>&#x2260;</mo><mn>0</mn></math>,
+there are two solutions to <math>
+  <mi>a</mi><msup><mi>x</mi><mn>2</mn></msup>
+  <mo>+</mo> <mi>b</mi><mi>x</mi>
+  <mo>+</mo> <mi>c</mi> <mo>=</mo> <mn>0</mn>
+</math> and they are
+<math mode="display">
+  <mi>x</mi> <mo>=</mo>
+  <mrow>
+    <mfrac>
+      <mrow>
+        <mo>&#x2212;</mo>
+        <mi>b</mi>
+        <mo>&#x00B1;</mo>
+        <msqrt>
+          <msup><mi>b</mi><mn>2</mn></msup>
+          <mo>&#x2212;</mo>
+          <mn>4</mn><mi>a</mi><mi>c</mi>
+        </msqrt>
+      </mrow>
+      <mrow> <mn>2</mn><mi>a</mi> </mrow>
+    </mfrac>
+  </mrow>
+  <mtext>.</mtext>
+</math>
     </section>
 
     <section id="sec-protocol-description">
