@@ -151,9 +151,11 @@ This section describes the assumptions made for the Enhanced BFT protocol.
 
     </section>
 
-    <section id="sec-message-structures">
+  </section>
 
-    <h3>Message Structures</h3>
+  <section id="sec-message-structures">
+
+  <h2>Message Structures</h2>
 
 This section defines the structures of the BFT sub-protocol messages
 communicated between Ethereum nodes.
@@ -167,9 +169,9 @@ using the validator private key:
 <code>hashForMessageSignature(message) = KEC(concatenate(message.ID, RLP(message.payload)))</code>
 
 
-          <section id="sec-proposal-message">
+    <section id="sec-proposal-message">
 
-          <h4>Proposal Message</h4>
+    <h3>Proposal Message</h3>
 
 The block <a>proposer</a> must send the
 <dfn data-lt="proposal messages">Proposal message</dfn> to all other
@@ -193,11 +195,11 @@ block.
   - <code>proposedBlock</code> – The content of the proposed block in Ethereum
 block format.
 
-          </section>
-		  
-          <section id="sec-prepare-message">
+    </section>
 
-          <h4>Prepare Message</h4>
+    <section id="sec-prepare-message">
+
+    <h3>Prepare Message</h3>
 
 The <dfn data-lt="prepare messages">Prepare message</dfn> MUST be sent when a
 <a>validator</a> that is not the designated block proposer for a round receives
@@ -219,11 +221,11 @@ integer.
 block?
   - <code>signature</code> DATA, 65 bytes – The <a>signature</a> of the payload.
 
-          </section>
+    </section>
 
-          <section id="sec-commit-message">
+    <section id="sec-commit-message">
 
-          <h4>Commit Message</h4>
+    <h3>Commit Message</h3>
 
 The <dfn data-lt="commit messages">Commit message</dfn> MUST be sent by a
 <a>validator</a> when <em>enough</em> <a>Prepare messages</a> matching the
@@ -248,11 +250,11 @@ block?
 received by the designated proposer of the round.
   - <code>signature</code> DATA, 65 bytes – The <a>signature</a> of the payload.
 
-          </section>
+    </section>
 
-          <section id="sec-round-change-message">
+    <section id="sec-round-change-message">
 
-          <h4>Round Change Message</h4>
+    <h3>Round Change Message</h3>
 
 A <dfn data-lt="round change messages">Round Change message</dfn> MUST be sent
 by a <a>validator</a> when they suspect no agreement on the block to be added to
@@ -290,11 +292,11 @@ If <code>latestProposedBlock</code> is not <code>nil</code>, then the digest of
 <code>signedPartOfPrepareMessages</code> should match the Keccack hash of
 <code>proposedBlock</code>.
 
-          </section>
+    </section>
 
-          <section id="sec-new-round-message">
+    <section id="sec-new-round-message">
 
-          <h4>New Round Message</h4>
+    <h3>New Round Message</h3>
 
 A <dfn data-lt="new round messages">New Round message</dfn> ... .
   
@@ -302,31 +304,30 @@ A <dfn data-lt="new round messages">New Round message</dfn> ... .
 
 The New Round message contains the following fields:
 
-
-          </section>
-
     </section>
 
-    <section id="sec-block-header-modifications">
+  </section>
 
-    <h3>Block Header Modifications</h3>
+  <section id="sec-block-header-modifications">
 
-    </section>
+  <h2>Block Header Modifications</h2>
 
-    <section id="mathjax-sample" class="informative">
+  </section>
 
-    <h3>MathJax Sample</h3>
+  <section id="mathjax-sample" class="informative">
+
+  <h2>MathJax Sample</h2>
 
     <p>
 When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
 $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
     </p>
 
-    </section>
+  </section>
 
-    <section id="math-in-tex-notation" class="informative">
+  <section id="math-in-tex-notation" class="informative">
 
-<h2>Math in TeX notation</h2>
+  <h2>Math in TeX notation</h2>
 
 When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
 $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
@@ -344,11 +345,11 @@ y-y_{S} & = & (x-x_{S})^{2}\\
 S(x_{S};y_{S}) & \,\textrm{or}\, 
     & S\left(-\dfrac{b}{2};\,\left(\dfrac{b}{2}\right)^{2}-c\right)
 \end{array} $$
-    </section>
+  </section>
 
-    <section id="math-in-mathml-notation" class="informative">
+  <section id="math-in-mathml-notation" class="informative">
 
-<h2>Math in MathML notation</h2>
+  <h2>Math in MathML notation</h2>
 
 When <math><mi>a</mi><mo>&#x2260;</mo><mn>0</mn></math>,
 there are two solutions to <math>
@@ -375,11 +376,11 @@ there are two solutions to <math>
   </mrow>
   <mtext>.</mtext>
 </math>
-    </section>
+  </section>
 
-    <section id="sec-protocol-description">
+  <section id="sec-protocol-description">
 
-    <h3>Protocol Description</h3>
+  <h2>Protocol Description</h2>
 
 The Enhanced BFT block finalization protocol consists of a series of messages
 exchanged by the <a>validators</a> using the gossip protocol to reach consensus
@@ -398,7 +399,7 @@ of the proposed block.
 (proposer seal), calculated as described in the Proposer Seal Calculation
 section.
 
-When a <a>validator</a> receives a <a>Proposer message</a> for round 0 and
+When a <a>validator</a> receives a <a>Proposal message</a> for round 0 and
 sequence <code>s</code>, it broadcasts a <a>Prepare message</a>
 (<code>PREPARE_MSG_CODE, r = 0, s, Hash(PB)</code>) to all other
 <a>validators</a>. A <a>validator</a> is said to be prepared on round
@@ -467,18 +468,194 @@ the one used by the sender of the <a>New Round message</a>. If no
 Proposal/Prepare certificate, then any <a>Proposal message</a> for a valid block
 included in the <a>New Round message</a> is accepted.
 
+  <p>
 If validation of the <a>New Round message</a> is successful, the <a>validator</a>
 acts as if it has received the <a>Proposal message</a> from the <a>proposer</a>
 and hence will broadcast a <a>Prepare message</a> as described above.
+  </p>
+
+    <section id="sec-pseudocode-protocol-description">
+
+    <h3>Pseudocode Protocol Description</h3>
+  <p>
+The Enhanced BFT consensus protocol is described by pseudocode in Algorithms 2
+and 3 where:
+  </p>
+
+  <ul>
+    <li>
+Each of the $\mathbf{upon}$ blocks in the pseudocode is assumed to be executed
+atomically when the condition specified after the $\mathbf{upon}$ keyword is
+satisfied.
+    </li>
+    <li>
+All functions in $\mathtt{typewriter font}$ are defined in the remainder of this
+section.
+    </li>
+    <li>
+All functions in ${italic font}$ are definned in the pseudocode.
+    </li>
+    <li>
+$\langle{m}\rangle_{\sigma_v}$ denotes a message ${m}$ signed by validator ${v}$.
+    </li>
+    <li>
+$\mathtt{numOfReceived}{(m}$ $\mathbf{with}$ ${condition, v)}$ corresponds to
+the number of messages ${m}$ received by validator ${v}$ for which ${condition}$
+is verified.
+    </li>
+    <li>
+$\mathtt{received}{(m}$ $\mathbf{with}$ ${condition, v)}$ is true if and only if
+validator ${v}$ has received at least one message ${m}$ for which ${condition}$
+is verified. That is,
+$\mathtt{received}{(m}$ $\mathbf{with}$ ${condition, v)} \equiv \mathtt{numOfReceived}{(m}$ $\mathbf{with}$ ${condition, v)}\ge{1}$.
+    </li>
+    <li>
+If $\mathbf{with}$ $condition$ is omitted (that is,
+$\mathtt{received}{(m, v)}$), then $\mathtt{received}$ is true if any message
+matching ${m}$ was received by ${v}$.
+    </li>
+    <li>
+The symbol ${*}$ denotes any value.
+    </li>
+    <li>
+$\langle{m}\rangle$ $\mathbf{from}$ ${V}$ matches any message ${m}$ sent by a
+validator included in the set ${V}$ .
+    </li>
+    <li>
+$\mathtt{setsOfMesagesReceivedLike}{(m}$ $\mathbf{with}$ ${condition, v)}$
+corresponds to all of the subsets including messages received that match ${m}$
+for which ${condition}$ is verified.
+
+For example, if validator ${v}$ receives the following messages:
+      <ul>
+        <li>
+$m_1 \equiv \langle$PREPARE${, h, r, \mathtt{KEC(\mathit{B})} \rangle_{\sigma_{v1}}}$
+        </li>
+        <li>
+$m_2 \equiv \langle$PREPARE${, h, r, \mathtt{KEC(\mathit{B})} \rangle_{\sigma_{v2}}}$
+        </li>
+        <li>
+$m_3 \equiv \langle$PREPARE${, h, r, \mathtt{KEC(\mathit{B})} \rangle_{\sigma_{v3}}}$
+        </li>
+        <li>
+$m_4 \equiv \langle$PREPARE${, h, r, \mathtt{KEC(\mathit{B})} \rangle_{\sigma_{v4}}}$
+        </li>
+      </ul>
+where ${v1}$, ${v2}$, ${v3}$, and ${v4}$ are included in set ${V}$ , then
+setsOfMessagesReceivedLike(hPREPARE; h; r; KEC(B)isender with sender 2 V; v) corresponds to
+ffg; fm1g; fm2g; fm3g; fm1;m2g; fm1;m3g; fm2;m3g; fm1;m2;m3gg
+    </li>
+    <li>
+$\mathtt{mesagesReceivedLike}{(m}$ $\mathbf{with}$ ${condition, v)}$ corresponds
+to all the messages received matching ${m}$ for which ${condition}$ is verified.
+In the context of the example presented above, messagesReceivedLike(hPREPARE; h; r; KEC(B)isender with sender 2 V; v) corresponds to
+fm1;m2;m3g.
+    </li>
+    <li>
+$\mathtt{blockHeight}{(FB)}$ is defined as the height of the finalised block
+${FB}$.
+    </li>
+    <li>
+Each validator ${v}$ stores its local blockchain in ${chain_v}$.
+    </li>
+    <li>
+${chain_v}{[n]}$ corresponds to the finalised block with height ${n}$, while ${chain_v}{[n:m]}$ corresponds to a sub-chain
+including all of the finalised blocks from height ${n}$ to height ${m}$.
+    </li>
+    <li>
+The blockchain height is defined as the height of the last finalised block added to the blockchain.
+    </li>
+    <li>
+$\mathtt{validators}{(chain_v}{[0:h-1])}$ represents the set of authorised
+validators for instance ${h}$ of the IBFT-block-finalization-protocol. The
+definition of the $\mathtt{validators}{()}$ function is not presented here as it
+is outside the scope of this work and does not have relevance to the results
+presented here. For the same reason, we do not describe the protocol that can be
+used to add or remove validators to or from the validator set of each instance
+of the IBFT-block-finalisation-protocol.
+    </li>
+    <li>
+$\mathtt{n}{(chain_v}{[0:h-1])}$ represents the number of validators for
+instance ${h}$ of the IBFT-block-finalization-protocol. That is
+$\mathtt{n}{(chain_v}{[0:h-1])}$ ${\equiv} \Vert \mathtt{n}{(chain_v}{[0:h-1]) \Vert}$.
+    </li>
+    <li>
+$\mathtt{extractFinalisationProof}{(FB)}$ denotes the finalization proof
+included in the finalized block ${FB}$;
+    </li>
+    <li>
+$\mathtt{extractBlock}{(FB)}$ denotes the block included in the finalized block
+${FB}$.
+    </li>
+    <li>
+$\mathtt{extractRound}{(FB)}$ denotes the round number included in the finalized
+block ${FB}$.
+    </li>
+    <li>
+The function $\mathtt{isValidBlock}{(B,B_{parent})}$ is defined to be true if
+and only if block ${B}$ is a valid Ethereum block with parent ${B_{parent}}$.
+For the purpose of this work, we consider that
+$\mathtt{isValidBlock}{(B,B_{parent})}$ only verifies the following fields of
+the standard Ethereum header: parentHash, stateRoot, transactionsRoot,
+receiptsRoot, logsBloom, number, gasLimit, gasUsed. These fields are verified as
+specified in [7]. The IBFT protocol implementation [5] actually verifies also
+the other fields but in a different way than specified in [7]. We do not
+describe how these fields are verified as this is out of the scope of this work
+and does not affect our results.
+    </li>
+  </ul>
+
+  <p>
+The pseudocode in Algorithm 3 introduces the following macros and functions:
+  </p>
+
+  <ul>
+    <li>
+${n}_{h,v}$ is the number of validators for the ${h}$-th instance of the
+IBFT-block-finalization-protocol for validator ${v}$.
+    </li>
+    <li>
+$\mathtt{validators}_{h,v}$ is the validators for the ${h}$-th instance of the
+IBFT-block-finalization-protocol for validator ${v}$.
+    </li>
+    <li>
+$\mathtt{proposer}_{h,v}{(r_{h,v})}$ is the proposer for round ${r_{h,v}}$ of the
+${h}$-th instance of the IBFT-block-finalization-protocol for validator ${v}$.
+    </li>
+    <li>
+$\mathtt{createNewProposedBlock}{(h, v)}$ represents the creation of a new block with height ${h}$ by validator ${v}$.
+    </li>
+    <li>
+$\mathtt{timeoutForRoundZero}$ represents the round timer duration for round 0.
+This is intended to be a parameter settable by the user.
+    </li>
+  </ul>
 
     </section>
 
+      <section id="sec-pseudocode">
+
+      <h4>Pseudocode</h4>
+
+<figure id="fig-algorithm1">
+  <img src="./images/algorithm1_pseudocode.png" alt="Algorithm 1">
+</figure>
+
+<figure id="fig-algorithm2">
+  <img src="./images/algorithm2_pseudocode.png" alt="Algorithm 2">
+</figure>
+
+<figure id="fig-algorithm3">
+  <img src="./images/algorithm3_pseudocode.png" alt="Algorithm 3">
+</figure>
+
+
+
+      </section>
+
+    </section>
 
   </section>
-
-
-
-
 
   <section id="sec-additional-information" class="appendix">
 
