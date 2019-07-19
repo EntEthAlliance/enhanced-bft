@@ -143,6 +143,210 @@ section.
 This section outlines the terminology used to describe the Enhanced BFT
 protocol.
 
+  <dl>
+    <dt>Blockchain consensus protocol</dt>
+    <dd>
+Blockchains are the most widely-adopted implementations of <em>distributed
+ledgers</em>, which are append-only databases of transactions that are
+replicated across multiple participants and where the trust and responsibility
+for maintaining the database is spread across all, or a subset of, the
+participants.<br>
+
+This is in contrast to traditional centralized systems where full trust is given
+to a central authority responsible for maintaining the database. One issue with
+this traditional approach is that the central authority has the power to alter
+the database unilaterally. The decentralisation aspect of distributed ledger
+technology makes it well suited in situations where the central authority is
+either adding costs to the system or undermining trust in the system itself.
+
+Blockchains implement distributed ledgers by batching transactions into blocks
+and cryptographically linking each block to the previous one forming a chain of
+blocks. Consensus protocols play a fundamental role in the blockchain technology
+as they responsible for ensuring that the chain of blocks replicated amongst the
+participants is consistent. The type of network and environment assumptions made
+when designing a consensus protocol influence how the blockchain performs after
+it is deployed in a real environment and network. Some of the key performance
+metrics that are heavily influenced by consensus protocols are:
+      <ul>
+        <li>
+Throughput. For example, the number of transactions per second.
+        </li>
+        <li>
+Latency. That is, time taken from when a transaction is submitted to the system
+to when the transaction is included in a block.
+        </li>
+        <li>
+Robustness. That is, what type of attacks the protocol can withstand.
+        </li>
+      </ul>
+    </dd>
+    <dt>Ethereum smart contracts</dt>
+    <dd>
+Compared to Bitcoin, which was the first widely adopted blockchain and mainly
+allows transferring values between participants, the Ethereum blockchain
+specifies a Turing-complete language that can be used to build small distributed
+programs, called <em>smart contracts</em>. Smart contracts are executed on a
+sandboxed runtime on any participant on execution of transactions. The
+availability of a Turing-complete language allows users to specify a custom set
+of rules and behavior associated with any transaction referring a specific smart
+contract.
+    </dd>
+    <dt>Byzantine fault tolerant (BFT)</dt>
+    <dd>
+Byzantine fault tolerant, or BFT, specifies the type of participant fault mode
+that the consensus protocol can cope with. Specifically, BFT identifies a class
+of consensus protocols that ensure blockchain consistency despite some of the
+participants, referred to as Byzantine, being malicious and acting arbitrarily.
+The usage of the word <em>Byzantine</em> to identify malicious nodes dates back
+to the paper "The Byzantine Generals Problem" by Lamport et al. The Byzantine
+failure mode is the strongest failure mode considered in the consensus protocol
+literature. Another common, but weaker, failure mode is fail-stop failure mode,
+which only considers participants that stop communicating, but never acting
+maliciously.
+    </dd>
+    <dt>Poof of Authority (PoA)</dt>
+    <dd>
+Another way to classify consensus protocols is by the technique used to prevent
+Sybil attacks. A Sybil attack is where a participant is able able to gain power
+in the system by creating multiple pseudonymous identities. Typically, creating
+a new digital identity that can be used to interact with a blockchain is
+relatively cheap because it only requires generating a random private key and
+the related public key, which can be done in a matter of seconds on any modern
+personal computer.<br>
+
+One of the most widely used and famous techniques for preventing Sybil attacks
+is Proof of Work (PoW), which wasoriginally pioneered by Dwork et al., and
+gained subsequent publicity by its employment in Bitcoin. PoW requires
+participants to spend computing effort in solving a hard cryptographic puzzle
+before being able to propose a block to be added to the blockchain.
+
+Proof of Stake (PoS) is another well known technique where the right to propose
+new blocks is given by the amount of stake owned.
+
+In contrast, PoA prevents Sybil attacks by conferring the right to create new
+blocks only to a defined set of identities.
+    </dd>
+    <dt>Consortium blockchains</dt>
+    <dd>
+Compared to permissionless, or public, blockchains, like Bitcoin or Ethereum,
+where anybody can join the network and participate in the protocol, in
+consortium blockchains permissioning exists, which enables only a set of
+participants to propose new blocks and to participate in the consensus
+protocol.<br>
+
+PoA type consensus protocols, like Enhanced BFT, are well suited to this type of
+permissioning. While not every participant can propose new blocks, some
+consoritum blockchains allow any valid blockchain identity to read data from the
+blockchain. Enhanced BFT also allows for this type of configuration.
+    </dd>
+    <dt>Immediate Finality</dt>
+    <dd>
+A transaction is deemed to be <em>final</em> after it is included in the
+blockchain and it cannot be removed, except if the environment is compromised. A
+compromise can occur, for example, if the number of Byzantine participants is
+higher than the maximum number the protocol can withstand.<br>
+
+Immediate finality means that as soon as a transaction is included in a block,
+the protocol guarantees that the transaction will not be removed.
+
+By comparison, the PoW consensus protocol in Bitcoin and Ethereum only
+guarantees eventual probabilistic finality, where the deeper a transaction is in
+the blockchain, the less probable that the transaction can be removed or have
+its position changed. Casper FFG, the Ethereum 2.0 PoS consensus protocol,
+provides eventual non-probabilistic finality, where transactions eventually
+reach a state where they cannot be removed or have their position changed, but
+this does not necessarily happen at every block.
+    </dd>
+    <dt>Robust in an eventually synchronous network</dt>
+    <dd>
+<em>Robustness</em> refers to two important properties that any blockchain
+consensus protocol must provide:
+      <ul>
+        <li>
+Persistence, which ensures consistency of the blockchain amongst all
+participants.
+        </li>
+        <li>
+Liveness, which ensures that transactions submitted to participants will
+eventually be included in the blockchain.
+        </ul>
+      </ul>
+
+An eventually synchronous network identifies a network model under which
+robustness of the protocol can be assured. In literature, there are three main
+network models that were considered, which differ on the assumptions made on
+transmission latency:
+      <ul>
+        <li>
+Synchronous networks. The maximum latency (the time required for a message to
+reach its recipient) is bounded and known.
+        </li>
+        <li>
+Asynchronous networks. The maximum latency is unknown and messages might never
+be delivered.
+        </li>
+        <li>
+Partially synchronous networks. This model lies in between synchronous and
+asynchronous. Specifically, there are two possible definitions of partial
+synchronous networks:
+          <ul>
+            <li>
+Messages are guaranteed to be delivered, but the maximum latency is unknown. To
+the best of our knowledge, no specific name is defined for this model.
+            </li>
+            <li>
+Eventually synchronous networks where there exists a point in time, called
+global stabilisation time (GST) after which the message delay is bounded by a
+finite and constant value.
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+The model with the weakest assumptions is the asynchronous network model, followed
+by the partially synchronous network model and then the synchronous network
+model, in this order. Between the two definitions of partial synchronous
+networks, eventual synchrony is the one with the weaker assumptions. As proved
+by Fischer et al. [2] in 1985, no consensus protocol that aims to tolerate at
+least one fail-stop participant is guaranteed to terminate in the model with the
+weakest assumptions (asynchronous network model). This means that the liveness
+property introduced above would be impaired in this model. There exist solutions
+that operate in the asynchronous network model, but the termination is only
+guaranteed probabilistically. The Enhanced BFT protocol is therefore robust in
+the network model with the weakest assumptions coming after the asynchronous
+network model.
+    </dd>
+    <dt>Dynamic validator set</dt>
+    <dd>
+Compared to classic (non-blockchain) consensus protocols where the set of
+participants is known in advance and never changes, Enhanced BFT, like Clique,
+allows participants to add and remove validators by a voting mechanism.<br>
+
+Enhanced BFT builds on the IBFT consensus protocol and addresses the following
+limitations of IBFT, as described by Saltini:
+      <ul>
+        <li>
+Termination of IBFT is not guaranteed in an eventually synchronous network.
+        </li>
+        <li>
+If the number of validators, $n$, is not exactly a multiple of 3 plus 1 (that
+is, $\lfloor\frac{n-1}{3}\rfloor\neq{0}$), then one Byzantine node can remove or
+change the position of a transaction that was already finalised.
+        </li>
+      </ul>
+
+An obstacle facing enterprises when considering adopting the Ethereum technology
+at scale is the lack of a well and standardised consortium consensus protocol.
+As clear indication of this, the latest Enterprise Ethereum Alliance (EEA)
+specifications fail to specify a consensus protocols to be used in the EEA
+context.
+
+This work aims to fill this gap by describing the Enhanced BFT protocol in a
+form well suited for translation into actual implementation to enable
+interoperability between multiple consortium Ethereum clients and therefore
+promote the usage of the Ethereum technology within the enterprise world.
+    </dd>
+  </dl>
 
     </section>
 
@@ -433,7 +637,7 @@ All functions in $\mathtt{typewriter\;font}$ are defined in the remainder of
 this section.
     </li>
     <li>
-All functions in $italic\;font$ are definned in the pseudocode.
+All functions in $italic\;font$ are defined in the pseudocode.
     </li>
     <li>
 $\langle{m}\rangle_{\sigma_v}$ denotes a message $m$ signed by validator $v$.
