@@ -21,6 +21,10 @@ table, th, td {
 th, td {
     padding: 5px;
 }
+code {
+    font-family: georgia, serif;
+	color: black;
+}
 </style>
 
 </head>
@@ -425,67 +429,60 @@ atomically when the condition specified after the $\mathbf{upon}$ keyword is
 satisfied.
     </li>
     <li>
-All functions in $\mathtt{typewriter font}$ are defined in the remainder of this
-section.
+All functions in $\mathtt{typewriter\;font}$ are defined in the remainder of
+this section.
     </li>
     <li>
-All functions in ${italic font}$ are definned in the pseudocode.
+All functions in $italic\;font$ are definned in the pseudocode.
     </li>
     <li>
-$\langle{m}\rangle_{\sigma_v}$ denotes a message ${m}$ signed by validator ${v}$.
+$\langle{m}\rangle_{\sigma_v}$ denotes a message $m$ signed by validator $v$.
     </li>
     <li>
-$\mathtt{numOfReceived}{(m}$ $\mathbf{with}$ ${condition, v)}$ corresponds to
-the number of messages ${m}$ received by validator ${v}$ for which ${condition}$
+$\mathtt{numOfReceived}{(m}\;\mathbf{with}\;{condition, v)}$ corresponds to
+the number of messages $m$ received by validator $v$ for which $condition$
 is verified.
     </li>
     <li>
-$\mathtt{received}{(m}$ $\mathbf{with}$ ${condition, v)}$ is true if and only if
-validator ${v}$ has received at least one message ${m}$ for which ${condition}$
+$\mathtt{received}{(m}\;\mathbf{with}\;{condition, v)}$ is true if and only if
+validator $v$ has received at least one message $m$ for which $condition$
 is verified. That is,
-$\mathtt{received}{(m}$ $\mathbf{with}$ ${condition, v)} \equiv \mathtt{numOfReceived}{(m}$ $\mathbf{with}$ ${condition, v)}\ge{1}$.
+$\mathtt{received}{(m}\;\mathbf{with}\;{condition, v)} \equiv \mathtt{numOfReceived}{(m}\;\mathbf{with}\;{condition, v)}\ge{1}$.
     </li>
     <li>
-If $\mathbf{with}$ $condition$ is omitted (that is,
+If $\mathbf{with}\;condition$ is omitted (that is,
 $\mathtt{received}{(m, v)}$), then $\mathtt{received}$ is true if any message
-matching ${m}$ was received by ${v}$.
+matching $m$ was received by $v$.
     </li>
     <li>
-The symbol ${*}$ denotes any value.
+The symbol $*$ denotes any value.
     </li>
     <li>
-$\langle{m}\rangle$ $\mathbf{from}$ ${V}$ matches any message ${m}$ sent by a
-validator included in the set ${V}$ .
+$\langle{m}\rangle\;\mathbf{from}\;{V}$ matches any message $m$ sent by a
+validator included in the set $V$ .
     </li>
     <li>
-$\mathtt{setsOfMesagesReceivedLike}{(m}$ $\mathbf{with}$ ${condition, v)}$
-corresponds to all of the subsets including messages received that match ${m}$
-for which ${condition}$ is verified.
+$\mathtt{setsOfMesagesReceivedLike}{(m}\;\mathbf{with}\;{condition, v)}$
+corresponds to all of the subsets including messages received that match $m$
+for which $condition$ is verified.
 
-For example, if validator ${v}$ receives the following messages:
-      <ul>
-        <li>
-$m_1 \equiv \langle$PREPARE${, h, r, \mathtt{KEC(\mathit{B})} \rangle_{\sigma_{v1}}}$
-        </li>
-        <li>
-$m_2 \equiv \langle$PREPARE${, h, r, \mathtt{KEC(\mathit{B})} \rangle_{\sigma_{v2}}}$
-        </li>
-        <li>
-$m_3 \equiv \langle$PREPARE${, h, r, \mathtt{KEC(\mathit{B})} \rangle_{\sigma_{v3}}}$
-        </li>
-        <li>
-$m_4 \equiv \langle$PREPARE${, h, r, \mathtt{KEC(\mathit{B})} \rangle_{\sigma_{v4}}}$
-        </li>
-      </ul>
-where ${v1}$, ${v2}$, ${v3}$, and ${v4}$ are included in set ${V}$ , then
-setsOfMessagesReceivedLike(hPREPARE; h; r; KEC(B)isender with sender 2 V; v) corresponds to
-ffg; fm1g; fm2g; fm3g; fm1;m2g; fm1;m3g; fm2;m3g; fm1;m2;m3gg
+For example, if validator $v$ receives the following messages:
+
+- $m_1 \equiv \langle\mathsf{PREPARE}{, h, r, \mathtt{KEC(}{B}) \rangle_{\sigma_{v1}}}$
+- $m_2 \equiv \langle\mathsf{PREPARE}{, h, r, \mathtt{KEC(}{B}) \rangle_{\sigma_{v2}}}$
+- $m_3 \equiv \langle\mathsf{PREPARE}{, h, r, \mathtt{KEC(}{B}) \rangle_{\sigma_{v3}}}$
+- $m_4 \equiv \langle\mathsf{PREPARE}{, h, r, \mathtt{KEC(}{B}) \rangle_{\sigma_{v4}}}$
+
+where $v1$, $v2$, $v3$, and $v4$ are included in set $V$, then
+$\mathtt{setsOfMessagesReceivedLike}{(\langle}\mathsf{PREPARE}, h, r, \mathtt{KEC(}{B}) \rangle_{\sigma_{sender}}\;\mathbf{with}\;sender\in{V,v)}$
+corresponds to $\{\{\},\{m_1\},\{m_2\},\{m_3\},\{m_1,m_2\},\{m_1,m_3\},\{m_2,m_3\},\{m_1,m_2,m_3\}\}$.
     </li>
     <li>
 $\mathtt{mesagesReceivedLike}{(m}$ $\mathbf{with}$ ${condition, v)}$ corresponds
 to all the messages received matching ${m}$ for which ${condition}$ is verified.
-In the context of the example presented above, messagesReceivedLike(hPREPARE; h; r; KEC(B)isender with sender 2 V; v) corresponds to
-fm1;m2;m3g.
+In the context of the example presented above,
+$\mathtt{messagesReceivedLike}{(\langle}\mathsf{PREPARE}, h, r, \mathtt{KEC(}{B}) \rangle_{\sigma_{sender}}\;\mathbf{with}\;sender\in{V,v)}$
+corresponds to $\{m_1,m_2,m_3\}$.
     </li>
     <li>
 $\mathtt{blockHeight}{(FB)}$ is defined as the height of the finalised block
@@ -532,12 +529,14 @@ The function $\mathtt{isValidBlock}{(B,B_{parent})}$ is defined to be true if
 and only if block ${B}$ is a valid Ethereum block with parent ${B_{parent}}$.
 For the purpose of this work, we consider that
 $\mathtt{isValidBlock}{(B,B_{parent})}$ only verifies the following fields of
-the standard Ethereum header: parentHash, stateRoot, transactionsRoot,
-receiptsRoot, logsBloom, number, gasLimit, gasUsed. These fields are verified as
-specified in [7]. The IBFT protocol implementation [5] actually verifies also
-the other fields but in a different way than specified in [7]. We do not
-describe how these fields are verified as this is out of the scope of this work
-and does not affect our results.
+the standard Ethereum header: <code>parentHash</code>, <code>stateRoot</code>,
+<code>transactionsRoot</code>, <code>receiptsRoot</code>,
+<code>logsBloom</code>, <code>number</code>, <code>gasLimit</code>, and
+<code>gasUsed</code>. These fields are verified as specified in [7]. The IBFT
+protocol implementation [5] actually verifies also the other fields but in a
+different way than specified in [7]. We do not describe how these fields are
+verified as this is out of the scope of this work and does not affect our
+results.
     </li>
   </ul>
 
@@ -545,24 +544,15 @@ and does not affect our results.
 The pseudocode in Algorithm 3 introduces the following macros and functions:
   </p>
 
-  <ul>
-    <li>
-${n}_{h,v}$ is the number of validators for the ${h}$-th instance of the
+- $n_{h,v}$ is the number of validators for the ${h}$-th instance of the
 IBFT-block-finalization-protocol for validator ${v}$.
-    </li>
-    <li>
-$\mathtt{validators}_{h,v}$ is the validators for the ${h}$-th instance of the
-IBFT-block-finalization-protocol for validator ${v}$.
-    </li>
-    <li>
-$\mathtt{proposer}_{h,v}{(r_{h,v})}$ is the proposer for round ${r_{h,v}}$ of the
-${h}$-th instance of the IBFT-block-finalization-protocol for validator ${v}$.
-    </li>
-    <li>
-$\mathtt{createNewProposedBlock}{(h, v)}$ represents the creation of a new block with height ${h}$ by validator ${v}$.
-    </li>
-    <li>
-$\mathtt{timeoutForRoundZero}$ represents the round timer duration for round 0.
+- $\mathtt{validators}_{h,v}$ is the validators for the $h$-th instance of the
+IBFT-block-finalization-protocol for validator $v$.
+- $\mathtt{proposer}_{h,v}{(r_{h,v})}$ is the proposer for round ${r_{h,v}}$ of
+the $h$-th instance of the IBFT-block-finalization-protocol for validator $v$.
+- $\mathtt{createNewProposedBlock}{(h, v)}$ represents the creation of a new
+block with height $h$ by validator $v$.
+- $\mathtt{timeoutForRoundZero}$ represents the round timer duration for round 0.
 This is intended to be a parameter settable by the user.
     </li>
   </ul>
