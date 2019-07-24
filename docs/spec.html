@@ -530,49 +530,6 @@ If <code>latestProposedBlock</code> is not <code>nil</code>, then the digest of
 
     </section>
 
-    <section id="sec-new-round-message">
-
-    <h3>New Round Message</h3>
-
-A <dfn data-lt="new round messages">New Round message</dfn> MUST be sent
-by a <a>validator</a> when ...
-  
-**Message content**
-
-The New Round message contains the following fields:
-
-  - <code>0x04</code> DATA, x? bytes – The message ID for the New Round
-message type.
-  - <code>payload</code> – An array of one or more of the following:
-  
-    - <code>height</code> QUANTITY, 8 bytes – The <a>height</a> of the block for
-which the <a>validator</a> is trying to reach agreement, as an integer.
-    - <code>round</code> QUANTITY, 4 bytes – The <a>round</a> number for which
-the <a>validator</a> has received <em>enough</em> <a>Round Change messages</a>
-to justify moving to that round, as an integer.
-    - <code>roundChangeCertificate</code> DATA – See below.
-    - <code>proposal</code>
-	  
-  - <code>signature</code> DATA, 65 bytes – The <a>signature</a> of the
-concatenation of the message ID and the payload.
-  - <code>proposedBlock</code> DATA - The content of proposed block for round
-<code>round</code>, in Ethereum block format.
-
-The <code>roundChangeCertificate</code> is an array of the signed portions of
-<a>Round Change messages</a>, each consisting of: 
-
-  - <code>roundChange</code> – The <a>Round Change message</a>, consisting of:
-
-    - <code>height</code> QUANTITY, 8 bytes - The <a>height</a> of the block for
-which the <a>validator</a> is trying to reach agreement, as an integer.
-    - <code>round</code> The <a>round</a> number to which the <a>validator</a>
-intends to move to, as an integer.
-    - <code>preparedCertificate</code> DATA.
-  - <code>signature</code> DATA, 65 bytes - The signature of the concatenation
-of the message ID and the payload.
-
-    </section>
-
   </section>
 
   <section id="sec-block-header-modifications">
