@@ -406,8 +406,8 @@ $\langle{m}\rangle_{\sigma_v}$ to denote a message $m$ signed by <a>validator</a
 This section defines the structures of the BFT sub-protocol messages
 communicated between Ethereum nodes.
 
-All messages MUST be encoded using RLP encoding serialisation as specified in
-[https://github.com/ethereum/wiki/wiki/RLP].
+All messages MUST be encoded using Recursive Length Prefix (RLP) encoding
+serialisation, as specified in [[RLP]].
 
 For any type of message, the <dfn>signature</dfn> corresponds to the hash over the message
 using the <a>validator</a> private key:
@@ -1457,6 +1457,11 @@ var respecConfig = {
       title: "Correctness Analysis of IBFT",
       href: "https://arxiv.org/abs/1901.07160",
       publisher: "Roberto Saltini"
+    },
+    "RLP": {
+      title: "Ethereum RLP",
+      href: "https://github.com/ethereum/wiki/wiki/RLP",
+      publisher: "Ethereum Foundation"
     },
     "Ethereum-Yellow-Paper": {
       title: "Ethereum: A Secure Decentralized Generalized Transaction Ledger",
