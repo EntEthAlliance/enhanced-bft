@@ -34,8 +34,8 @@ This document, the IBFT 2.0 Consensus Algorithm Specification, describes a
 protocol.
 
 The Instanbul Byzantine Fault Tolerant (IBFT) 2.0 protocol builds on the IBFT
-blockchain consensus protocol [11, 14], retaining all of its original features,
-plus addresses safety and liveness limitations described in a previous work [15]. 
+blockchain consensus protocol ([[IBFT]] and [[Quorum]]), retaining all of its original features,
+plus addresses safety and liveness limitations described in a previous work [[IBFT_FAnalysis]]. 
 
 </section>
 
@@ -61,10 +61,10 @@ capabilities of <a>Ethereum smart contracts</a>. The protocol:
 - Features a <a>dynamic validator set</a>.
 
 The protocol is based on the IBFT protocol that was developed in early 2017 by
-AMIS Technologies [11], which was then fully implemented in Quorum [14] in
+AMIS Technologies [[IBFT]], which was then fully implemented in Quorum [14] in
 November 2017. The IBFT protocol features all of the properties of the IBFT 2.0
 protocol mentioned above, except for robustness in eventually synchronous
-networks, as identified by Saltini [15]. The IBFT 2.0 protocol addresses this
+networks, as identified by Saltini [[IBFT-Analysis]]. The IBFT 2.0 protocol addresses this
 robustness issue of the IBFT protocol, while maintaining all of its original
 properties.
 
@@ -269,7 +269,7 @@ The model with the weakest assumptions is the asynchronous network model, follow
 by the partially synchronous network model and then the synchronous network
 model, in this order. Between the two definitions of partial synchronous
 networks, eventual synchrony is the one with the weaker assumptions. As proved
-by Fischer et al. [2] in 1985, no consensus protocol that aims to tolerate at
+by Fischer et al. [[One-Faulty-Process]] in 1985, no consensus protocol that aims to tolerate at
 least one fail-stop participant is guaranteed to terminate in the model with the
 weakest assumptions (asynchronous network model). This means that the liveness
 property introduced above would be impaired in this model. There exist solutions
@@ -291,9 +291,9 @@ allows participants to add and remove <a>validators</a> by a voting mechanism.
 
   <h2>Limitations in IBFT Addressed by IBFT 2.0</h2>
 
-As stated previously, the IBFT 2.0 protocol builds on the IBFT protocol [11, 14]
-and addresses the following limitations of the IBFT protocol, as described by
-Saltini [15]:
+As stated previously, the IBFT 2.0 protocol builds on the IBFT protocol
+([[IBFT]] and [[Quorum]]) and addresses the following limitations of the IBFT
+protocol, as described by Saltini [[IBFT_Analysis]]:
 
   <ul>
     <li>
@@ -331,7 +331,7 @@ no new transactions can be added to the distributed ledger.
   <h2>System Model Properties</h2>
 
 The system model considered for the IBFT 2.0 protocol is the same as that
-considered in the analysis of the IBFT protocol [15]. For convenience, these
+considered in the analysis of the IBFT protocol [[IBFT_Analysis]]. For convenience, these
 properties are restated here.
 
   <dl>
@@ -350,7 +350,7 @@ Network model
     <dd>
 The IBFT 2.0 protocol relies on the Ethereum DEVp2p protocol for delivering all
 protocol messages. We model the gossip network as an eventually synchronous
-network, as defined in Dwork et al. [5], where there exists a point in time,
+network, as defined in Dwork et al. [[Partial-Synchrony]], where there exists a point in time,
 called <dfn data-lt="gst">global stabilisation time</dfn> (GST), after which the
 message delay is bounded by a constant, $\Delta$. Before GST there is no bound
 on the message delay and we admit messages being lost.
@@ -363,7 +363,7 @@ We consider a Byzantine failure mode system, where Byzantine nodes can behave
 arbitrarily. In contrast, honest nodes never diverge from the protocol
 definition. We denote the maximum number of Byzantine nodes that an eventually
 synchronous network of $n$ nodes participating in the consensus protocol can
-tolerate as $f(n)$. As proved in Dwork et al. [5], the relationship between the
+tolerate as $f(n)$. As proved in Dwork et al. [[Partial-Synchrony]], the relationship between the
 total number of nodes, $n$, and the maximum number of Byzantine nodes can be
 expressed as: $$f(n)\equiv\lfloor\frac{n-1}{3}\rfloor$$
     </dd>
@@ -371,8 +371,8 @@ expressed as: $$f(n)\equiv\lfloor\frac{n-1}{3}\rfloor$$
 Cryptographic primitives
     </dt>
     <dd>
-The IBFT 2.0 protocol uses the Keccak hash function variant, as per the Ethereum
-Yellow Paper [16], to produce block <dfn data-lt="digest">digests</dfn>. We assume that the Keccak hash
+The IBFT 2.0 protocol uses the Keccak hash function variant, as per the
+[[Ethereum-Yellow-Paper]], to produce block <dfn data-lt="digest">digests</dfn>. We assume that the Keccak hash
 function is collision-resistant.
 
 The IBFT 2.0 protocol relies on the Elliptic Curve Digital Signature (ECDS)
@@ -625,11 +625,11 @@ starting from the next block and all of the votes targeting this <a>validator</a
 discarded. This document does not describe this algorithm, but it might be added
 in a future revision.
 
-    <section id="document-convensions">
+    <section id="algorithm-convensions">
 
-    <h3>Document Conventions</h3>
+    <h3>Algorithm Conventions</h3>
 
-The IBFT 2.0 protocol is described in Sections
+The IBFT 2.0 protocol algorithms are textually described in Sections
 <a href="#starting-stopping-ibft2-protocol"></a> and
 <a href="#ibft2-block-finalization-protocol"></a>, and by the pseudocode in
 Section <a href="#algorithm-pseudocode"></a>. The following
@@ -788,9 +788,9 @@ gasUsed.
       </li>
     </ul>
 
-These fields are verified as specified in [16]. The IBFT 2.0 and IBFT protocol
+These fields are verified as specified in [[Ethereum]]. The IBFT 2.0 and IBFT protocol
 implementations also verify the other fields but in a different way than
-specified in [16]. How these fields are verified is outside of the scope of this
+specified in [[Ethereum]]. How these fields are verified is outside of the scope of this
 document, but it does not affect our results. These details will be discussed in
 a future document describing the implementation details of the IBFT 2.0
 protocol.
@@ -812,11 +812,11 @@ Finalised blocks are delivered to nodes using the standard ETH DEVp2p
 sub-protocol. In the pseudocode we abstract the actual Ethereum sub-protocol and
 model the reception of a finalised block $FB$ with the reception of a 
 <span style="color:darkred">$\langle\mathsf{FINALISED-BLOCK},FB\rangle$</span>
-message. No such message actually exists in the IBFT 2.0 protocol [13]
+message. No such message actually exists in the IBFT 2.0 protocol [[Pantheon]]
 implementatoin. As per the standard Ethereum sub-protocol, a block can be
 received either using an unsolicited NewBlock message or using the pair of
 messages GetBlockHeaders/BlockHeaders followed by the pair of messages
-GetBlockBodies/BlockBodies [7].
+GetBlockBodies/BlockBodies [[[Ethereum-Wire-Protocol]]].
 
 As described by the $\mathbf{upon}$ block at line 10, when a new finalised block
 is received by a node $v$, $v$ executes the following operations:
@@ -861,7 +861,7 @@ IBFT-2.0-block-finalisation-protocol. That is, $n\equiv\mathbf{n}(chain_v[0:h-1]
 the Ethereum block and the round number included in the finalisation proof.
 
 Compared to IBFT, the IBFT 2.0 protocol adds the $\mathbf{upon}$ block at line
-19 to address the <a>persistence</a> issue identified in Lemma 6 of [15]. All of
+19 to address the <a>persistence</a> issue identified in Lemma 6 of [[IBFT_Analysis]]. All of
 the IBFT 2.0-specific messages (that is, the Proposal, Prepare, Commit, and
 Round-Change messages) include the height of the
 IBFT-2.0-block-finalisation-protocol instance that they relate to.
@@ -897,12 +897,12 @@ Algorithm 2 in Section <a href="#algorithm-pseudocode"></a>.
 
   <p class="note">
 Significant portions of the IBFT-2.0-block-finalisation-protocol are similar to
-the IBFT-block-finalisation-protocol presented in Section 3 of [15], but for
+the IBFT-block-finalisation-protocol presented in Section 3 of [[IBFT_Analysis]], but for
 completeness sake, this section describes the full
 IBFT-2.0-block-finalisation-protocol. However, for those portions of the
 IBFT-2.0-block-finalisation-protocol that are identical or very similar to the
 IBFT-block-finalisation-protocol, the description is taken almost verbatim from
-[15].
+[[IBFT_Analysis]].
   </p>
 
 As with the IBFT-block-finalisation-protocol, the
@@ -931,27 +931,27 @@ $h$-th instance of the IBFT-2.0-block-finalisation-protocol for <a>validator</a>
 
 These macros are used both in the pseudocode and in this section to simplify the
 notation when describing the $h$-th instance of the
-IBFT-2.0-block-finalisation-protocol for <a>validator</a> $v$. The term
-<em>non-proposing <a>validators</a> for round r and instance h</em> is used to indicate
+IBFT-2.0-block-finalisation-protocol for <a>validator</a> $v$. The term,
+<em>non-proposing <a>validators</a> for round r and instance h</em>, is used to indicate
 all of the <a>validators</a> for round $r$ and instance $h$ with the exclusion of the
 proposer for round $r$ and instance $h$.
 
 For the purpose of this document, we do not define the proposer selection
-function, but state that it ensures that all of the <a>validators</a> for the $h$-th
+function, but state that it ensures all of the <a>validators</a> for the $h$-th
 instance of the IBFT-2.0-block-finalisation-protocol are selected for any
 sequence of $n_{h,v}$ consecutive rounds. The IBFT 2.0 protocol retains the IBFT
 protocol capability to specify two alternative logics for selecting the proposer
 for round 0:
 
-- Sticky proposer. The proposer for round 0 corresponds to the proposer of the
+- Sticky proposer, where the proposer for round 0 corresponds to the proposer of
+the block included in the previous finalised block.
+- Round-robin proposer, where the proposer for round 0 corresponds to the
+proposer of the proposer selection sequence that comes after the proposer of the
 block included in the previous finalised block.
-- Round-robin proposer. The proposer for round 0 corresponds to the proposer of
-the proposer selection sequence that comes after the proposer of the block
-included in the previous finalised block.
 
 Compared to IBFT, IBFT 2.0 has no block locking mechanism. The safety of the
 protocol is guaranteed by the round change protocol discussed below, which is
-based on the view change protocol of PBFT [3].
+based on the view change protocol of PBFT [[PBFT]].
 
 As specified by the initialisation block (line 9), if $v$ is the selected block
 proposer for the first round, that is, round 0, then $v$ multicasts a Proposal
@@ -1076,14 +1076,155 @@ message for the new round to all <a>validators</a> (including itself). Note that
 the Round-Change message includes the latest Prepared-Certificate and the
 proposed block associated with the latest Prepared Certificate.
 
-The $\mathbf{upon}$ block at line 55 describes under which conditions a Proposal message for a new round is multicast
-and how the Proposal message is assembled. Specifically, the $\mathbf{upon}$
-block is executed only if $v$ has received at least $Quorum(n_{h,v})$
-Round-Change message for the current IBFT-2.0-block-finalisation-protocol
-instance such that:
+The $\mathbf{upon}$ block at line 55 describes under which conditions a Proposal
+message for a new round is multicast and how the Proposal message is assembled.
+Specifically, the $\mathbf{upon}$ block is executed only if $v$ has received at
+least $Quorum(n_{h,v})$ Round-Change messages for the current
+IBFT-2.0-block-finalisation-protocol instance such that:
 
+  <ul>
+    <li>
+All messages are for the same round number $r_{rc}$ and $r_{rc}$ is higher than
+the current round.
+    </li>
+    <li>
+All messages are sent by distinct <a>validators</a> for the current instance of
+the IBFT-2.0-block-finalisation-protocol.
+    </li>
+    <li>
+All messages contain a valid Prepared-Certificate. A Prepared-Certificate is
+considered valid either if it is empty ($\bot$) or if it contains one Proposal
+message and at least $Quorum(n_{h,v}) - 1$ Prepare messages for the same round
+$r'$ such that:
+    <ul>
+      <li>
+$r'\lt$ than the the round number of the Round-Change messages, $r_{rc}$.
+      </li>
+      <li>
+The Proposal message is signed by the selected proposer for round $r'$.
+      </li>
+      <li>
+The Prepare messages are sent by non-proposing validators for the $h$-th
+instance of the IBFT-2.0-block-finalisation-protocol and round $r'$ and they are
+all for the current instance $h$ of the IBFT-2.0-block-finalisation-protocol,
+round $r'$ and same hash as the one included in the Proposal message.
+      </li>
+    </ul>
+    </li>
+    <li>
+The Keccak hash of the $proposedBlock$ included in each of the Round-Change
+messages considered matches the hash included in the Proposal and Prepare
+message of the Prepared-Certificate.
+    </li>
+  </ul>
 
+Any set meeting these conditions is a valid Round-Change-Certificate for round
+$r'$ where round $r'$ is the round included in all of the Round-Change messages
+included in the Round-Change-Certificate. When all of the conditions listed
+above are met, then:
 
+  <ul>
+    <li>
+$v$ moves to the round number included in one of the Round-Change-Certificates
+with the highest round number, lets $RCC$ be the chosen Round-Change-Certificate
+and lets $r_h$ be the round number of $RCC$.
+    </li>
+    <li>
+If $v$ was not already in $r_h$, then $v$ starts the round timer for round $r_h$.
+    </li>
+    <li>
+If $v$ is the selected proposer for round $r_h$, $v$ sends a Proposal message
+for the new round including the selected Round-Change-Certificate ($RCC$) and a
+proposed block calculated as follows:
+    <ul>
+      <li>
+If all of the Prepared-Certificates included in the Round-Change message are
+empty, that is $=\bot$, then the proposed block must be a tuple including any
+valid Ethereum block for height $h$ and the current round number, which must
+match the round number of the Proposal message.
+      </li>
+      <li>
+Otherwise, the Ethereum block included in the tuple constituting the proposed
+block must match the proposed block received as part of one of the Round-Change
+messages including a Prepared-Certificate for the highest round amongst the
+rounds of all the other Prepared-Certificates included in the
+Round-Change-Certificate.
+      </li>
+    </ul>
+    </li>
+  </ul>
+
+As specified by the $\mathbf{upon}$ block at line 71, a Proposal message
+$\langle\langle\mathsf{PROPOSAL},h,r_{pp},H\rangle_{\sigma_{sender}},PB;RCC\rangle$
+for a round higher than 0 is accepted only if all of the following conditions
+are met:
+
+  <ul>
+    <li>
+$v$ is currently running the IBFT-2.0-block-finalisation-protocol instance
+$h_{pp}$. That is, $h_{pp}=h$.
+    </li>
+    <li>
+The round number $r_{pp}$ of the Proposal message is either higher than the
+current round or equal to the current round provided that $v$ has not accepted
+any Proposal message for the current round. That is, $acceptedPB = \bot$.
+    </li>
+    <li>
+$H$ corresponds to the Keccak hash of the proposed block $PB$.
+    </li>
+    <li>
+The signed portion of the message is signed by the selected proposer for round
+$r_{pp}$ and instance $h$ of the IBFT-2.0-block-finalisation-protocol.
+    </li>
+    <li>
+The Round-Change-Certificate $RCC$ includes at least $Quorum(n_{h,v})$
+Round-Change messages for round $r_pp$ and height $h$.
+    </li>
+    <li>
+If each of the Round-Change messages included in the Round-Change-Certificate
+$RCC$ includes either an invalid Prepared-Certificate or an empty
+Prepared-Certificate, then the:
+    <ul>
+      <li>
+Ethereum block $EB$ included in the proposed block $PB$ must be a valid block
+for height $h$.
+      </li>
+      <li>
+Round number $r_{EB}$ included in the prepared block $PB$ must match the current
+round number. That is, $r_{h,v} = r_{EB}$.
+      </li>
+    </ul>
+    </li>
+    <li>
+Otherwise, the Keccak hash of the tuple composed of the Ethereum block included
+in $PB$ and the highest round number of all Prepared-Certificated included in
+$RCC$ must match the hash included in any of the messages that are part of the
+Prepared-Certificates with the highest round number amongst all of the
+Prepared-Certificates included in the Round-Change-Certificate $RCC$.
+    </li>
+  </ul>
+
+The effect of accepting a Proposal message for a round $r_{pp} \gt 0$ is
+essentially the same as accepting the Proposal message for round 0 with the
+addition of moving to round $r_{pp}$. Specifically, $v$:
+
+  <ul>
+    <li>
+Moves to round $r_{pp}$ and starts the related round timer if $v$ was not
+already in round $r_{pp}$.
+    </li>
+    <li>
+Multicasts a Prepare message
+$\langle\mathsf{PREPARE},h,r_{h,v},H\rangle_{\sigma_v}$ to all validators
+(including itself).
+    </li>
+    <li>
+Sets $acceptedPB_{h,v}$ to the proposed block $PB$ indicating that it
+accepted a Proposal message for $PB$.
+    </li>
+  </ul>
+  
+From here on the protocol proceeds as described above.
 
 
 
@@ -1277,256 +1418,50 @@ var respecConfig = {
     }]
   }],
   localBiblio: {
-    "ABI": {
-      title: "Contract ABI Specification",
-      href: "https://solidity.readthedocs.io/en/develop/abi-spec.html",
-      publisher: "Ethereum Foundation"
+    "PBFT": {
+      title: "Practical Byzantine Fault Tolerance",
+      href: "https://dl.acm.org/citation.cfm?id=296806.296824",
+      publisher: "Miguel Castro and Barbara Liskov"
     },
-    "Byzantine-Fault-Tolerant": {
-      title: "Byzantine Fault Tolerant",
-      href: "https://en.wikipedia.org/wiki/Byzantine_fault_tolerance"
-    },
-    "DEVp2p-Node-Discovery": {
-      title: "Node Discovery Protocol",
-      href: "https://github.com/ethereum/devp2p/blob/master/rlpx.md"
-    },
-    "DEVp2p-Wire-Protocol": {
-      title: "ÐΞVp2p Wire Protocol",
-      href: "https://github.com/ethereum/devp2p/blob/master/caps/eth.md"
-    },
-    "DIF": {
-      title: "Decentralized Identity Foundation",
-      href: "http://identity.foundation/"
-    },
-    "EEA-OC": {
-      title: "EEA Off-Chain Trusted Compute Specification V0.5",
-      href: "http://entethalliance.org/wp-content/uploads/2018/10/EEA_Off_Chain_Trusted_Compute_Specification_V0_5.pdf",
-      publisher: "Enterprise Ethereum Alliance, Inc."
-    },
-    "EEA-extended-opcode-registry": {
-      title: "EEA EVM opcode extensions registry",
-      href: "http://entethalliance.github.io/client-spec/extended-opcodes-registry.html",
-      publisher: "Enterprise Ethereum Alliance, Inc."
-    },
-    "EIP-225": {
-      title: "Clique proof-of-authority consensus protocol",
-      href: "https://eips.ethereum.org/EIPS/eip-225",
-      publisher: "Ethereum Foundation"
-    },
-    "EIP-648": {
-      title: "Easy Parallelizability",
-      href: "https://github.com/ethereum/EIPs/issues/648",
-      publisher: "Ethereum Foundation"
-    },
-    "EIP-650": {
-      title: "Istanbul Byzantine Fault Tolerance",
-      href: "https://github.com/ethereum/EIPs/issues/650",
-      publisher: "Ethereum Foundation"
-    },
-    "EIP-1013": {
-      title: "Hardfork Meta: Constantinople",
-      href: "https://eips.ethereum.org/EIPS/eip-1013",
-      publisher: "Ethereum Foundation"
-    },
-    "EIP-1352": {
-      title: "Specify restricted address range for precompiles/system contracts",
-      href: "https://eips.ethereum.org/EIPS/eip-1352",
-      publisher: "Ethereum Foundation"
-    },
-    "EIPs": {
-      title: "Ethereum Improvement Proposals",
-      href: "https://eips.ethereum.org/",
-      publisher: "Ethereum Foundation"
-    },
-    "enode": {
-      title: "Ethereum enode URL format",
-      href: "https://github.com/ethereum/wiki/wiki/enode-url-format",
-      publisher: "Ethereum Foundation"
-    },
-    "ERC-20": {
-      title: "Ethereum Improvement Proposal 20 - Standard Interface for Tokens",
-      href: "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md",
-      publisher: "Ethereum Foundation"
-    },
-    "ERC-223": {
-      title: "Ethereum Improvement Proposal 223 - Token Standard",
-      href: "https://github.com/ethereum/EIPs/issues/223",
-      publisher: "Ethereum Foundation"
-    },
-    "ERC-621": {
-      title: "Ethereum Improvement Proposal 621 - Token Standard Extension for Increasing & Decreasing Supply",
-      href: "https://github.com/ethereum/EIPs/pull/621",
-      publisher: "Ethereum Foundation"
-    },
-    "ERC-721": {
-      title: "Ethereum Improvement Proposal 721 - Non-fungible Token Standard",
-      href: "https://github.com/ethereum/eips/issues/721",
-      publisher: "Ethereum Foundation"
-    },
-    "ERC-827": {
-      title: "Ethereum Improvement Proposal 827 - Extension to ERC-20",
-      href: "https://github.com/ethereum/EIPs/issues/827",
-      publisher: "Ethereum Foundation"
-    },
-    "Ethereum": {
-      title: "Ethereum Foundation",
-      href: "https://www.ethereum.org/foundation"
-    },
-    "Ethereum-Foundation": {
-      aliasOf: "Ethereum"
+    "Partial-Synchrony": {
+      title: "Consensus in the Presence of Partial Synchrony",
+      href: "https://dl.acm.org/citation.cfm?doid=42282.42283",
+      publisher: "Cynthia Dwork, Nancy Lynch, and Larry Stockmeyer"
     },
     "Ethereum-Wire-Protocol": {
       title: "Ethereum Wire Protocol",
-      href: "https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol"
+      href: "https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol",
+      publisher: "Ethereum Foundation"
+    },
+    "One-Faulty-Process": {
+      title: "Impossibility of Distributed Consensus with One Faulty Process",
+      href: "https://dl.acm.org/citation.cfm?doid=3149.214121",
+      publisher: "Michael J. Fischer, Nancy A. Lynch, and Michael S. Paterson"
+    },
+    "IBFT": {
+      title: "Istanbul Byzantine Fault Tolerance",
+      href: "https://github.com/ethereum/EIPs/issues/650",
+      publisher: "Yu-Te Lin, Ethereum Foundation"
+    },
+    "Pantheon": {
+      title: "Pantheon",
+      href: "https://github.com/PegaSysEng/pantheon",
+      publisher: "PegaSys (ConsenSys)"
+    },
+    "Quorum": {
+      title: "Quorum: A permissioned implementation of Ethereum supporting data privacy",
+      href: "https://github.com/jpmorganchase/quorum",
+      publisher: "JP Morgan Chase"
+    },
+    "IBFT-Analysis": {
+      title: "Correctness Analysis of IBFT",
+      href: "https://arxiv.org/abs/1901.07160",
+      publisher: "Roberto Saltini"
     },
     "Ethereum-Yellow-Paper": {
       title: "Ethereum: A Secure Decentralized Generalized Transaction Ledger",
       href: "https://ethereum.github.io/yellowpaper/paper.pdf",
       publisher: "Dr. Gavin Wood"
-    },
-    "EVM-Opcodes": {
-      title: "Ethereum Virtual Machine (EVM) Opcodes and Instruction Reference",
-      href: "https://github.com/trailofbits/evm-opcodes"
-    },
-    "eWASM": {
-      title: "Ethereum-flavored WebAssembly",
-      href: "https://github.com/ewasm/design"
-    },
-    "GDPR": {
-      title: "European Union General Data Protection Regulation",
-      href: "https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1528874672298&uri=CELEX%3A32016R0679",
-      publisher: "European Union"
-    },
-    "debug-traceTransaction":{
-      title: "debug_traceTransaction",
-      href: "https://github.com/ethereum/go-ethereum/wiki/Management-APIs"
-    },
-	"geth-repo":{
-      title: "Go-Ethereum",
-      href: "https://github.com/ethereum/go-ethereum/"
-    },
-	"implementation-code-in-Golang":{
-      title: "implementation code in Golang",
-      href: "https://github.com/ethereum/go-ethereum/blob/master/core/vm/contracts.go#L50-L360"
-    },
-    "IBFT-2.0": {
-      title: "IBFT 2.0 Specification",
-      href: "https://arxiv.org/abs/1901.07160",
-      publisher: "PegaSys (ConsenSys)"
-    },
-    "JSON-RPC": {
-      title: "JavaScript Object Notation - Remote Procedure Call",
-      href: "http://www.jsonrpc.org/specification",
-      publisher: "JSON-RPC Working Group"
-    },
-    "JSON-RPC-API": {
-      title: "Ethereum JSON-RPC API",
-      href: "https://github.com/ethereum/wiki/wiki/JSON-RPC",
-      publisher: "Ethereum Foundation"
-    },
-    "JSON-RPC-API-v27e37ee": {
-      title: "Ethereum JSON-RPC API",
-      href: "https://github.com/ethereum/wiki/wiki/JSON-RPC/27e37ee31ca29565fd8542ced0814fefc37a94fb",
-      publisher: "Ethereum Foundation"
-    },
-    "JSON-RPC-PUB-SUB": {
-      title: "RPC PUB-SUB",
-      href: "https://github.com/ethereum/go-ethereum/wiki/RPC-PUB-SUB",
-      publisher: "Ethereum Foundation"
-    },
-    "Layer2-Scaling-Solutions": {
-      title: "Making Sense of Ethereum's Layer 2 Scaling Solutions: State Channels, Plasma, and Truebit",
-      href: "https://medium.com/l4-media/making-sense-of-ethereums-layer-2-scaling-solutions-state-channels-plasma-and-truebit-22cb40dcc2f4",
-      publisher: "Josh Stark",
-      date: "February 2018"
-    },
-    "LLL": {
-      title: "LLL Introduction",
-      href: "http://lll-docs.readthedocs.io/en/latest/lll_introduction.html",
-      publisher: "Ben Edgington",
-      date: "2017"
-    },
-    "Nethereum": {
-      title: "Nethereum .NET Integration Library",
-      href: "https://nethereum.com",
-      publisher: "Nethereum Open Source Community"
-    },
-    "Plasma": {
-      title: "Plasma: Scalable Autonomous Smart Contracts",
-      href: "https://plasma.io/plasma.pdf",
-      publisher: "Joseph Poon and Vitalik Buterin",
-      date: "August 2017"
-    },
-    "PoET": {
-      title: "Proof of Elapsed Time 1.0 Specification",
-      href: "https://sawtooth.hyperledger.org/docs/core/releases/1.0/architecture/poet.html#",
-      publisher: "Intel Corporation",
-      date: "2015-2017"
-    },
-    "protocol-buffers": {
-      title: "A language-neutral, platform-neutral extensible mechanism for serializing structured data",
-      href: "https://developers.google.com/protocol-buffers/",
-      publisher: "Google Developers"
-    },
-    "PSD2": {
-      title: "European Union Personal Service Directive",
-      href: "https://ec.europa.eu/info/law/payment-services-psd-2-directive-eu-2015-2366_en",
-      publisher: "European Union"
-    },
-    "RAFT": {
-      title: "Raft-based Consensus for Ethereum/Quorum",
-      href: "https://github.com/jpmorganchase/quorum/blob/master/raft/doc.md",
-      publisher: "J.P. Morgan"
-    },
-    "Remix": {
-      title: "Ethereum Tools for the Web",
-      href: "https://github.com/ethereum/remix",
-      publisher: "Ethereum Foundation"
-    },
-    "RLP": {
-      title: "Recursive Length Prefix",
-      href: "https://github.com/ethereum/wiki/wiki/RLP",
-      publisher: "Ethereum Foundation"
-    },
-    "sharding": {
-      title: "Sharding FAQs",
-      href: "https://github.com/ethereum/wiki/wiki/Sharding-FAQs",
-      publisher: "Ethereum Foundation"
-    },
-    "Solidity": {
-      title: "The Solidity Contract-Oriented Programming Language",
-      href: "https://github.com/ethereum/solidity",
-      publisher: "Ethereum Foundation"
-    },
-    "state-channels": {
-      title: "Counterfactual: Generalized State Channels",
-      href: "https://counterfactual.com/statechannels"
-    },
-    "Truffle": {
-      title: "Ethereum Development Framework",
-      href: "https://truffleframework.com/",
-      publisher: "ConsenSys"
-    },
-    "web3j": {
-      title: "web3j Lightweight Ethereum Java and Android Integration Library",
-      href: "https://web3j.io",
-      publisher: "Conor Svensson"
-    },
-    "web3.js": {
-      title: "Ethereum JavaScript API",
-      href: "https://github.com/ethereum/web3.js",
-      publisher: "Ethereum Foundation"
-    },
-    "Whisper-protocol": {
-      title: "Whisper",
-      href: "https://github.com/ethereum/wiki/wiki/Whisper",
-      publisher: "Ethereum Foundation"
-    },
-    "ZK-STARKS": {
-      title: "Scalable, transparent, and post-quantum secure computational integrity",
-      href: "https://eprint.iacr.org/2018/046.pdf",
-      publisher: "Cryptology ePrint Archive",
-      date: "2018-03-16"
     }
   }
 };
