@@ -35,7 +35,7 @@ protocol.
 
 The Instanbul Byzantine Fault Tolerant (IBFT) 2.0 protocol builds on the IBFT
 blockchain consensus protocol ([[IBFT]] and [[Quorum]]), retaining all of its original features,
-plus addresses safety and liveness limitations described in a previous work [[IBFT_FAnalysis]]. 
+plus addresses safety and liveness limitations described in a previous work [[IBFT-Analysis]]. 
 
 </section>
 
@@ -293,7 +293,7 @@ allows participants to add and remove <a>validators</a> by a voting mechanism.
 
 As stated previously, the IBFT 2.0 protocol builds on the IBFT protocol
 ([[IBFT]] and [[Quorum]]) and addresses the following limitations of the IBFT
-protocol, as described by Saltini [[IBFT_Analysis]]:
+protocol, as described by Saltini [[IBFT-Analysis]]:
 
   <ul>
     <li>
@@ -331,7 +331,7 @@ no new transactions can be added to the distributed ledger.
   <h2>System Model Properties</h2>
 
 The system model considered for the IBFT 2.0 protocol is the same as that
-considered in the analysis of the IBFT protocol [[IBFT_Analysis]]. For convenience, these
+considered in the analysis of the IBFT protocol [[IBFT-Analysis]]. For convenience, these
 properties are restated here.
 
   <dl>
@@ -788,12 +788,12 @@ gasUsed.
       </li>
     </ul>
 
-These fields are verified as specified in [[Ethereum]]. The IBFT 2.0 and IBFT protocol
-implementations also verify the other fields but in a different way than
-specified in [[Ethereum]]. How these fields are verified is outside of the scope of this
-document, but it does not affect our results. These details will be discussed in
-a future document describing the implementation details of the IBFT 2.0
-protocol.
+These fields are verified as specified in the [[Ethereum-Yellow-Paper]]. The
+IBFT 2.0 and IBFT protocol implementations also verify the other fields but in a
+different way than specified in the [[Ethereum-Yellow-Paper]]. How these fields
+are verified is outside of the scope of this document, but it does not affect
+our results. These details will be discussed in a future document describing the
+implementation details of the IBFT 2.0 protocol.
     </li>
   </ul>
   
@@ -861,7 +861,7 @@ IBFT-2.0-block-finalisation-protocol. That is, $n\equiv\mathbf{n}(chain_v[0:h-1]
 the Ethereum block and the round number included in the finalisation proof.
 
 Compared to IBFT, the IBFT 2.0 protocol adds the $\mathbf{upon}$ block at line
-19 to address the <a>persistence</a> issue identified in Lemma 6 of [[IBFT_Analysis]]. All of
+19 to address the <a>persistence</a> issue identified in Lemma 6 of [[IBFT-Analysis]]. All of
 the IBFT 2.0-specific messages (that is, the Proposal, Prepare, Commit, and
 Round-Change messages) include the height of the
 IBFT-2.0-block-finalisation-protocol instance that they relate to.
@@ -897,12 +897,12 @@ Algorithm 2 in Section <a href="#algorithm-pseudocode"></a>.
 
   <p class="note">
 Significant portions of the IBFT-2.0-block-finalisation-protocol are similar to
-the IBFT-block-finalisation-protocol presented in Section 3 of [[IBFT_Analysis]], but for
+the IBFT-block-finalisation-protocol presented in Section 3 of [[IBFT-Analysis]], but for
 completeness sake, this section describes the full
 IBFT-2.0-block-finalisation-protocol. However, for those portions of the
 IBFT-2.0-block-finalisation-protocol that are identical or very similar to the
 IBFT-block-finalisation-protocol, the description is taken almost verbatim from
-[[IBFT_Analysis]].
+[[IBFT-Analysis]].
   </p>
 
 As with the IBFT-block-finalisation-protocol, the
@@ -1235,17 +1235,14 @@ From here on the protocol proceeds as described above.
     <h3>Algorithm Pseudocode</h3>
 
 <figure id="fig-algorithm1">
-  <img src="./images/algorithm1_pseudocode.png" alt="Algorithm 1">
+  <img src="./images/IBFT2_algorithm1.png" alt="Algorithm 1">
+  <figcaption>Starting and Stopping the IBFT 2.0 Protocol (Algorithm 1)</figcaption>
 </figure>
 
 <figure id="fig-algorithm2">
-  <img src="./images/algorithm2_pseudocode.png" alt="Algorithm 2">
+  <img src="./images/IBFT2_algorithm2.png" alt="Algorithm 2">
+  <figcaption>The IBFT 2.0-block-finalization-protocol (Algorithm 2)</figcaption>
 </figure>
-
-<figure id="fig-algorithm3">
-  <img src="./images/algorithm3_pseudocode.png" alt="Algorithm 3">
-</figure>
-
 
     </section>
 
