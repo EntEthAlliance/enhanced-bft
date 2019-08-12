@@ -30,12 +30,13 @@ code {
 <section id='abstract'>
 
 This document, the IBFT 2.0 Consensus Algorithm Specification, describes a
-<a>Proof of Authority</a> (PoA) <a>Byzantine Fault Tolerant</a> (BFT) blockchain consensus
-protocol.
+<a>Proof of Authority</a> (PoA) <a>Byzantine Fault Tolerant</a> (BFT) blockchain
+consensus protocol.
 
-The Instanbul Byzantine Fault Tolerant (IBFT) 2.0 protocol builds on the IBFT
-blockchain consensus protocol ([[IBFT]] and [[Quorum]]), retaining all of its original features,
-plus addresses safety and liveness limitations described in a previous work [[IBFT-Analysis]]. 
+The Istanbul Byzantine Fault Tolerant (IBFT) 2.0 protocol builds on the IBFT
+blockchain consensus protocol ([[IBFT]] and [[Quorum]]), retaining all of its
+original features, plus addresses safety and liveness limitations described in a
+previous work [[IBFT-Analysis]]. 
 
 </section>
 
@@ -52,9 +53,10 @@ This is an editors' draft of the IBFT 2.0 Consensus Algorithm Specification v1.
 
   <h2>Introduction</h2>
 
-The IBFT 2.0 protocol is a <a>Proof of Authority</a> (PoA) <a>Byzantine Fault Tolerant</a> (BFT)
-blockchain consensus protocol enabling consortium networks to leverage on the
-capabilities of <a>Ethereum smart contracts</a>. The protocol:
+The IBFT 2.0 protocol is a <a>Proof of Authority</a> (PoA)
+<a>Byzantine Fault Tolerant</a> (BFT) blockchain consensus protocol enabling
+consortium networks to leverage on the capabilities of
+<a>Ethereum smart contracts</a>. The protocol:
 
 - Ensures <a>immediate finality</a>.
 - Is <a>robust</a> in an <a>eventually synchronous network</a> model.
@@ -64,9 +66,9 @@ The protocol is based on the IBFT protocol that was developed in early 2017 by
 AMIS Technologies [[IBFT]], which was then fully implemented in Quorum [14] in
 November 2017. The IBFT protocol features all of the properties of the IBFT 2.0
 protocol mentioned above, except for robustness in eventually synchronous
-networks, as identified by Saltini [[IBFT-Analysis]]. The IBFT 2.0 protocol addresses this
-robustness issue of the IBFT protocol, while maintaining all of its original
-properties.
+networks, as identified by Saltini [[IBFT-Analysis]]. The IBFT 2.0 protocol
+addresses this <a>robustness</a> issue of the IBFT protocol, while maintaining
+all of its original properties.
 
   </section>
 
@@ -128,8 +130,8 @@ metrics that are heavily influenced by consensus protocols are:
 <dfn>Throughput</dfn>. For example, the number of transactions per second.
         </li>
         <li>
-<dfn>Latency</dfn>. That is, time taken from when a transaction is submitted to the system
-to when the transaction is included in a block.
+<dfn>Latency</dfn>. That is, time taken from when a transaction is submitted to
+the system to when the transaction is included in a block.
         </li>
         <li>
 <a>Robustness</a>. That is, what type of attacks the protocol can withstand.
@@ -155,9 +157,9 @@ Byzantine fault tolerant, or BFT, specifies the type of participant fault mode
 that the consensus protocol can cope with. Specifically, BFT identifies a class
 of consensus protocols that ensure blockchain consistency despite some of the
 participants, referred to as Byzantine, being malicious and acting arbitrarily.
-The term <dfn>Byzantine</dfn> is used to identify malicious nodes, and dates back
-to the paper "The Byzantine Generals Problem" by Lamport et al. The Byzantine
-failure mode is the strongest failure mode considered in the consensus protocol
+The term <dfn>Byzantine</dfn> is used to identify malicious nodes, and dates
+back to the "The [[Byzantine-Generals-Problem]]" paper. The Byzantine failure
+mode is the strongest failure mode considered in the consensus protocol
 literature. Another common, but weaker, failure mode is fail-stop failure mode,
 which only considers participants that stop communicating, but never acting
 maliciously.
@@ -174,13 +176,13 @@ the related public key, which can be done in a matter of seconds on any modern
 personal computer.<br>
 
 One of the most widely used and famous techniques for preventing Sybil attacks
-is Proof of Work (PoW), which wasoriginally pioneered by Dwork et al., and
+is Proof of Work ([[PoW]]), which was originally pioneered by Dwork et al., and
 gained subsequent publicity by its employment in Bitcoin. PoW requires
 participants to spend computing effort in solving a hard cryptographic puzzle
 before being able to propose a block to be added to the blockchain.
 
-<dfn data-lt="pos">Proof of Stake</dfn> (PoS) is another well known technique where the right to propose
-new blocks is given by the amount of stake owned.
+<dfn data-lt="pos">Proof of Stake</dfn> (PoS) is another well known technique
+where the right to propose new blocks is given by the amount of stake owned.
 
 In contrast, PoA prevents Sybil attacks by conferring the right to create new
 blocks only to a defined set of identities.
@@ -196,7 +198,7 @@ protocol.<br>
 
 PoA type consensus protocols, like IBFT 2.0, are well suited to this type of
 permissioning. While not every participant can propose new blocks, some
-consoritum blockchains allow any valid blockchain identity to read data from the
+consortium blockchains allow any valid blockchain identity to read data from the
 blockchain. IBFT 2.0 also allows for this type of configuration.
     </dd>
 
@@ -221,23 +223,23 @@ this does not necessarily happen at every block.
 
     <dt>Robust in an eventually synchronous network</dt>
     <dd>
-<dfn data-lt="robust">Robustness</dfn> refers to two important properties that any blockchain
-consensus protocol must provide:
+<dfn data-lt="robust">Robustness</dfn> refers to two important properties that
+any blockchain consensus protocol must provide:
       <ul>
         <li>
 <dfn>Persistence</dfn>, which ensures consistency of the blockchain amongst all
 participants.
         </li>
         <li>
-<dfn>Liveness</dfn>, which ensures that transactions submitted to participants will
-eventually be included in the blockchain.
+<dfn>Liveness</dfn>, which ensures that transactions submitted to participants
+will eventually be included in the blockchain.
         </ul>
       </ul>
 
-An <dfn>eventually synchronous network</dfn> identifies a network model under which
-robustness of the protocol can be assured. In literature, there are three main
-network models that were considered, which differ on the assumptions made on
-transmission latency:
+An <dfn>eventually synchronous network</dfn> identifies a network model under
+which <a>robustness</a> of the protocol can be assured. In literature, there are
+three main network models that were considered, which differ on the assumptions
+made on transmission latency:
       <ul>
         <li>
 Synchronous networks. The maximum latency (the time required for a message to
@@ -265,18 +267,18 @@ finite and constant value.
         </li>
       </ul>
 
-The model with the weakest assumptions is the asynchronous network model, followed
-by the partially synchronous network model and then the synchronous network
-model, in this order. Between the two definitions of partial synchronous
+The model with the weakest assumptions is the asynchronous network model,
+followed by the partially synchronous network model and then the synchronous
+network model, in this order. Between the two definitions of partial synchronous
 networks, eventual synchrony is the one with the weaker assumptions. As proved
-by Fischer et al. [[One-Faulty-Process]] in 1985, no consensus protocol that aims to tolerate at
-least one fail-stop participant is guaranteed to terminate in the model with the
-weakest assumptions (asynchronous network model). This means that the liveness
-property introduced above would be impaired in this model. There exist solutions
-that operate in the asynchronous network model, but the termination is only
-guaranteed probabilistically. The IBFT 2.0 protocol is therefore robust in
-the network model with the weakest assumptions coming after the asynchronous
-network model.
+by Fischer et al. [[One-Faulty-Process]] in 1985, no consensus protocol that
+aims to tolerate at least one fail-stop participant is guaranteed to terminate
+in the model with the weakest assumptions (asynchronous network model). This
+means that the <a>liveness</a> property introduced above would be impaired in
+this model. There exist solutions that operate in the asynchronous network
+model, but the termination is only guaranteed probabilistically. The IBFT 2.0
+protocol is therefore <a>robust</a> in the network model with the weakest
+assumptions coming after the asynchronous network model.
     </dd>
 
     <dt><dfn>Dynamic validator set</dfn></dt>
@@ -306,26 +308,26 @@ protocol, as described by Saltini [[IBFT-Analysis]]:
 <a>Persistence</a> is not guaranteed, such that:
     <ul>
       <li>
-One Byzantine <a>validator</a> is potentially able to remove a transaction or change
-the position of a finalized transaction.
+One Byzantine <a>validator</a> is potentially able to remove a transaction or
+change the position of a finalized transaction.
       </li>
       <li>
-In a network of six <a>validators</a>, even if all <a>validators</a> are honest, a network
-partitioning can cause the blockchains maintained by two sets of three
-<a>validators</a> each to diverge. After the partitioning is resolved, <a>validators</a> have
-to choose one chain, which means removing or reordering transactions of the
-other chain.
+In a network of six <a>validators</a>, even if all <a>validators</a> are honest,
+a network partitioning can cause the blockchains maintained by two sets of three
+<a>validators</a> each to diverge. After the partitioning is resolved,
+<a>validators</a> have to choose one chain, which means removing or reordering
+transactions of the other chain.
       </li>
       <li>
 The IBFT protocol does not guarantee that a transaction added to the local
-blockchain of one <a>validator</a> is eventually added to the local blockchain of all
-other nodes.
+blockchain of one <a>validator</a> is eventually added to the local blockchain
+of all other nodes.
       </li>
     </ul>
     </li>
     <li>
 <a>Liveness</a> is not guaranteed. Specifically, the IBFT protocol might reach a
-state where no new blocks can be added to any local blockchain,which means that
+state where no new blocks can be added to any local blockchain, which means that
 no new transactions can be added to the distributed ledger.
     </li>
   </ul>
@@ -337,8 +339,8 @@ no new transactions can be added to the distributed ledger.
   <h2>System Model Properties</h2>
 
 The system model considered for the IBFT 2.0 protocol is the same as that
-considered in the analysis of the IBFT protocol [[IBFT-Analysis]]. For convenience, these
-properties are restated here.
+considered in the analysis of the IBFT protocol [[IBFT-Analysis]]. For
+convenience, these properties are restated here.
 
   <dl>
     <dt>
@@ -356,10 +358,10 @@ Network model
     <dd>
 The IBFT 2.0 protocol relies on the Ethereum DEVp2p protocol for delivering all
 protocol messages. We model the gossip network as an eventually synchronous
-network, as defined in Dwork et al. [[Partial-Synchrony]], where there exists a point in time,
-called <dfn data-lt="gst">global stabilisation time</dfn> (GST), after which the
-message delay is bounded by a constant, $\Delta$. Before GST there is no bound
-on the message delay and we admit messages being lost.
+network, as defined in Dwork et al. [[Partial-Synchrony]], where there exists a
+point in time, called <dfn data-lt="gst">global stabilisation time</dfn> (GST),
+after which the message delay is bounded by a constant, $\Delta$. Before GST
+there is no bound on the message delay and we admit messages being lost.
     </dd>
     <dt>
 Failure model
@@ -369,17 +371,17 @@ We consider a Byzantine failure mode system, where Byzantine nodes can behave
 arbitrarily. In contrast, honest nodes never diverge from the protocol
 definition. We denote the maximum number of Byzantine nodes that an eventually
 synchronous network of $n$ nodes participating in the consensus protocol can
-tolerate as $f(n)$. As proved in Dwork et al. [[Partial-Synchrony]], the relationship between the
-total number of nodes, $n$, and the maximum number of Byzantine nodes can be
-expressed as: $$f(n)\equiv\lfloor\frac{n-1}{3}\rfloor$$
+tolerate as $f(n)$. As proved in Dwork et al. [[Partial-Synchrony]], the
+relationship between the total number of nodes, $n$, and the maximum number of
+Byzantine nodes can be expressed as: $$f(n)\equiv\lfloor\frac{n-1}{3}\rfloor$$
     </dd>
     <dt>
 Cryptographic primitives
     </dt>
     <dd>
 The IBFT 2.0 protocol uses the Keccak hash function variant, as per the
-[[Ethereum-Yellow-Paper]], to produce block <dfn data-lt="digest">digests</dfn>. We assume that the Keccak hash
-function is collision-resistant.
+[[Ethereum-Yellow-Paper]], to produce block <dfn data-lt="digest">digests</dfn>.
+We assume that the Keccak hash function is collision-resistant.
 
 The IBFT 2.0 protocol relies on the Elliptic Curve Digital Signature (ECDS)
 scheme already used in the Ethereum protocol to sign transactions. We assume
@@ -393,7 +395,8 @@ distinct messages have a high probability of being different.
       <li>
 <dfn>Unforgeability</dfn>, which ensures that Byzantine nodes, even if they
 collude, cannot forge digital signatures produced by honest nodes. We use
-$\langle{m}\rangle_{\sigma_v}$ to denote a message $m$ signed by <a>validator</a> $v$.
+$\langle{m}\rangle_{\sigma_v}$ to denote a message $m$ signed by
+<a>validator</a> $v$.
       </li>
     </ul>
     </dd>
@@ -405,7 +408,7 @@ $\langle{m}\rangle_{\sigma_v}$ to denote a message $m$ signed by <a>validator</a
 
 
 
-  <section id="sec-message-structures">
+  <section id="message-structures">
 
   <h2>Message Structures</h2>
 
@@ -413,21 +416,21 @@ This section defines the structures of the BFT sub-protocol messages
 communicated between Ethereum nodes.
 
 All messages MUST be encoded using Recursive Length Prefix (RLP) encoding
-serialisation, as specified in [[RLP]].
+serialization, as specified in [[RLP]].
 
-For any type of message, the <dfn>signature</dfn> corresponds to the hash over the message
-using the <a>validator</a> private key:
+For any type of message, the <dfn>signature</dfn> corresponds to the hash over
+the message using the <a>validator</a> private key:
 
 <code>hashForMessageSignature(message) = KEC(concatenate(message.ID, RLP(message.payload)))</code>
 
 
-    <section id="sec-proposal-message">
+    <section id="proposal-message">
 
     <h3>Proposal Message</h3>
 
 The block <a>proposer</a> MUST send the
-<dfn data-lt="proposal messages|proposal|proposals">Proposal message</dfn> to all other
-<a>validators</a> at the beginning of any round.
+<dfn data-lt="proposal messages|proposal|proposals">Proposal message</dfn> to
+all other <a>validators</a> at the beginning of any round.
 
 **Message content**
 
@@ -449,7 +452,7 @@ block format.
 
     </section>
 
-    <section id="sec-prepare-message">
+    <section id="prepare-message">
 
     <h3>Prepare Message</h3>
 
@@ -475,13 +478,14 @@ block?
 
     </section>
 
-    <section id="sec-commit-message">
+    <section id="commit-message">
 
     <h3>Commit Message</h3>
 
 The <dfn data-lt="commit messages">Commit message</dfn> MUST be sent by a
 <a>validator</a> when <em>enough</em> <a>Prepare messages</a> matching the
-<a>Proposal</a> sent by the designated <a>proposer</a> of the round are received.
+<a>Proposal</a> sent by the designated <a>proposer</a> of the round are
+received.
   
 **Message content**
 
@@ -504,7 +508,7 @@ received by the designated proposer of the round.
 
     </section>
 
-    <section id="sec-round-change-message">
+    <section id="round-change-message">
 
     <h3>Round Change Message</h3>
 
@@ -571,65 +575,68 @@ the number of parent links separating the block from the genesis block, which
 has height 0.
 
 Both the IBFT 2.0 and IBFT protocols can be modelled as running sequential
-instances of what we call the <em>IBFT-2.0-block-finalisation-protocol</em>,
+instances of what we call the <em>IBFT-2.0-block-finalization-protocol</em>,
 where the objective of the $h$-th instance of the
-IBFT-2.0-block-finalisation-protocol is to decide which Ethereum block, and
+IBFT-2.0-block-finalization-protocol is to decide which Ethereum block, and
 consequently which set of transactions, are to be added at height $h$ of the
 blockchain maintained by any IBFT 2.0 or IBFT node.
 
 Only a subset of the entire set of IBFT 2.0 or IBFT nodes can participate in the
-$h$-th instance of the block finalisation protocol. We call this set of nodes
+$h$-th instance of the block finalization protocol. We call this set of nodes
 the <em><a>validators</a></em> for height/instance h</em> and
-refer to each member of this set as a <em><a>validator</a> for height/instance h</em>.
-We also refer to all of the nodes not included in the <a>validator</a> set for
-height/instance h as <a>standard nodes</a>. In
-statements about <a>validators</a> where it is clear from the context, we often omit
-<em>for height/instance h</em>. The set of <a>validators</a> for each instance $h$ of
-the IBFT-2.0-block-finalisation-protocol is deterministically computed as a
-function of the chain of blocks from the <a>genesis block</a> to the block with
-height $h-1$.
+refer to each member of this set as a
+<em><a>validator</a> for height/instance h</em>. We also refer to all of the
+nodes not included in the <a>validator</a> set for height/instance h as
+<a>standard nodes</a>. In statements about <a>validators</a> where it is clear
+from the context, we often omit <em>for height/instance h</em>. The set of
+<a>validators</a> for each instance $h$ of the
+IBFT-2.0-block-finalization-protocol is deterministically computed as a function
+of the chain of blocks from the <a>genesis block</a> to the block with height
+$h-1$.
 
-Each instance of the IBFT-2.0-block-finalisation-protocol is organised in
-<dfn data-lt="round">rounds</dfn>. In each round one of the <a>validators</a> is responsibile for
-proposing an Ethereum block for the height associated with the specific
-instance of the IBFT-2.0-block-finalisation-protocol that the <a>validators</a>
-is running. After agreement is reached, the IBFT-2.0-block-finalisation-protocol
-creates a finalised block, which includes the Ethereum block and additional
-information that allows any node, even nodes that did not participate in the
-IBFT-2.0-block-finalisation-protocol, to verify that agreement on the Ethereum
-block included in the finalized block was correctly added.
+Each instance of the IBFT-2.0-block-finalization-protocol is organized in
+<dfn data-lt="round">rounds</dfn>. In each round one of the <a>validators</a>
+is responsible for proposing an Ethereum block for the height associated with
+the specific instance of the IBFT-2.0-block-finalization-protocol that the
+<a>validators</a> is running. After agreement is reached, the
+IBFT-2.0-block-finalization-protocol creates a finalized block, which includes
+the Ethereum block and additional information that allows any node, even nodes
+that did not participate in the IBFT-2.0-block-finalization-protocol, to verify
+that agreement on the Ethereum block included in the finalized block was
+correctly added.
 
-In practice, each IBFT 2.0 or IBFT node adds finalised blocks to its local
+In practice, each IBFT 2.0 or IBFT node adds finalized blocks to its local
 blockchain, not just the Ethereum blocks included in them. In this way, any node
 joining the network at any point in time, when synching its local blockchain
 with its peers, receives all the information required to verify that agreement
 was reached correctly on each block that it receives, even on those created
-before it joined the network. Each IBFT 2.0 finalised block $FB$ can be modelled
+before it joined the network. Each IBFT 2.0 finalized block $FB$ can be modelled
 by the tuple $(FB_{EB},FB_{FP})$ where:
 
 - $FB_{EB}$ is the Ethereum block to be added to the blockchain.
 - $FB_{FP}$ is the proof that agreement was correctly reached on the position in
 the chain of the block $FB_{EB}$.
 
-Each finalisation proof $FP$ can be in turn modelled by the tuple
+Each finalization proof $FP$ can be in turn modelled by the tuple
 $(FB_r,FB_{CS})$ where:
 
-- $FB_r$ is the round number of the IBFT-2.0-block-finalisation-protocol, during
+- $FB_r$ is the round number of the IBFT-2.0-block-finalization-protocol, during
 the execution of which, agreement on the block inclusion in the blockchain was
 reached.
 - $FB_{CS}$ is a list of signatures on both the Ethereum block and the round
 proving that agreement was reached by a correct execution of the
-IBFT-2.0-block-finalisation-protocol. For more information about how this list
+IBFT-2.0-block-finalization-protocol. For more information about how this list
 of signatures, called <dfn data-lt="commit seal">commit seals</dfn>, are
 computed, see Section 3.1.
 
 Each Ethereum block can carry a vote, cast by the proposer of that block, to add
-a <a>validator</a> to or remove a <a>validator</a> from the <a>validator</a> set. When more than half
-of the <a>validators</a> cast a consistent vote to add or remove a <a>validator</a> to or from
-the <a>validator</a> set, the <a>validator</a> is added or removed from the validator set
-starting from the next block and all of the votes targeting this <a>validator</a> are
-discarded. This document does not describe this algorithm, but it might be added
-in a future revision.
+a <a>validator</a> to or remove a <a>validator</a> from the <a>validator</a>
+set. When more than half of the <a>validators</a> cast a consistent vote to add
+or remove a <a>validator</a> to or from the <a>validator</a> set, the
+<a>validator</a> is added or removed from the validator set starting from the
+next block and all of the votes targeting this <a>validator</a> are discarded.
+This document does not describe this algorithm, but it might be added in a
+future revision.
 
     <section id="algorithm-convensions">
 
@@ -651,9 +658,10 @@ provide an unambiguous definition of the protocol that can be understood by
 people not familiar with standard mathematical notation.
     </li>
     <li>
-Comments identified by <code style="color:green;">text in green typewriter font</code>
-are used to provide a natural language description of pseudocode statements that
-might not be immediately obvious.
+Comments identified by
+<code style="color:green;">text in green typewriter font</code> are used to
+provide a natural language description of pseudocode statements that might not
+be immediately obvious.
     </li>
     <li>
 For brevity of notation, we avoid using individual existential quantifiers
@@ -715,7 +723,7 @@ Black color when applied to messages denotes IBFT 2.0 specific messages not
 included in the current Ethereum sub-protocol.
     </li>
     <li>
-$T:(t_1,...,t_n)$ indicates a tuple $(t_1,...,t_n)$ that is thereafter refered
+$T:(t_1,...,t_n)$ indicates a tuple $(t_1,...,t_n)$ that is thereafter referred
 to as $T$.
     </li>
     <li>
@@ -739,33 +747,34 @@ whose signature of the hash $H$ corresponds to $signature$.
 Each <a>validator</a> $v$ stores its local blockchain in $chain_v$.
     </li>
     <li>
-$chain_v[n]$ corresponds to the finalised block with height $n$, while
-$chain_v[n:m]$ corresponds to a sub-chain including all of the finalised blocks
+$chain_v[n]$ corresponds to the finalized block with height $n$, while
+$chain_v[n:m]$ corresponds to a sub-chain including all of the finalized blocks
 from height $n$ to height $m$ included.
     </li>
     <li>
-$chain_{EB_v}[n]$ corresponds to the Ethereum block included in the finalised
+$chain_{EB_v}[n]$ corresponds to the Ethereum block included in the finalized
 block with height $n$, while $chain_{EB_v}[n:m]$ corresponds to a sub-chain
-including all of the Ethereum blocks included in the finalised blocks from
+including all of the Ethereum blocks included in the finalized blocks from
 height $n$ to height $m$ included.
     </li>
     <li>
-The blockchain height is defined as the height of the last finalised block
+The blockchain height is defined as the height of the last finalized block
 added to the blockchain.
     </li>
     <li>
 $\mathtt{validators}(chain_v[0:h-1])$ represents the set of authorized
-<a>validators</a> for instance $h$ of the IBFT-2.0-block-finalisation-protocol.
+<a>validators</a> for instance $h$ of the IBFT-2.0-block-finalization-protocol.
     </li>
     <li>
-$\mathtt{n}(chain_v[0:h-1])$ represents the number of <a>validators</a> for instance
-$h$ of the IBFT-2.0-block-finalisation-protocol. That is, $\mathtt{n}(chain_v[0:h-1])\equiv\mathtt{sizeOf}(\mathtt{validators}(chain_v[0:h-1]))$.
+$\mathtt{n}(chain_v[0:h-1])$ represents the number of <a>validators</a> for
+instance $h$ of the IBFT-2.0-block-finalization-protocol. That is,
+$\mathtt{n}(chain_v[0:h-1])\equiv\mathtt{sizeOf}(\mathtt{validators}(chain_v[0:h-1]))$.
     </li>
     <li>
-$\mathtt{isValidBlock}(EB,EB_p)$ is defined to be true if and only if block
-$EB$ is a valid Ethereum block with parent $EB_p$. For the purpose of this
-document, we consider that $\mathtt{isValidBlock}(EB,EB_p)$ only verifies the
-following fields of the standard Ethereum header:
+$\mathtt{isValidBlock}(EB,EB_p)$ is defined to be true if and only if block $EB$
+is a valid Ethereum block with parent $EB_p$. For the purpose of this document,
+we consider that $\mathtt{isValidBlock}(EB,EB_p)$ only verifies the following
+fields of the standard Ethereum header:
 
     <ul>
       <li>
@@ -810,82 +819,85 @@ implementation details of the IBFT 2.0 protocol.
     <h3>Starting and Stopping the IBFT 2.0 Protocol (Algorithm 1)</h3>
 
 As outlined by Algorithm 1 in Section <a href="#algorithm-pseudocode"></a>, the
-different instances of the IBFT-2.0-block-finalisation-protocol are started and
+different instances of the IBFT-2.0-block-finalization-protocol are started and
 stopped in the same way that instances are started and stopped in the IBFT
 protocol.
 
-Finalised blocks are delivered to nodes using the standard ETH DEVp2p
+Finalized blocks are delivered to nodes using the standard ETH DEVp2p
 sub-protocol. In the pseudocode we abstract the actual Ethereum sub-protocol and
-model the reception of a finalised block $FB$ with the reception of a 
-<span style="color:darkred">$\langle\mathsf{FINALISED-BLOCK},FB\rangle$</span>
+model the reception of a finalized block $FB$ with the reception of a 
+<span style="color:darkred">$\langle\mathsf{FINALIZED-BLOCK},FB\rangle$</span>
 message. No such message actually exists in the IBFT 2.0 protocol [[Pantheon]]
-implementatoin. As per the standard Ethereum sub-protocol, a block can be
+implementation. As per the standard Ethereum sub-protocol, a block can be
 received either using an unsolicited NewBlock message or using the pair of
 messages GetBlockHeaders/BlockHeaders followed by the pair of messages
 GetBlockBodies/BlockBodies [[[Ethereum-Wire-Protocol]]].
 
-As described by the $\mathbf{upon}$ block at line 10, when a new finalised block
+As described by the $\mathbf{upon}$ block at line 10, when a new finalized block
 is received by a node $v$, $v$ executes the following operations:
 
   <ol>
     <li>
-Verifies if the finalised block received is for the next expected chain height.
+Verifies if the finalized block received is for the next expected chain height.
 That is, $h_v$.
     </li>
     <li>
-If so, it verifies if the finalised block received is a valid finalised block.
+If so, it verifies if the finalized block received is a valid finalized block.
     </li>
     <li>
 If both verifications pass, then:
     </li>
     <ol type="a">
       <li>
-$v$ adds the finalised block to its local blockchain.
+$v$ adds the finalized block to its local blockchain.
       </li>
       <li>
 If $v$ is a <a>validator</a> for the current instance of the
-IBFT-2.0-block-finalisation-protocol, then $v$ stops that instance.
+IBFT-2.0-block-finalization-protocol, then $v$ stops that instance.
       </li>
       <li>
 $v$ advances the next expected block height, $h_v$, by 1.
       </li>
       <li>
-If $v$ is a <a>validator</a> for the IBFT-2.0-block-finalisation-protocol instance for
-the new value of $h_v$, then $v$ starts that instance.
+If $v$ is a <a>validator</a> for the IBFT-2.0-block-finalization-protocol
+instance for the new value of $h_v$, then $v$ starts that instance.
       </li>
     </ol>
   </ol>
 
-As described by the function $isValidFinalisationBlock(FB,v)$ at line 3, an 
-IBFT 2.0 finalised block $FB$ is defined valid if and only if all of the
+As described by the function $isValidFinalizationBlock(FB,v)$ at line 3, an 
+IBFT 2.0 finalized block $FB$ is defined valid if and only if all of the
 following conditions are met:
 
 - It contains at least $Quorum(n)\equiv\lceil\frac{2n}{3}\rceil$ different
-commit seals, where $n$ is the number of <a>validators</a> for instance $h$ of the
-IBFT-2.0-block-finalisation-protocol. That is, $n\equiv\mathbf{n}(chain_v[0:h-1])$.
-- Each commit seal corresponds to the signature of one of the <a>validators</a> over
-the Ethereum block and the round number included in the finalisation proof.
+commit seals, where $n$ is the number of <a>validators</a> for instance $h$ of
+the IBFT-2.0-block-finalization-protocol. That is,
+$n\equiv\mathbf{n}(chain_v[0:h-1])$.
+- Each commit seal corresponds to the signature of one of the <a>validators</a>
+over the Ethereum block and the round number included in the finalization proof.
 
 Compared to IBFT, the IBFT 2.0 protocol adds the $\mathbf{upon}$ block at line
-19 to address the <a>persistence</a> issue identified in Lemma 6 of [[IBFT-Analysis]]. All of
-the IBFT 2.0-specific messages (that is, the Proposal, Prepare, Commit, and
-Round-Change messages) include the height of the
-IBFT-2.0-block-finalisation-protocol instance that they relate to.
+19 to address the <a>persistence</a> issue identified in Lemma 6 of
+[[IBFT-Analysis]]. All of the IBFT 2.0-specific messages (that is, the
+<a href="#proposal-message">Proposal</a>,
+<a href="#prepare-message">Prepare</a>, <a href="commit-message">Commit</a>, and
+<a href="round-change-message">Round-Change</a> messages) include the height of
+the IBFT-2.0-block-finalization-protocol instance that they relate to.
 
 When a node $v$ receives one of these messages including a height $h_m$ with
 value $\ge$ than the next expected height $h_v$, if the sender of the message is
-one of the DEVp2p peers of $v$, then $v$ starts asking the peer for finalised
+one of the DEVp2p peers of $v$, then $v$ starts asking the peer for finalized
 blocks with height between the $v$'s current height $h_v$ and the height $h_m$
 included in the IBFT 2.0 message received. This is modeled with the transmission
 of a
 <span style="color:darkred">$\langle\mathsf{GET-BLOCKS},h_v,h_m\rangle$</span>
 message. The peer's response to this request is modeled as a
-<span style="color:darkred">$\langle\mathsf{FINALISE-BLOCK},FB\rangle$</span>
+<span style="color:darkred">$\langle\mathsf{FINALIZE-BLOCK},FB\rangle$</span>
 message.
 
 As stated previously, this is not an exact description of the real messages sent
 by the implementation. It is a modelling of the DEVp2p behaviour useful in this
-context for analysing the protocol. $\mathbf{expectedHeight}_v[v']$ represents
+context for analyzing the protocol. $\mathbf{expectedHeight}_v[v']$ represents
 the blockchain height that node $v$ expects node $v'$ to have. In our modelling
 of the protocol, we use $\mathbf{expectedHeight}_v[v']$ to express that
 Get-Blocks messages are sent only the first time an IBFT 2.0 message with a
@@ -898,29 +910,29 @@ height higher than $h_v$ is received.
     <h3>The IBFT 2.0-block-finalization-protocol (Algorithm 2)</h3>
 
 This section describes a generic $h$ instance of the
-IBFT-2.0-block-finalisation-protocol for a <a>validator</a> $v$, as detailed in
+IBFT-2.0-block-finalization-protocol for a <a>validator</a> $v$, as detailed in
 Algorithm 2 in Section <a href="#algorithm-pseudocode"></a>.
 
   <p class="note">
-Significant portions of the IBFT-2.0-block-finalisation-protocol are similar to
-the IBFT-block-finalisation-protocol presented in Section 3 of [[IBFT-Analysis]], but for
-completeness sake, this section describes the full
-IBFT-2.0-block-finalisation-protocol. However, for those portions of the
-IBFT-2.0-block-finalisation-protocol that are identical or very similar to the
-IBFT-block-finalisation-protocol, the description is taken almost verbatim from
+Significant portions of the IBFT-2.0-block-finalization-protocol are similar to
+the IBFT-block-finalization-protocol presented in Section 3 of
+[[IBFT-Analysis]], but for completeness sake, this section describes the full
+IBFT-2.0-block-finalization-protocol. However, for those portions of the
+IBFT-2.0-block-finalization-protocol that are identical or very similar to the
+IBFT-block-finalization-protocol, the description is taken almost verbatim from
 [[IBFT-Analysis]].
   </p>
 
-As with the IBFT-block-finalisation-protocol, the
-IBFT-2.0-block-finalisation-protocol is organised in rounds, starting from round
-0, where <a>validators</a> progress to the next round after they suspect that in the
-current round they cannot decide on the block to be included at height $h$ of
-the blockchain. Both in Algorithm 2 and in this description, the current round
-for the $h$-th instance of the IBFT-2.0-block-finalisation-protocol for
+As with the IBFT-block-finalization-protocol, the
+IBFT-2.0-block-finalization-protocol is organized in rounds, starting from round
+0, where <a>validators</a> progress to the next round after they suspect that in
+the current round they cannot decide on the block to be included at height $h$
+of the blockchain. Both in Algorithm 2 and in this description, the current
+round for the $h$-th instance of the IBFT-2.0-block-finalization-protocol for
 <a>validator</a> $v$ is denoted as $r_{h,v}$.
 
-For each round, one of the <a>validators</a> is selected to play the role of block
-proposer. The selection is operated by the evaluation of
+For each round, one of the <a>validators</a> is selected to play the role of
+block proposer. The selection is operated by the evaluation of
 $\mathbf{proposer}(chain_v[0:h-1],r_{h,v})$ where
 $\mathbf{proposer}(\cdotp,\cdotp)$ is a deterministic function of the chain of
 blocks from the genesis block until the block with height $h-1$ and the current
@@ -929,41 +941,42 @@ round number.
 The pseudocode at lines 2 to 4 introduces the following macros:
 
 - $n_{h,v}$ - The number of <a>validators</a> for the $h$-th instance of the
-IBFT-2.0-block-nalisation-protocol for <a>validator</a> $v$.
-- $\mathbf{validators}_{h,v}$ - The <a>validators</a> for the $h$-th instance of the
-IBFT-2.0-block-finalisation-protocol for <a>validator</a> $v$.
+IBFT-2.0-block-finalization-protocol for <a>validator</a> $v$.
+- $\mathbf{validators}_{h,v}$ - The <a>validators</a> for the $h$-th instance of
+the IBFT-2.0-block-finalization-protocol for <a>validator</a> $v$.
 - $\mathbf{proposer}_{h,v}(r_{h,v})$ - The proposer for round $r_{h,v}$ of the
-$h$-th instance of the IBFT-2.0-block-finalisation-protocol for <a>validator</a> $v$.
+$h$-th instance of the IBFT-2.0-block-finalization-protocol for <a>validator</a>
+$v$.
 
 These macros are used both in the pseudocode and in this section to simplify the
 notation when describing the $h$-th instance of the
-IBFT-2.0-block-finalisation-protocol for <a>validator</a> $v$. The term,
-<em>non-proposing <a>validators</a> for round r and instance h</em>, is used to indicate
-all of the <a>validators</a> for round $r$ and instance $h$ with the exclusion of the
-proposer for round $r$ and instance $h$.
+IBFT-2.0-block-finalization-protocol for <a>validator</a> $v$. The term,
+<em>non-proposing <a>validators</a> for round r and instance h</em>, is used to
+indicate all of the <a>validators</a> for round $r$ and instance $h$ with the
+exclusion of the proposer for round $r$ and instance $h$.
 
 For the purpose of this document, we do not define the proposer selection
 function, but state that it ensures all of the <a>validators</a> for the $h$-th
-instance of the IBFT-2.0-block-finalisation-protocol are selected for any
+instance of the IBFT-2.0-block-finalization-protocol are selected for any
 sequence of $n_{h,v}$ consecutive rounds. The IBFT 2.0 protocol retains the IBFT
 protocol capability to specify two alternative logics for selecting the proposer
 for round 0:
 
 - Sticky proposer, where the proposer for round 0 corresponds to the proposer of
-the block included in the previous finalised block.
+the block included in the previous finalized block.
 - Round-robin proposer, where the proposer for round 0 corresponds to the
 proposer of the proposer selection sequence that comes after the proposer of the
-block included in the previous finalised block.
+block included in the previous finalized block.
 
 Compared to IBFT, IBFT 2.0 has no block locking mechanism. The safety of the
 protocol is guaranteed by the round change protocol discussed below, which is
 based on the view change protocol of PBFT [[PBFT]].
 
-As specified by the initialisation block (line 9), if $v$ is the selected block
-proposer for the first round, that is, round 0, then $v$ multicasts a Proposal
-message $\langle\langle\mathsf{PROPOSAL},h,0,\mathbf{KEC}(PB)\rangle_{\sigma_v},PB,\bot\rangle$
-to all <a>validators</a> (including itself)
-that comprises the message
+As specified by the initialization block (line 9), if $v$ is the selected block
+proposer for the first round, that is, round 0, then $v$ multicasts a
+<a href="#proposal-message">Proposal message</a>
+$\langle\langle\mathsf{PROPOSAL},h,0,\mathbf{KEC}(PB)\rangle_{\sigma_v},PB,\bot\rangle$
+to all <a>validators</a> (including itself) that comprises the message
 $\langle\langle\mathsf{PROPOSAL},h,0,\mathbf{KEC}(PB)\rangle_{\sigma_v}$
 signed by $v$, the proposed block $PB$ and a Round-Change-Certificate, which for
 round 0 is empty (that is, $\bot$). More detail on how the
@@ -972,101 +985,113 @@ when discussing how <a>validators</a> move to a different round.
 
 The proposed block $PB$ is modelled here as a tuple where the first element is a
 standard Ethereum block and the second element is the current round number at
-which the Ethereum block was created, which at initialisation is 0.
+which the Ethereum block was created, which at initialization is 0.
 $\mathbf{KEC}(\cdotp)$ represents the Keccak hash function. The pseudocode uses
 $\mathbf{createNewProposedBlock}(h,v)$ to represent the creation of a new block
-with height $h$ by <a>validator</a> $v$. Honest <a>validators</a> employee a fair transaction
-selection algorithm to decide which transactions to include in the next block. 
-The definition of such algorithm is outside the scope of this document.
+with height $h$ by <a>validator</a> $v$. Honest <a>validators</a> employee a
+fair transaction selection algorithm to decide which transactions to include in
+the next block. The definition of such algorithm is outside the scope of this
+document.
 
-As specified by lines 31 to 32, a <a>validator</a> $v$ accepts a Proposal message
+As specified by lines 31 to 32, a <a>validator</a> $v$ accepts a
+<a href="#proposal-message">Proposal message</a>
 $\langle\langle\mathsf{PROPOSAL},h_{pp},r_{pp},H\rangle,PB:(EB,r_{EB}),*\rangle$
 if and only if all of the following conditions are met:
 
-- $v$ is currently running the IBFT-2.0-block-finalisation-protocol instance
+- $v$ is currently running the IBFT-2.0-block-finalization-protocol instance
 $h_{pp}$. That is, $h_{pp}=h$.
 - $v$ is in round 0. That is, $r_{pp}=r_{h,v} = 0$.
 - The signed portion of the message, $\langle\mathsf{PROPOSAL},h_{pp},r_{pp},H\rangle$,
 is signed by the selected proposer for round $r_{h,v} = 0$ and instance $h$ of
-the IBFT-2.0-block-finalisation-protocol.
-- $v$ has not already accepted a Proposal message for round $r_{h,v} = 0$ in the
-$h$-th instance of the IBFT-block-finalisation-protocol. That is, $acceptedPB = \bot$.
+the IBFT-2.0-block-finalization-protocol.
+- $v$ has not already accepted a <a href="#proposal-message">Proposal message</a>
+for round $r_{h,v} = 0$ in the $h$-th instance of the
+IBFT-block-finalization-protocol. That is, $acceptedPB = \bot$.
 - The Ethereum block $EB$ included in the proposed block $PB$ is a valid block
 for height $h$.
 - The round number included in the prepared block $PB$ matches the current round
 number. That is, $r_{h,v} = r_{EB} = 0$.
 - $H$ corresponds to the Keccak hash of the proposed block $PB$.
 
-When a <a>validator</a> $v$ accepts a Proposal message, it:
+When a <a>validator</a> $v$ accepts a
+<a href="#proposal-message">Proposal message</a>, it:
 
-- Marks the Proposal message as accepted by setting the state variable
-$acceptedPB$ to the proposed block included in the Proposal message (see line 16).
-- Multicasts a Prepare message $\langle\mathsf{PREPARE},h,r_{h,v},H\rangle_{\sigma_v}$
-(see line 17) to all <a>validators</a> (including itself).
+- Marks the <a href="#proposal-message">Proposal message</a> as accepted by
+setting the state variable $acceptedPB$ to the proposed block included in the
+<a href="#proposal-message">Proposal message</a> (see line 16).
+- Multicasts a <a href="#prepare-message">Prepare message</a>
+$\langle\mathsf{PREPARE},h,r_{h,v},H\rangle_{\sigma_v}$ (see line 17) to all
+<a>validators</a> (including itself).
 
 The $\mathbf{upon}$ block at line 36 is executed the first time all of the
 following conditions are met by <a>validator</a> $v$:
 
-- $v$ has accepted a Proposal message for the proposed block $PB$. That is,
-$acceptedPB_{h,v} = PB$.
-- $v$ has received, from non-proposing <a>validators</a> for the current round, at
-least $Quorum(n_{h,v})-1$ Prepare messages for the current instance of the
-IBFT-2.0-block-finalisation-protocol, current round, and with digest $H$
-corresponding to the Keccak hash of the accepted proposed block $PB$.
+- $v$ has accepted a <a href="#proposal-message">Proposal message</a> for the
+proposed block $PB$. That is, $acceptedPB_{h,v} = PB$.
+- $v$ has received, from non-proposing <a>validators</a> for the current round,
+at least $Quorum(n_{h,v})-1$ <a href="#prepare-message">Prepare message</a> for
+the current instance of the IBFT-2.0-block-finalization-protocol, current round,
+and with digest $H$ corresponding to the Keccak hash of the accepted proposed
+block $PB$.
 
 When all of the conditions listed above are met for the first time, then:
 
-- $v$ multicasts a Commit message $\langle\mathsf{COMMIT},h,r_{h,v},H,CS(PB,v)\rangle_{\sigma_v}$
-to all <a>validators</a> (including itself), where $CS(PB,v)$, called
+- $v$ multicasts a <a href="#commit-message">Commit message</a>
+$\langle\mathsf{COMMIT},h,r_{h,v},H,CS(PB,v)\rangle_{\sigma_v}$ to all
+<a>validators</a> (including itself), where $CS(PB,v)$, called
 <em>commit seal</em>, corresponds to the signature of $v$ over the proposed
 block $PB$ and the current round number.
 - $v$ sets $latestPreparedProposedBlock_{h,v}$ to the proposed block $PB$;
 - $v$ sets $latestPC_{h,v}$ to a set including the signed portion of the
-accepted Proposal message and all of the Prepare messages sent by non-proposing
+accepted <a href="#proposal-message">Proposal message</a> and all of the
+<a href="#prepare-message">Prepare message</a> sent by non-proposing
 <a>validators</a> for the current round targeting the current instance of the
-IBFT-2.0-block-finalisation-protocol, current round and with digest $H$
+IBFT-2.0-block-finalization-protocol, current round and with digest $H$
 corresponding to the Keccak hash of the accepted proposed block $PB$.
 
 The pseudocode uses the state variable $commitSent_{h,v}$ to indicate that the
-Commit message is sent only the first time that all of the conditions listed
-above are met. $commitSent_{h,v}$ is set to $true$ at line 39 and reset to
-$false$ in the $StartNewRound$ procedure at line 26. Borrowing from the PBFT
-terminology, when a <a>validator</a> meets the conditions indicated in the
-$\mathbf{upon}$ block at line 36, then $v$ is said to be $prepared$ at round
-$r_{h,v}$. Borrowing again from the PBFT terminology, $latestPC_{h,v}$ is the
-latest Prepared-Certificate and the protocol is designed so that
-$latestPC_{h,v}$ always holds at least the minimum number of messages required
-to prove that $v$ $prepared$ in round $r_{h,v}$ on a proposed block with Keccak
-hash $H$. We say that a Prepared-Certificate is for round $r$ and instance $h$
-if and only if the Prepared-Certificate only includes signed Proposal and
-Prepare messages for round $r$ and height $h$. $latestPC_{h,v}$ always holds the
-Prepared-Certificate for the latest round in the current instance $h$ where $v$
-is $prepared$. $latestPC_{h,v} = \bot$ only if $v$ has never $prepared$ in the
-current instance $h$.
+<a href="#commit-message">Commit message</a> is sent only the first time that
+all of the conditions listed above are met. $commitSent_{h,v}$ is set to $true$
+at line 39 and reset to $false$ in the $StartNewRound$ procedure at line 26.
+Borrowing from the PBFT terminology, when a <a>validator</a> meets the
+conditions indicated in the $\mathbf{upon}$ block at line 36, then $v$ is said
+to be $prepared$ at round $r_{h,v}$. Borrowing again from the PBFT terminology,
+$latestPC_{h,v}$ is the latest Prepared-Certificate and the protocol is
+designed so that $latestPC_{h,v}$ always holds at least the minimum number of
+messages required to prove that $v$ $prepared$ in round $r_{h,v}$ on a proposed
+block with Keccak hash $H$. We say that a Prepared-Certificate is for round $r$
+and instance $h$ if and only if the Prepared-Certificate only includes signed
+<a href="#proposal-message">Proposal</a> and
+<a href="#prepare-message">Prepare</a> messages for round $r$ and height $h$.
+$latestPC_{h,v}$ always holds the Prepared-Certificate for the latest round in
+the current instance $h$ where $v$ is $prepared$. $latestPC_{h,v} = \bot$ only
+if $v$ has never $prepared$ in the current instance $h$.
 
 The $\mathbf{upon}$ block at line 44 is executed the first time all of the
 following conditions are met by <a>validator</a> $v$:
 
-- $v$ has accepted a Proposal message for the proposed block $PB$. That is,
-$acceptedPB_{h,v} = PB$.
-- $v$ has received, from at least different $Quorum(n_{h,v})$ <a>validators</a> for the
-current instance of the IBFT-2.0-block-finalisation-protocol, a Commit message
-for the current instance of the IBFT-2.0-block-finalisation-protocol, current
-round, with digest $H$ corresponding to the Keccak hash of the accepted proposed
-block $PB$ and commit seal signed by the sender of the Commit message.
+- $v$ has accepted a <a href="#proposal-message">Proposal message</a> for the
+proposed block $PB$. That is, $acceptedPB_{h,v} = PB$.
+- $v$ has received, from at least different $Quorum(n_{h,v})$ <a>validators</a>
+for the current instance of the IBFT-2.0-block-finalization-protocol, a
+<a href="#commit-message">Commit message</a> for the current instance of the
+IBFT-2.0-block-finalization-protocol, current round, with digest $H$
+corresponding to the Keccak hash of the accepted proposed block $PB$ and commit
+seal signed by the sender of the <a href="#commit-message">Commit message</a>.
 
 When all of the conditions listed above are met for the first time, then:
 
-- $v$ creates a block finalisation proof modelled as a tuple comprising the
-current round number and the commit seals included in all the Commit messages
-that satisfy the condition on Commit messages stated above.
-- $v$ creates a finalised block modelled as a tuple comprising the Ethereum
-block included in the proposed block and the finalisation proof.
-- $v$ broadcasts the finalised block to all nodes.
+- $v$ creates a block finalization proof modelled as a tuple comprising the
+current round number and the commit seals included in all the
+<a href="#commit-message">Commit messages</a> that satisfy the condition on
+<a href="#commit-message">Commit messages</a> stated above.
+- $v$ creates a finalized block modelled as a tuple comprising the Ethereum
+block included in the proposed block and the finalization proof.
+- $v$ broadcasts the finalized block to all nodes.
 
-The pseudocode uses the state variable $finalisedBlockSent_{h,v}$ to trigger the
-transmission of a finalised block only the first time the conditions listed
-above are met. $finalisedBlockSent_{h,v}$ is set at line 50 and reset in the
+The pseudocode uses the state variable $finalizedBlockSent_{h,v}$ to trigger the
+transmission of a finalized block only the first time the conditions listed
+above are met. $finalizedBlockSent_{h,v}$ is set at line 50 and reset in the
 $StartNewRound$ procedure at line 12.
 
 In alignment with PBFT, the IBFT 2.0 protocol relies on a round change
@@ -1075,18 +1100,20 @@ causing the protocol to never terminate. As specified at lines 21 to 22,
 whenever a <a>validator</a> $v$ starts a new round, it starts a round timer with
 a duration exponential to the round number (see line 8).
 
-When <a>validator</a> $v$'s round timer for the current round expires (line 51), $v$
-starts the round $r_{h,v} + 1$ and multicasts a
+When <a>validator</a> $v$'s round timer for the current round expires (line 51),
+$v$ starts the round $r_{h,v} + 1$ and multicasts a
 $\langle\langle\mathsf{ROUND-CHANGE},h,r_{h,v} + 1,latestPC_{h,v}\rangle,latestPreparedProposedBlock_{h,v}\rangle$
 message for the new round to all <a>validators</a> (including itself). Note that
-the Round-Change message includes the latest Prepared-Certificate and the
-proposed block associated with the latest Prepared Certificate.
+the <a href="#round-change-message">Round Change message</a> includes the latest
+Prepared-Certificate and the proposed block associated with the latest Prepared
+Certificate.
 
-The $\mathbf{upon}$ block at line 55 describes under which conditions a Proposal
-message for a new round is multicast and how the Proposal message is assembled.
+The $\mathbf{upon}$ block at line 55 describes under which conditions a
+<a href="#proposal-message">Proposal message</a> for a new round is multicast
+and how the <a href="#proposal-message">Proposal message</a> is assembled.
 Specifically, the $\mathbf{upon}$ block is executed only if $v$ has received at
-least $Quorum(n_{h,v})$ Round-Change messages for the current
-IBFT-2.0-block-finalisation-protocol instance such that:
+least $Quorum(n_{h,v})$ <a href="#round-change-message">Round Change messages</a>
+for the current IBFT-2.0-block-finalization-protocol instance such that:
 
   <ul>
     <li>
@@ -1095,39 +1122,44 @@ the current round.
     </li>
     <li>
 All messages are sent by distinct <a>validators</a> for the current instance of
-the IBFT-2.0-block-finalisation-protocol.
+the IBFT-2.0-block-finalization-protocol.
     </li>
     <li>
 All messages contain a valid Prepared-Certificate. A Prepared-Certificate is
-considered valid either if it is empty ($\bot$) or if it contains one Proposal
-message and at least $Quorum(n_{h,v}) - 1$ Prepare messages for the same round
-$r'$ such that:
+considered valid either if it is empty ($\bot$) or if it contains one
+<a href="#proposal-message">Proposal message</a> and at least
+$Quorum(n_{h,v}) - 1$ <a href="#prepare-message">Prepare messages</a> for the
+same round $r'$ such that:
     <ul>
       <li>
-$r'\lt$ than the the round number of the Round-Change messages, $r_{rc}$.
+$r'\lt$ than the the round number of the
+<a href="#round-change-message">Round Change messages</a>, $r_{rc}$.
       </li>
       <li>
-The Proposal message is signed by the selected proposer for round $r'$.
+The <a href="#proposal-message">Proposal message</a> is signed by the selected
+proposer for round $r'$.
       </li>
       <li>
-The Prepare messages are sent by non-proposing validators for the $h$-th
-instance of the IBFT-2.0-block-finalisation-protocol and round $r'$ and they are
-all for the current instance $h$ of the IBFT-2.0-block-finalisation-protocol,
-round $r'$ and same hash as the one included in the Proposal message.
+The <a href="#prepare-message">Prepare messages</a> are sent by non-proposing
+validators for the $h$-th instance of the IBFT-2.0-block-finalization-protocol
+and round $r'$ and they are all for the current instance $h$ of the
+IBFT-2.0-block-finalization-protocol, round $r'$ and same hash as the one
+included in the <a href="#proposal-message">Proposal message</a>.
       </li>
     </ul>
     </li>
     <li>
-The Keccak hash of the $proposedBlock$ included in each of the Round-Change
-messages considered matches the hash included in the Proposal and Prepare
-message of the Prepared-Certificate.
+The Keccak hash of the $proposedBlock$ included in each of the
+<a href="#round-change-message">Round Change messages</a> considered matches the
+hash included in the <a href="#proposal-message">Proposal</a> and
+<a href="#prepare-message">Prepare</a> message of the Prepared-Certificate.
     </li>
   </ul>
 
 Any set meeting these conditions is a valid Round-Change-Certificate for round
-$r'$ where round $r'$ is the round included in all of the Round-Change messages
-included in the Round-Change-Certificate. When all of the conditions listed
-above are met, then:
+$r'$ where round $r'$ is the round included in all of the
+<a href="#round-change-message">Round Change messages</a> included in the
+Round-Change-Certificate. When all of the conditions listed above are met, then:
 
   <ul>
     <li>
@@ -1139,57 +1171,62 @@ and lets $r_h$ be the round number of $RCC$.
 If $v$ was not already in $r_h$, then $v$ starts the round timer for round $r_h$.
     </li>
     <li>
-If $v$ is the selected proposer for round $r_h$, $v$ sends a Proposal message
-for the new round including the selected Round-Change-Certificate ($RCC$) and a
-proposed block calculated as follows:
+If $v$ is the selected proposer for round $r_h$, $v$ sends a
+<a href="#proposal-message">Proposal message</a> for the new round including the
+selected Round-Change-Certificate ($RCC$) and a proposed block calculated as
+follows:
     <ul>
       <li>
-If all of the Prepared-Certificates included in the Round-Change message are
-empty, that is $=\bot$, then the proposed block must be a tuple including any
-valid Ethereum block for height $h$ and the current round number, which must
-match the round number of the Proposal message.
+If all of the Prepared-Certificates included in the
+<a href="#round-change-message">Round Change message</a> are empty, that is
+$=\bot$, then the proposed block must be a tuple including any valid Ethereum
+block for height $h$ and the current round number, which must match the round
+number of the <a href="#proposal-message">Proposal message</a>.
       </li>
       <li>
 Otherwise, the Ethereum block included in the tuple constituting the proposed
-block must match the proposed block received as part of one of the Round-Change
-messages including a Prepared-Certificate for the highest round amongst the
-rounds of all the other Prepared-Certificates included in the
-Round-Change-Certificate.
+block must match the proposed block received as part of one of the
+<a href="#round-change-message">Round Change messages</a> including a
+Prepared-Certificate for the highest round amongst the rounds of all the other
+Prepared-Certificates included in the Round-Change-Certificate.
       </li>
     </ul>
     </li>
   </ul>
 
-As specified by the $\mathbf{upon}$ block at line 71, a Proposal message
+As specified by the $\mathbf{upon}$ block at line 71, a
+<a href="#proposal-message">Proposal message</a>
 $\langle\langle\mathsf{PROPOSAL},h,r_{pp},H\rangle_{\sigma_{sender}},PB;RCC\rangle$
 for a round higher than 0 is accepted only if all of the following conditions
 are met:
 
   <ul>
     <li>
-$v$ is currently running the IBFT-2.0-block-finalisation-protocol instance
+$v$ is currently running the IBFT-2.0-block-finalization-protocol instance
 $h_{pp}$. That is, $h_{pp}=h$.
     </li>
     <li>
-The round number $r_{pp}$ of the Proposal message is either higher than the
-current round or equal to the current round provided that $v$ has not accepted
-any Proposal message for the current round. That is, $acceptedPB = \bot$.
+The round number $r_{pp}$ of the <a href="#proposal-message">Proposal message</a>
+is either higher than the current round or equal to the current round provided
+that $v$ has not accepted any <a href="#proposal-message">Proposal message</a>
+for the current round. That is, $acceptedPB = \bot$.
     </li>
     <li>
 $H$ corresponds to the Keccak hash of the proposed block $PB$.
     </li>
     <li>
 The signed portion of the message is signed by the selected proposer for round
-$r_{pp}$ and instance $h$ of the IBFT-2.0-block-finalisation-protocol.
+$r_{pp}$ and instance $h$ of the IBFT-2.0-block-finalization-protocol.
     </li>
     <li>
 The Round-Change-Certificate $RCC$ includes at least $Quorum(n_{h,v})$
-Round-Change messages for round $r_pp$ and height $h$.
+<a href="#round-change-message">Round Change messages</a> for round $r_pp$ and
+height $h$.
     </li>
     <li>
-If each of the Round-Change messages included in the Round-Change-Certificate
-$RCC$ includes either an invalid Prepared-Certificate or an empty
-Prepared-Certificate, then the:
+If each of the <a href="#round-change-message">Round Change messages</a>
+included in the Round-Change-Certificate $RCC$ includes either an invalid
+Prepared-Certificate or an empty Prepared-Certificate, then the:
     <ul>
       <li>
 Ethereum block $EB$ included in the proposed block $PB$ must be a valid block
@@ -1210,9 +1247,10 @@ Prepared-Certificates included in the Round-Change-Certificate $RCC$.
     </li>
   </ul>
 
-The effect of accepting a Proposal message for a round $r_{pp} \gt 0$ is
-essentially the same as accepting the Proposal message for round 0 with the
-addition of moving to round $r_{pp}$. Specifically, $v$:
+The effect of accepting a <a href="#proposal-message">Proposal message</a> for a
+round $r_{pp} \gt 0$ is essentially the same as accepting the
+<a href="#proposal-message">Proposal message</a> for round 0 with the addition
+of moving to round $r_{pp}$. Specifically, $v$:
 
   <ul>
     <li>
@@ -1220,13 +1258,13 @@ Moves to round $r_{pp}$ and starts the related round timer if $v$ was not
 already in round $r_{pp}$.
     </li>
     <li>
-Multicasts a Prepare message
+Multicasts a <a href="#prepare-message">Prepare message</a>
 $\langle\mathsf{PREPARE},h,r_{h,v},H\rangle_{\sigma_v}$ to all validators
 (including itself).
     </li>
     <li>
 Sets $acceptedPB_{h,v}$ to the proposed block $PB$ indicating that it
-accepted a Proposal message for $PB$.
+accepted a <a href="#proposal-message">Proposal message</a> for $PB$.
     </li>
   </ul>
   
@@ -1436,10 +1474,20 @@ var respecConfig = {
       href: "https://dl.acm.org/citation.cfm?doid=42282.42283",
       publisher: "Cynthia Dwork, Nancy Lynch, and Larry Stockmeyer"
     },
+    "PoW": {
+      title: "Pricing via Processing or Combatting Junk Mail",
+      href: "https://dl.acm.org/citation.cfm?id=646757.705669",
+      publisher: "Cynthia Dwork and Moni Naor"
+    },
     "Ethereum-Wire-Protocol": {
       title: "Ethereum Wire Protocol",
       href: "https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol",
       publisher: "Ethereum Foundation"
+    },
+    "Byzantine-Generals-Problem": {
+      title: "The Byzantine Generals Problem",
+      href: "https://dl.acm.org/citation.cfm?doid=357172.357176",
+      publisher: "Leslie Lamport, Robert Shostak, and Marshall Pease"
     },
     "One-Faulty-Process": {
       title: "Impossibility of Distributed Consensus with One Faulty Process",
