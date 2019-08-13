@@ -879,10 +879,11 @@ over the Ethereum block and the round number included in the finalization proof.
 Compared to IBFT, the IBFT 2.0 protocol adds the $\mathbf{upon}$ block at line
 19 to address the <a>persistence</a> issue identified in Lemma 6 of
 [[IBFT-Analysis]]. All of the IBFT 2.0-specific messages (that is, the
-<a href="#proposal-message">Proposal</a>,
-<a href="#prepare-message">Prepare</a>, <a href="commit-message">Commit</a>, and
-<a href="round-change-message">Round-Change</a> messages) include the height of
-the IBFT-2.0-block-finalization-protocol instance that they relate to.
+<a data-lt="proposal message">Proposal</a>,
+<a data-lt="prepare message">Prepare</a>,
+<a data-lt="commit message">Commit</a>, and
+<a data-lt="round change message">Round Change</a> messages) include the height
+of the IBFT-2.0-block-finalization-protocol instance that they relate to.
 
 When a node $v$ receives one of these messages including a height $h_m$ with
 value $\ge$ than the next expected height $h_v$, if the sender of the message is
@@ -896,7 +897,7 @@ message. The peer's response to this request is modeled as a
 message.
 
 As stated previously, this is not an exact description of the real messages sent
-by the implementation. It is a modelling of the DEVp2p behaviour useful in this
+by the implementation. It is a modelling of the DEVp2p behavior useful in this
 context for analyzing the protocol. $\mathbf{expectedHeight}_v[v']$ represents
 the blockchain height that node $v$ expects node $v'$ to have. In our modelling
 of the protocol, we use $\mathbf{expectedHeight}_v[v']$ to express that
@@ -973,8 +974,7 @@ protocol is guaranteed by the round change protocol discussed below, which is
 based on the view change protocol of PBFT [[PBFT]].
 
 As specified by the initialization block (line 9), if $v$ is the selected block
-proposer for the first round, that is, round 0, then $v$ multicasts a
-<a href="#proposal-message">Proposal message</a>
+proposer for the first round, that is, round 0, then $v$ multicasts a <a>Proposal message</a>
 $\langle\langle\mathsf{PROPOSAL},h,0,\mathbf{KEC}(PB)\rangle_{\sigma_v},PB,\bot\rangle$
 to all <a>validators</a> (including itself) that comprises the message
 $\langle\langle\mathsf{PROPOSAL},h,0,\mathbf{KEC}(PB)\rangle_{\sigma_v}$
@@ -993,8 +993,7 @@ fair transaction selection algorithm to decide which transactions to include in
 the next block. The definition of such algorithm is outside the scope of this
 document.
 
-As specified by lines 31 to 32, a <a>validator</a> $v$ accepts a
-<a href="#proposal-message">Proposal message</a>
+As specified by lines 31 to 32, a <a>validator</a> $v$ accepts a <a>Proposal message</a>
 $\langle\langle\mathsf{PROPOSAL},h_{pp},r_{pp},H\rangle,PB:(EB,r_{EB}),*\rangle$
 if and only if all of the following conditions are met:
 
@@ -1004,65 +1003,62 @@ $h_{pp}$. That is, $h_{pp}=h$.
 - The signed portion of the message, $\langle\mathsf{PROPOSAL},h_{pp},r_{pp},H\rangle$,
 is signed by the selected proposer for round $r_{h,v} = 0$ and instance $h$ of
 the IBFT-2.0-block-finalization-protocol.
-- $v$ has not already accepted a <a href="#proposal-message">Proposal message</a>
-for round $r_{h,v} = 0$ in the $h$-th instance of the
-IBFT-block-finalization-protocol. That is, $acceptedPB = \bot$.
+- $v$ has not already accepted a <a>Proposal message</a> for round $r_{h,v} = 0$
+in the $h$-th instance of the IBFT-block-finalization-protocol. That is,
+$acceptedPB = \bot$.
 - The Ethereum block $EB$ included in the proposed block $PB$ is a valid block
 for height $h$.
 - The round number included in the prepared block $PB$ matches the current round
 number. That is, $r_{h,v} = r_{EB} = 0$.
 - $H$ corresponds to the Keccak hash of the proposed block $PB$.
 
-When a <a>validator</a> $v$ accepts a
-<a href="#proposal-message">Proposal message</a>, it:
+When a <a>validator</a> $v$ accepts a <a>Proposal message</a>, it:
 
-- Marks the <a href="#proposal-message">Proposal message</a> as accepted by
-setting the state variable $acceptedPB$ to the proposed block included in the
-<a href="#proposal-message">Proposal message</a> (see line 16).
-- Multicasts a <a href="#prepare-message">Prepare message</a>
+- Marks the <a>Proposal message</a> as accepted by setting the state variable
+$acceptedPB$ to the proposed block included in the <a>Proposal message</a> (see
+line 16).
+- Multicasts a <a>Prepare message</a>
 $\langle\mathsf{PREPARE},h,r_{h,v},H\rangle_{\sigma_v}$ (see line 17) to all
 <a>validators</a> (including itself).
 
 The $\mathbf{upon}$ block at line 36 is executed the first time all of the
 following conditions are met by <a>validator</a> $v$:
 
-- $v$ has accepted a <a href="#proposal-message">Proposal message</a> for the
-proposed block $PB$. That is, $acceptedPB_{h,v} = PB$.
+- $v$ has accepted a <a>Proposal message</a> for the proposed block $PB$. That
+is, $acceptedPB_{h,v} = PB$.
 - $v$ has received, from non-proposing <a>validators</a> for the current round,
-at least $Quorum(n_{h,v})-1$ <a href="#prepare-message">Prepare message</a> for
-the current instance of the IBFT-2.0-block-finalization-protocol, current round,
-and with digest $H$ corresponding to the Keccak hash of the accepted proposed
-block $PB$.
+at least $Quorum(n_{h,v})-1$ <a>Prepare message</a> for the current instance of
+the IBFT-2.0-block-finalization-protocol, current round, and with digest $H$
+corresponding to the Keccak hash of the accepted proposed block $PB$.
 
 When all of the conditions listed above are met for the first time, then:
 
-- $v$ multicasts a <a href="#commit-message">Commit message</a>
+- $v$ multicasts a <a>Commit message</a>
 $\langle\mathsf{COMMIT},h,r_{h,v},H,CS(PB,v)\rangle_{\sigma_v}$ to all
 <a>validators</a> (including itself), where $CS(PB,v)$, called
 <em>commit seal</em>, corresponds to the signature of $v$ over the proposed
 block $PB$ and the current round number.
 - $v$ sets $latestPreparedProposedBlock_{h,v}$ to the proposed block $PB$;
 - $v$ sets $latestPC_{h,v}$ to a set including the signed portion of the
-accepted <a href="#proposal-message">Proposal message</a> and all of the
-<a href="#prepare-message">Prepare message</a> sent by non-proposing
-<a>validators</a> for the current round targeting the current instance of the
-IBFT-2.0-block-finalization-protocol, current round and with digest $H$
-corresponding to the Keccak hash of the accepted proposed block $PB$.
+accepted <a>Proposal message</a> and all of the <a>Prepare message</a> sent by
+non-proposing <a>validators</a> for the current round targeting the current
+instance of the IBFT-2.0-block-finalization-protocol, current round and with
+digest $H$ corresponding to the Keccak hash of the accepted proposed block $PB$.
 
 The pseudocode uses the state variable $commitSent_{h,v}$ to indicate that the
-<a href="#commit-message">Commit message</a> is sent only the first time that
-all of the conditions listed above are met. $commitSent_{h,v}$ is set to $true$
-at line 39 and reset to $false$ in the $StartNewRound$ procedure at line 26.
-Borrowing from the PBFT terminology, when a <a>validator</a> meets the
-conditions indicated in the $\mathbf{upon}$ block at line 36, then $v$ is said
-to be $prepared$ at round $r_{h,v}$. Borrowing again from the PBFT terminology,
-$latestPC_{h,v}$ is the latest Prepared-Certificate and the protocol is
-designed so that $latestPC_{h,v}$ always holds at least the minimum number of
-messages required to prove that $v$ $prepared$ in round $r_{h,v}$ on a proposed
-block with Keccak hash $H$. We say that a Prepared-Certificate is for round $r$
-and instance $h$ if and only if the Prepared-Certificate only includes signed
-<a href="#proposal-message">Proposal</a> and
-<a href="#prepare-message">Prepare</a> messages for round $r$ and height $h$.
+<a>Commit message</a> is sent only the first time that all of the conditions
+listed above are met. $commitSent_{h,v}$ is set to $true$ at line 39 and reset
+to $false$ in the $StartNewRound$ procedure at line 26. Borrowing from the PBFT
+terminology, when a <a>validator</a> meets the conditions indicated in the
+$\mathbf{upon}$ block at line 36, then $v$ is said to be $prepared$ at round
+$r_{h,v}$. Borrowing again from the PBFT terminology, $latestPC_{h,v}$ is the
+latest Prepared-Certificate and the protocol is designed so that
+$latestPC_{h,v}$ always holds at least the minimum number of messages required
+to prove that $v$ $prepared$ in round $r_{h,v}$ on a proposed block with Keccak
+hash $H$. We say that a Prepared-Certificate is for round $r$ and instance $h$
+if and only if the Prepared-Certificate only includes signed
+<a data-lt="proposal message">Proposal</a> and
+<a data-lt="prepare message">Prepare</a> messages for round $r$ and height $h$.
 $latestPC_{h,v}$ always holds the Prepared-Certificate for the latest round in
 the current instance $h$ where $v$ is $prepared$. $latestPC_{h,v} = \bot$ only
 if $v$ has never $prepared$ in the current instance $h$.
@@ -1070,21 +1066,21 @@ if $v$ has never $prepared$ in the current instance $h$.
 The $\mathbf{upon}$ block at line 44 is executed the first time all of the
 following conditions are met by <a>validator</a> $v$:
 
-- $v$ has accepted a <a href="#proposal-message">Proposal message</a> for the
-proposed block $PB$. That is, $acceptedPB_{h,v} = PB$.
+- $v$ has accepted a <a>Proposal message</a> for the proposed block $PB$. That
+is, $acceptedPB_{h,v} = PB$.
 - $v$ has received, from at least different $Quorum(n_{h,v})$ <a>validators</a>
 for the current instance of the IBFT-2.0-block-finalization-protocol, a
-<a href="#commit-message">Commit message</a> for the current instance of the
+<a>Commit message</a> for the current instance of the
 IBFT-2.0-block-finalization-protocol, current round, with digest $H$
 corresponding to the Keccak hash of the accepted proposed block $PB$ and commit
-seal signed by the sender of the <a href="#commit-message">Commit message</a>.
+seal signed by the sender of the <a>Commit message</a>.
 
 When all of the conditions listed above are met for the first time, then:
 
 - $v$ creates a block finalization proof modelled as a tuple comprising the
 current round number and the commit seals included in all the
-<a href="#commit-message">Commit messages</a> that satisfy the condition on
-<a href="#commit-message">Commit messages</a> stated above.
+<a>Commit messages</a> that satisfy the condition on <a>Commit messages</a>
+stated above.
 - $v$ creates a finalized block modelled as a tuple comprising the Ethereum
 block included in the proposed block and the finalization proof.
 - $v$ broadcasts the finalized block to all nodes.
@@ -1104,16 +1100,16 @@ When <a>validator</a> $v$'s round timer for the current round expires (line 51),
 $v$ starts the round $r_{h,v} + 1$ and multicasts a
 $\langle\langle\mathsf{ROUND-CHANGE},h,r_{h,v} + 1,latestPC_{h,v}\rangle,latestPreparedProposedBlock_{h,v}\rangle$
 message for the new round to all <a>validators</a> (including itself). Note that
-the <a href="#round-change-message">Round Change message</a> includes the latest
+the <a>Round Change message</a> includes the latest
 Prepared-Certificate and the proposed block associated with the latest Prepared
 Certificate.
 
 The $\mathbf{upon}$ block at line 55 describes under which conditions a
-<a href="#proposal-message">Proposal message</a> for a new round is multicast
-and how the <a href="#proposal-message">Proposal message</a> is assembled.
-Specifically, the $\mathbf{upon}$ block is executed only if $v$ has received at
-least $Quorum(n_{h,v})$ <a href="#round-change-message">Round Change messages</a>
-for the current IBFT-2.0-block-finalization-protocol instance such that:
+<a>Proposal message</a> for a new round is multicast and how the
+<a>Proposal message</a> is assembled. Specifically, the
+$\mathbf{upon}$ block is executed only if $v$ has received at least
+$Quorum(n_{h,v})$ <a>Round Change messages</a> for the current
+IBFT-2.0-block-finalization-protocol instance such that:
 
   <ul>
     <li>
@@ -1127,39 +1123,35 @@ the IBFT-2.0-block-finalization-protocol.
     <li>
 All messages contain a valid Prepared-Certificate. A Prepared-Certificate is
 considered valid either if it is empty ($\bot$) or if it contains one
-<a href="#proposal-message">Proposal message</a> and at least
-$Quorum(n_{h,v}) - 1$ <a href="#prepare-message">Prepare messages</a> for the
-same round $r'$ such that:
+<a>Proposal message</a> and at least $Quorum(n_{h,v}) - 1$
+<a>Prepare messages</a> for the same round $r'$ such that:
     <ul>
       <li>
-$r'\lt$ than the the round number of the
-<a href="#round-change-message">Round Change messages</a>, $r_{rc}$.
+$r'\lt$ than the the round number of the <a>Round Change messages</a>, $r_{rc}$.
       </li>
       <li>
-The <a href="#proposal-message">Proposal message</a> is signed by the selected
-proposer for round $r'$.
+The <a>Proposal message</a> is signed by the selected proposer for round $r'$.
       </li>
       <li>
-The <a href="#prepare-message">Prepare messages</a> are sent by non-proposing
-validators for the $h$-th instance of the IBFT-2.0-block-finalization-protocol
-and round $r'$ and they are all for the current instance $h$ of the
-IBFT-2.0-block-finalization-protocol, round $r'$ and same hash as the one
-included in the <a href="#proposal-message">Proposal message</a>.
+The <a>Prepare messages</a> are sent by non-proposing validators for the $h$-th
+instance of the IBFT-2.0-block-finalization-protocol and round $r'$ and they are
+all for the current instance $h$ of the IBFT-2.0-block-finalization-protocol,
+round $r'$ and same hash as the one included in the <a>Proposal message</a>.
       </li>
     </ul>
     </li>
     <li>
 The Keccak hash of the $proposedBlock$ included in each of the
-<a href="#round-change-message">Round Change messages</a> considered matches the
-hash included in the <a href="#proposal-message">Proposal</a> and
-<a href="#prepare-message">Prepare</a> message of the Prepared-Certificate.
+<a>Round Change messages</a> considered matches the hash included in the
+<a data-lt="proposal message">Proposal</a> and
+<a data-lt="prepare message">Prepare</a> message of the Prepared-Certificate.
     </li>
   </ul>
 
 Any set meeting these conditions is a valid Round-Change-Certificate for round
 $r'$ where round $r'$ is the round included in all of the
-<a href="#round-change-message">Round Change messages</a> included in the
-Round-Change-Certificate. When all of the conditions listed above are met, then:
+<a>Round Change messages</a> included in the Round-Change-Certificate. When all
+of the conditions listed above are met, then:
 
   <ul>
     <li>
@@ -1172,30 +1164,28 @@ If $v$ was not already in $r_h$, then $v$ starts the round timer for round $r_h$
     </li>
     <li>
 If $v$ is the selected proposer for round $r_h$, $v$ sends a
-<a href="#proposal-message">Proposal message</a> for the new round including the
-selected Round-Change-Certificate ($RCC$) and a proposed block calculated as
-follows:
+<a>Proposal message</a> for the new round including the selected
+Round-Change-Certificate ($RCC$) and a proposed block calculated as follows:
     <ul>
       <li>
 If all of the Prepared-Certificates included in the
-<a href="#round-change-message">Round Change message</a> are empty, that is
-$=\bot$, then the proposed block must be a tuple including any valid Ethereum
-block for height $h$ and the current round number, which must match the round
-number of the <a href="#proposal-message">Proposal message</a>.
+<a>Round Change message</a> are empty, that is $=\bot$, then the proposed block
+must be a tuple including any valid Ethereum block for height $h$ and the
+current round number, which must match the round number of the
+<a>Proposal message</a>.
       </li>
       <li>
 Otherwise, the Ethereum block included in the tuple constituting the proposed
 block must match the proposed block received as part of one of the
-<a href="#round-change-message">Round Change messages</a> including a
-Prepared-Certificate for the highest round amongst the rounds of all the other
-Prepared-Certificates included in the Round-Change-Certificate.
+<a>Round Change messages</a> including a Prepared-Certificate for the highest
+round amongst the rounds of all the other Prepared-Certificates included in the
+Round-Change-Certificate.
       </li>
     </ul>
     </li>
   </ul>
 
-As specified by the $\mathbf{upon}$ block at line 71, a
-<a href="#proposal-message">Proposal message</a>
+As specified by the $\mathbf{upon}$ block at line 71, a <a>Proposal message</a>
 $\langle\langle\mathsf{PROPOSAL},h,r_{pp},H\rangle_{\sigma_{sender}},PB;RCC\rangle$
 for a round higher than 0 is accepted only if all of the following conditions
 are met:
@@ -1206,10 +1196,10 @@ $v$ is currently running the IBFT-2.0-block-finalization-protocol instance
 $h_{pp}$. That is, $h_{pp}=h$.
     </li>
     <li>
-The round number $r_{pp}$ of the <a href="#proposal-message">Proposal message</a>
-is either higher than the current round or equal to the current round provided
-that $v$ has not accepted any <a href="#proposal-message">Proposal message</a>
-for the current round. That is, $acceptedPB = \bot$.
+The round number $r_{pp}$ of the <a>Proposal message</a> is either higher than
+the current round or equal to the current round provided that $v$ has not
+accepted any <a>Proposal message</a> for the current round. That is,
+$acceptedPB = \bot$.
     </li>
     <li>
 $H$ corresponds to the Keccak hash of the proposed block $PB$.
@@ -1220,13 +1210,12 @@ $r_{pp}$ and instance $h$ of the IBFT-2.0-block-finalization-protocol.
     </li>
     <li>
 The Round-Change-Certificate $RCC$ includes at least $Quorum(n_{h,v})$
-<a href="#round-change-message">Round Change messages</a> for round $r_pp$ and
-height $h$.
+<a>Round Change messages</a> for round $r_pp$ and height $h$.
     </li>
     <li>
-If each of the <a href="#round-change-message">Round Change messages</a>
-included in the Round-Change-Certificate $RCC$ includes either an invalid
-Prepared-Certificate or an empty Prepared-Certificate, then the:
+If each of the <a>Round Change messages</a> included in the
+Round-Change-Certificate $RCC$ includes either an invalid Prepared-Certificate
+or an empty Prepared-Certificate, then the:
     <ul>
       <li>
 Ethereum block $EB$ included in the proposed block $PB$ must be a valid block
@@ -1247,10 +1236,9 @@ Prepared-Certificates included in the Round-Change-Certificate $RCC$.
     </li>
   </ul>
 
-The effect of accepting a <a href="#proposal-message">Proposal message</a> for a
-round $r_{pp} \gt 0$ is essentially the same as accepting the
-<a href="#proposal-message">Proposal message</a> for round 0 with the addition
-of moving to round $r_{pp}$. Specifically, $v$:
+The effect of accepting a <a>Proposal message</a> for a round $r_{pp} \gt 0$ is
+essentially the same as accepting the <a>Proposal message</a> for round 0 with
+the addition of moving to round $r_{pp}$. Specifically, $v$:
 
   <ul>
     <li>
@@ -1258,13 +1246,13 @@ Moves to round $r_{pp}$ and starts the related round timer if $v$ was not
 already in round $r_{pp}$.
     </li>
     <li>
-Multicasts a <a href="#prepare-message">Prepare message</a>
+Multicasts a <a>Prepare message</a>
 $\langle\mathsf{PREPARE},h,r_{h,v},H\rangle_{\sigma_v}$ to all validators
 (including itself).
     </li>
     <li>
 Sets $acceptedPB_{h,v}$ to the proposed block $PB$ indicating that it
-accepted a <a href="#proposal-message">Proposal message</a> for $PB$.
+accepted a <a>Proposal message</a> for $PB$.
     </li>
   </ul>
   
@@ -1294,12 +1282,316 @@ From here on the protocol proceeds as described above.
   </section>
 
 
-  <section id="sec-improvements">
+  <section id="improvements">
 
   <h2>Improvements</h2>
 
-This section specifies a series of improvements to the IBFT 2.0 protocol. 
+This section specifies a series of possible improvements to the IBFT 2.0
+protocol, based on analytical review. 
 
+    <section id="reduce-number-assuptions">
+
+    <h3>Reduce the Number of Assumptions</h3>
+
+The improvements in this section are designed to reduce the number of
+assumptions required for correctness of the protocol.
+
+      <section id="remove-fair-network-assumption">
+
+      <h4>Remove the Fair Network Behavior Assumption</h4>
+
+**Modification**
+
+To remove the dependency on the robustness proof in the Fair Network Behaviour
+Assumption it is sufficient to require that the proposer selection function for
+height $h$ only selects validators that did not propose any of the latest
+$f(n_h)$ blocks where $n_h$ is the number of validators for the block with
+height $h$.
+
+This modification corresponds to replacing the $\mathbf{proposer}(\cdotp,\cdotp)$
+function in the IBFT 2.0-block-finalization-protocol (introduced at line 4) with
+the $FairProposer$ function, shown below.
+
+<figure id="fig-algorithm3">
+  <img src="./images/IBFT2_algorithm3.png" alt="Algorithm 3">
+  <figcaption>FairProposer (Algorithm 3)</figcaption>
+</figure>
+
+**Justification**
+
+This modification reduces the number of possible proposers for the next block
+from $n_h$ to $n_h - f(n_h)$. This implies that the minimum number of honest
+proposers for the next block is reduced from $n_h - f(n_h)$ to
+$n_h - 2 \cdot f(n_h)$. It is easy to prove that $n_h - 2 \cdot f(n_h) > 0$,
+which means that this modification guarantees that at least one of the possible
+proposers for the next block is honest. This in turn implies that this
+modification does not affect the validity of the Weak-Liveness and Liveness
+properties of the protocol.
+
+For any finalized block $FB$ with height $h$, provided there is no change to the
+validator list in the next $f(n_h)+1$ blocks, since we assume that no more than
+$f(n_h)$ validators are Byzantine, this modification ensures that at least one
+out of the next $f(n_h) + 1$ finalized blocks includes an Ethereum block created
+by an honest validator.
+
+      </section>
+
+    </section>
+
+    <section id="reduce-block-finalization-latency">
+
+    <h3>Reduce Block Finalization Latency</h3>
+
+The improvements in this section are designed to reduce block finalization
+latency.
+
+      <section id="reduce-number-of-communication-phases">
+
+      <h4>Reduce the Minimum Number of Communication Phases</h4>
+
+**Modification**
+
+In the IBFT 2.0 protocol the minimum number of communication phases required to
+finalize a block is three, even if all validators are honest and the message
+transmission latency is less than $\frac{\mathbf{timeoutForRoundZero}}{3}$.
+These phases are as follows:
+
+1. The proposer for round 0 and instance $h$ of the
+IBFT-2.0-block-finalisation-protocol sends a
+<a>Proposal message</a> to all validators.
+2. All validators of height $h$, excluding the proposer for round 0, reply by
+sending a <a>Prepare message</a> to all validators.
+3. All validators of height $h$, after they receive the <a>Proposal message</a>
+for round 0 from the proposer for round 0, and $Quorum(n_h) - 1$
+<a>Prepare messages</a> from non-proposing validators for round 0, they send a
+<a>Commit message</a> to all validators. After a validator for height $h$
+receives $Quorum(n_h)$ <a>Commit messages</a> for round 0 from the validators of
+height $h$, it creates a finalized block.
+
+The modification described in this section, which is based on the very fast
+learning protocol presented by Dutta et al. [[Byzantine-Consensus]], allows
+reducing the minimum number of communication phases from three to two, as
+follows:
+
+1. The proposer for round 0 and instance $h$ of the
+IBFT-2.0-block-finalisation-protocol sends a <a>Proposal message</a> to all
+validators.
+2. All validators of height $h$, excluding the proposer for round 0, reply by
+sending a <a>Prepare message</a> to all validators. After a validator for height
+$h$ receives the <a>Proposal message</a> for round 0 from the proposer for round
+0, and $n_h - 1$ <a>Prepare messages</a> from all the non-proposing validators
+for round 0, it creates a finalized block.
+
+Block finalization in only two communication phases can be accomplished only if
+the following conditions are met:
+
+- All validators are honest;
+- The network latency is less than $\frac{\mathbf{timeoutForRoundZero}}{2}$.
+
+Assuming the same latency for the different communication phases, when the
+conditions listed above are met, this modification reduces the block
+finalization latency by 33%. Note that when the conditions listed above are not
+achieved, the protocol degrades back to the performance of the original IBFT 2.0
+protocol with no overhead.
+
+This improvement requires the following modifications to the IBFT 2.0 protocol:
+
+  <ul>
+    <li>
+If the improvement outlined in Section
+<a href="#remove-commit-seal-from-commit-message"></a> is not applied, then a 
+<em>Prepare seal</em> must be added to the <a>Prepare messages</a>. If the
+improvement applied, the <a>Prepare messages</a> do not need to be modified.
+    </li>
+    <li>
+If a block is finalized in only two phases, the commit seals include the
+signatures (or Prepare seals, if the improvement outlined in Section
+<a href="#remove-commit-seal-from-commit-message"></a> is not applied) of the
+$n_h - 1$ <a>Prepare messages</a>.
+    </li>
+    <li>
+During validation of a finalized block, if the number of commit seals is
+$n_h - 1$, the seals are interpreted as signatures (Prepare seals, if the
+improvement outlined in Section
+<a href="#remove-commit-seal-from-commit-message"></a> is not applied) of
+Prepare messages. Otherwise, if the number of seals is $Quorum(n_h)$, the seals
+are interpreted as signatures (Commit seals, if the improvement outlined in
+Section <a href="#remove-commit-seal-from-commit-message"></a> is not applied)
+of Commit messages.
+    </li>
+    <li>
+When a validator sends a <a>Round Change message</a>, if the validator has
+received a valid <a>Proposal message</a> for round 0, but it has never prepared,
+then it must include the <a>Proposal message</a> in the
+<a>Round Change message</a>. After the first time a validator prepares while
+running instance $h$ of the IBFT-2.0-block-finalization-protocol, the validator
+only includes the latest Prepared-Certificate in any <a>Round Change message</a>
+it sends.
+    </li>
+    <li>
+When a validator sends a <a>Proposal message</a> for a round number higher than
+0, if there exists an Ethereum block $EB$ such that:
+    <ul>
+      <li>
+$EB$ is the only Ethereum block such that at least $f(n_h) + 1$ of the
+<a>Round Change messages</a> forming the Round-Change-Certificate (included in
+the <a>Proposal message</a>) include a <a>Proposal message</a> for round 0 and
+for this block.
+      </li>
+      <li>
+No <a>Round Change messages</a> include a valid Prepared-Certificate.
+      </li>
+    </ul>
+
+then the proposed block included in the <a>Proposal message</a> must include the
+Ethereum block $EB$.
+
+If the conditions listed above are not met, the Ethereum block to be included in
+a <a>Proposal message</a> with height higher than 0 must be determined as
+specified by the original IBFT 2.0 protocol.
+    </li>
+    <li>
+On reception of a <a>Proposal message</a> for a round higher than 0, the
+same calculation must be performed to validate the <a>Proposal message</a>.
+    </li>
+  </ul>
+
+As described above, this modification allows reducing the minimum number of
+communication phases from three to two for round 0 only. While it is possible to
+modify the IBFT 2.0 protocol to reduce the minimum number of communication
+phases to two for any round, because of the following reasons, this optimisation
+should be applied only to round 0:
+
+  <ul>
+    <li>
+Applying the optimization for rounds higher than 0 requires potentially
+increasing the size of the <a>Round Change message</a> by the size of one block
+because the latest accepted <a>Proposal message</a> and the latest
+Prepared-Certificate can refer to two different blocks.
+    </li>
+    <li>
+If the conditions required to achieve block finalization in two phases are not
+met for round 0, then either:
+    <ul>
+      <li>
+One or more validators are Byzantine and can therefore prevent block
+finalization in two phases at any round, or
+      </li>
+      <li>
+Network latency is higher than $\frac{\mathbf{timeoutForRoundZero}}{2}$, which
+means block finalization latency is already higher than
+$\mathbf{timeoutForRoundZero}$ and therefore whether block finalization is
+reached in two or three phases in the next round adds only minimal improvement
+to the block finalization latency.
+      </li>
+    </ul>
+    </li>
+  </ul>
+
+**Justification**
+
+Because any valid <a>Proposal message</a> for rounds higher than 0 includes
+$Quorum(n_h)$ <a>Round Change messages</a>, if the Ethereum block $EB$ is 
+finalized in two phases, then at least $Quorum(n_h) - f(n_h)$ of the
+<a>Round Change messages</a> included in the Round-Change-Certificate included
+in the <a>Proposal message</a> for round 1 were sent by honest validators and
+therefore they include the <a>Proposal message</a> received by the proposer of
+round 0. Because $Quorum(n_h) - f(n_h)\;\ge\;f(n_h) + 1$ (quite easy to prove),
+the number of <a>Proposal messages</a> for Ethereum block $EB$ is
+$\ge\;f(n_h) + 1$.
+
+Also, because all honest validators will include the <a>Proposal message</a> for
+the Ethereum block $EB$ in the <a>Round Change message</a> they send for round
+1, and there are at most $f(n_h)$ Byzantine validators, it is impossible that
+there exists another Ethereum block $EB'$, different from $EB$, for which
+$f(n_h) + 1$ <a>Round Change messages</a> including matching
+<a>Proposal messages</a> are sent.
+
+These two considerations imply that the only Ethereum block that a valid
+<a>Proposal message</a> for round 1 can include is $EB$. Because honest
+validators can only prepare on the Ethereum block included in a valid
+<a>Proposal message</a>, the only block that any honest validator can prepare on
+in round 1 is $EB$. Therefore, any <a>Round Change message</a> for round 2 sent
+by honest validators either includes a <a>Proposal message</a> for the Ethereum
+block $EB$, or a Prepared-Certificate for the same Ethereum block $EB$. This
+argument can be generalized to any round by induction on the round number.
+
+      </section>
+
+      <section id="reduce-latency-for-validators">
+
+      <h4>Reduce the Latency for Validators to be in the Same Round Long Enough to Create a Finalized Block</h4>
+
+
+      </section>
+
+    </section>
+
+    <section id="decrease-message-size">
+
+    <h3>Decrease Message Size</h3>
+
+The improvements in this section are designed to decrease overall message sizes.
+
+      <section id="replace-round-change-messages-with-hashes">
+
+      <h4>Replace Round Change Messages in the Round Change Certificates with Hashes</h4>
+
+
+      </section>
+
+      <section id="remove-commit-seal-from-commit-message">
+
+      <h4>Remove Commit Seal from Commit Messages</h4>
+
+
+      </section>
+
+      <section id="reduce-number-of-messages-in-prepared-certificates">
+
+      <h4>Reduce the Number of Messages Included in Prepared-Certificates</h4>
+
+
+      </section>
+
+      <section id="remove-proposal-message-from-prepared-certificate">
+
+      <h4>Remove the Proposal Message from the Prepared-Certificate</h4>
+
+
+      </section>
+
+      <section id="remove-repeated-message-bodies">
+
+      <h4>Remove Repeated Message Bodies from the Prepared-Certificates in a Round Change Message</h4>
+
+
+      </section>
+
+      <section id="use-aggregate-signature-scheme">
+
+      <h4>Use an Aggregate Signature Scheme for the Prepared-Certificate</h4>
+
+
+      </section>
+
+    </section>
+
+    <section id="improve-message-semantics">
+
+    <h3>Improve Message Semantics</h3>
+
+The improvements in this section are designed to improve the overall message
+structure, making it more efficient.
+
+      <section id="disregard-round-number">
+
+      <h4>Disregard the Round Number when Computing the Block Hash in IBFT 2.0 Messages</h4>
+
+
+      </section>
+
+    </section>
 
   </section>
 
@@ -1468,6 +1760,11 @@ var respecConfig = {
       title: "Practical Byzantine Fault Tolerance",
       href: "https://dl.acm.org/citation.cfm?id=296806.296824",
       publisher: "Miguel Castro and Barbara Liskov"
+    },
+    "Byzantine-Consensus": {
+      title: "Best-Case Complexity of Asynchronous Byzantine Consensus",
+      href: "http://lpdwww.epfl.ch/upload/documents/publications/567931850DGV-feb-05.pdf",
+      publisher: "Partha Dutta, Rachid Guerraoui, and Marko Vukolic"
     },
     "Partial-Synchrony": {
       title: "Consensus in the Presence of Partial Synchrony",
