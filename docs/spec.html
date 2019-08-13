@@ -293,17 +293,18 @@ allows participants to add and remove <a>validators</a> by a voting mechanism.
 
   <h2>Block Header Modifications</h2>
 
-This section describes changes to the block headers used in Ethereum. 
+This section describes changes to the block headers used in Ethereum.
 
     <section id="sec-block-header-structure">
 
     <h3>Block Header Structure</h2>
 
 The Ethereum block header structure is maintained intact except for the 
-extraData field which in IBFT 2.0 is defined as follows:
-extraData:[vanityData:B32, validatorList:[validator0:B20, : : :, validatorn],
-vote:[recipient:B20, voteValue:{0x00: B1, 0xFF: B1}] or nil, round:B4,
-commitSeals:[commitSeal0: B65, : : :, commitSealn]]
+$\mathtt{extraData}$ field, which in the IBFT 2.0 protocol is defined as:
+
+$\mathtt{extraData:[vanityData:\mathbb{B}_{32},\;validatorList:[validator_0:\mathbb{B}_{20},\;...,\;validator_n],}$
+$\mathtt{vote:[recipient:\mathbb{B}_{20},\;voteValue:\{0x00:\;\mathbb{B}_1,\;0xFF:\;\mathbb{B}_1\}]\;\mathbf{or}}$ $nil\mathtt{, round:\mathbb{B}_4,}$
+$\mathtt{commitSeals:[commitSeal_0:\;\mathbb{B}_{65},\;...,\;commitSeal_n]]}$
 
     </section>
 
@@ -311,18 +312,22 @@ commitSeals:[commitSeal0: B65, : : :, commitSealn]]
 
     <h3>RLP Encoding of Block Header</h2>
 
-This section outlines the RLP Encoding of the IBFT 2.0 Block Header for Block Header
-Hash calculation.
+This section outlines the RLP Encoding of the IBFT 2.0 block header for block
+header hash calculations.
 
-IBFT 2.0 defines a slightly different formula for computing the hash of the 
-block header compared to the standard formula used in Ethereum. The RLP 
-encoding of the IBFT 2.0 block header used to calculate the
-block header hash should be computed by removing the round and commitSeals 
-fields from extraData. A bit more formally, extraData must be replaced 
-with the following extraDataForBlockHeaderHashCalculation:
-extraDataForBlockHeaderHashCalculation:[vanityData, validatorList, vote]
-where the value of vanityData, validatorList and vote must be equal to the 
-values of the homonymous filed in extraData.
+The IBFT 2.0 protocol defines a slightly different formula for computing the
+hash of the block header compared to the standard formula used in Ethereum. The
+RLP encoding of the IBFT 2.0 block header used to calculate the block header
+hash should be computed by removing the $\mathtt{round}$ and
+$\mathtt{commitSeals}$ fields from $\mathtt{extraData}$. More formally,
+$\mathtt{extraData}$ must be replaced with the following
+$\mathtt{extraDataForBlockHeaderHashCalculation}$:
+
+$\mathtt{extraDataForBlockHeaderHashCalculation:[vanityData,\;validatorList,\;vote]}$
+
+where the value of $\mathtt{vanityData}$, $\mathtt{validatorList}$, and
+$\mathtt{vote}$ must be equal to the values of the homonymous fields in
+$\mathtt{extraData}$.
 
     </section>
 
@@ -330,61 +335,121 @@ values of the homonymous filed in extraData.
 
     <h3>Computation of the validator set</h2>
 
-This section describes the algorithm used by IBFT 2.0 to compute the set of validators for any block. Descrip-
-tion TBD. Pseudocode TBD.
+This section describes the algorithm used by the IBFT 2.0 protocol to compute
+the set of validators for any block. Description TBD. Pseudocode TBD.
 
     </section>
 	
     <section id="sec-block-header-validation">
 
     <h3>Block Header Validation</h2>
-	
-	IBFT 2.0 modifies the standard Ethereum block header validation as follows. H identifies the block header	under validation.
-	parentHash: No change.
-	ommersHash: Must be equal to the Keccak hash of the RLP encoding of an empty list,i.e KEC(RLP([]));
-	beneficiary: Must be one the validators for the header under validation as computed by validators(H).
-	stateRoot: No change
-	transactionsRoot: No change
-	receiptsRoot: No change
-	logsBloom: No chnage
-	difficulty: Must be equal to 1;
-	number: No change
-	gasLimit: No change
-	gasUsed: No change
-	timestamp: Must be  than the timestamp of the parent block header + BLOCK_PERIOD
-	extraData:
-	extraData.vanityData any sequence of  32 bytes is admitted
-	extraData.validatorList Must match the validator list for the header under vercation as
-	computed by validators(H)
-	extraData.vote
-	extraData.vote.recipient any sequence of 20 bytes is admitted
-	extraData.vote.voteValue Must either 0x00 or 0xFF
-	extraData.round any sequence of 4 bytes is admitted
-	extraData.commitSeals As described by the pseudocode in ... :
-	
-	
-	 All the elements of the extraData.commitSeals list must be unique
-	 The number of elements in the extraData.commitSeals list must be equal to
-	ceil
-	􀀀 2 * len(extraData.validators)
-	3
-	
-	 Each element of extraData.commitSeals must be a signature over the block header hash as
-	calculated by headerHashForCommitSealCalculation(defined below) generate by one of the
-	Ethereuem addressed listed in extraData.validators.
-	headerHashForCommitSealCalculation is defined as the Keccak hash over the RLP encod-
-	ing of the RLP encoding of the header with the field commitSeals, but not round, removed
-	from the extraData field. A bit more formally, extraData must be replaced with the follow-
-	ing extraDataForBlockHeaderHashCalculationForCommitSeal:
-	extraDataForBlockHeaderHashCalculationForCommitSeal:[vanityData, validatorList,
-	vote, round]
-	where the value of vanityData, validatorList, vote and round must be equal to the values
-	of the homonymous field in extraData.
-	mixHash: Must be equal to 0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365
-	nonce: Must be equal to 0.
-	
-	
-	</section>
+
+The IBFT 2.0 protocol modifies the standard Ethereum block header validation as
+follows. $\mathtt{H}$ identifies the block header under validation.
+
+  <ul>
+    <li>
+$\mathtt{parentHash}$: No change
+    </li>
+    <li>
+$\mathtt{ommersHash}$: Must be equal to the Keccak hash of the RLP encoding of
+an empty list. That is, $\mathtt{KEC(RLP([]))}$
+    </li>
+    <li>
+$\mathtt{beneficiary}$: Must be one the validators for the header under
+validation as computed by $\mathtt{validators(H)}$.
+    </li>
+    <li>
+$\mathtt{stateRoot}$: No change
+    </li>
+    <li>
+$\mathtt{transactionsRoot}$: No change
+    </li>
+    <li>
+$\mathtt{receiptsRoot}$: No change
+    </li>
+    <li>
+$\mathtt{logsBloom}$: No chnage
+    </li>
+    <li>
+$\mathtt{difficulty}$: Must be equal to 1
+    </li>
+    <li>
+$\mathtt{number}$: No change
+    </li>
+    <li>
+$\mathtt{gasLimit}$: No change
+    </li>
+    <li>
+$\mathtt{gasUsed}$: No change
+    </li>
+    <li>
+$\mathtt{timestamp}$: Must be $\ge$ than the timestamp of the parent block
+header + $\mathtt{BLOCK\_PERIOD}$
+    </li>
+    <li>
+$\mathtt{extraData}$:
+    <ul>
+      <li>
+$\mathtt{extraData.vanityData}$: Any sequence of $\le$ 32 bytes is admitted
+      </li>
+      <li>
+$\mathtt{extraData.validatorList}$: Must match the validator list for the header
+under verfication as computed by $\mathtt{validators(H)}$
+      </li>
+      <li>
+$\mathtt{extraData.vote}$:
+      <ul>
+        <li>
+$\mathtt{extraData.vote.recipient}$: Any sequence of 20 bytes is admitted
+        </li>
+        <li>
+$\mathtt{extraData.vote.voteValue}$: Must either $\mathtt{0x00}$ or $\mathtt{0xFF}$
+        </li>
+      </ul>
+      </li>
+      <li>
+$\mathtt{extraData.round}$: Any sequence of 4 bytes is admitted
+      </li>
+      <li>
+$\mathtt{extraData.commitSeals}$: As described by the pseudocode in ... :
+      <ul>
+        <li>
+All the elements of the $\mathtt{extraData.commitSeals}$ list must be unique
+        </li>
+        <li>
+The number of elements in the $\mathtt{extraData.commitSeals}$ list must be
+equal to $\mathtt{ceil\biggl(\frac{2*len(extraData.validators)}{3}\biggr)}$
+        </li>
+        <li>
+Each element of $\mathtt{extraData.commitSeals}$ must be a signature over the
+block header hash, as calculated by $\mathtt{headerHashForCommitSealCalculation}$
+(defined below) generated by one of the Ethereuem addresses listed in
+$\mathtt{extraData.validators}$.
+
+$\mathtt{headerHashForCommitSealCalculation}$ is defined as the Keccak hash over
+the RLP encoding of the RLP encoding of the header with the field
+$\mathtt{commitSeals}$, but not $\mathtt{round}$, removed from the
+$\mathtt{extraData}$ field. More formally, $\mathtt{extraData}$ must be replaced
+with the following $\mathtt{extraDataForBlockHeaderHashCalculationForCommitSeal}$:
+
+$\mathtt{extraDataForBlockHeaderHashCalculationForCommitSeal:[vanityData,\;validatorList,\;vote,\;round]}$
+where the value of $\mathtt{vanityData}$, $\mathtt{validatorList}$,
+$\mathtt{vote}$, and $\mathtt{round}$ must be equal to the values of the
+homonymous fields in $\mathtt{extraData}$.
+        </li>
+      </ul>
+      </li>
+    </ul>
+    <li>
+$\mathtt{mixHash}$: Must be equal to $\mathtt{0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365}$
+    </li>
+    <li>
+$\mathtt{nonce}$: Must be equal to 0.
+    </li>
+  </ul>
+
+    </section>
 
   </section>  
   
