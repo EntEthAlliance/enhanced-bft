@@ -373,8 +373,8 @@ that did not participate in the EBFT-block-finalization-protocol, to verify
 that agreement on the Ethereum block included in the finalized block was
 correctly added.
 
-In practice, each EBFT node adds finalized blocks to its local blockchain, not
-just the Ethereum blocks included in them. In this way, any node joining the
+In practice, each EBFT node adds finalized blocks to its local blockchain.
+In this way, any node joining the
 network at any point in time, when synching its local blockchain with its peers,
 receives all the information required to verify that agreement was reached
 correctly on each block that it receives, even on those created before it joined
@@ -1558,7 +1558,7 @@ assumptions required for correctness of the protocol.
 
       <section id="remove-fair-network-assumption">
 
-      <h4>Remove the Fair Network Behavior Assumption</h4>
+      <h4>Remove the Fair Network Behavior Assumption (Improvement 1)</h4>
 
 To remove the dependency on the robustness proof in the Fair Network Behaviour
 Assumption described in Section 4.4 of the [[IBFT2-Gray-Paper]]
@@ -1590,7 +1590,7 @@ latency.
 
       <section id="reduce-number-of-communication-phases">
 
-      <h4>Reduce the Minimum Number of Communication Phases From Three Down to Two</h4>
+      <h4>Reduce the Minimum Number of Communication Phases From Three Down to Two (Improvement 2)</h4>
 
 In the EBFT protocol the minimum number of communication phases required to
 finalize a block is three, even if all validators happens to be honest and the message
@@ -1730,7 +1730,7 @@ to the block finalization latency.
 
       <section id="reduce-latency-for-validators">
 
-      <h4>Reduce Latency for Validators</h4>
+      <h4>Reduce Latency for Validators (Improvement 3)</h4>
 
 This improvement reduces the latency for validators to be in the same round long
 enough to create a finalized block and requires the following modifications to
@@ -1758,7 +1758,7 @@ The improvements in this section are designed to decrease overall message sizes.
 
       <section id="replace-round-change-messages-with-hashes">
 
-      <h4>Replace Round-Change Messages with Hashes of Round Change Messages</h4>
+      <h4>Replace Round-Change Messages with Hashes of Round Change Messages (Improvement 4)</h4>
 
 This improvement replaces the <a>Round Change messages</a> in the
 Round-Change-Certificate included in <a>Proposal messages</a> with hashes of the
@@ -1795,7 +1795,7 @@ moved within the signed portion of the message.
       <section id="remove-commit-seal-from-commit-message">
 
       <h4>Remove the Commit Seal from the Commit Message and Replace the Commit
-Seals Included in a Block with the Signatures of the Commit Messages Received</h4>
+Seals Included in a Block with the Signatures of the Commit Messages Received (Improvement 5)</h4>
 
 
 This improvement removes the commit seal from a <a>Commit message</a> and
@@ -1816,7 +1816,7 @@ function.
 
       <section id="reduce-number-of-messages-in-prepared-certificates">
 
-      <h4>Reduce the Number of Messages Included in Prepared-Certificates</h4>
+      <h4>Reduce the Number of Messages Included in Prepared-Certificates (Improvement 6)</h4>
 
 This improvement reduces the number of messages included in
 Prepared-Certificates as well as the number of commit seals included in
@@ -1839,7 +1839,7 @@ were received.
 
       <section id="remove-proposal-message-from-prepared-certificate">
 
-      <h4>Remove the Proposal Message from the Prepared-Certificate</h4>
+      <h4>Remove the Proposal Message from the Prepared-Certificate (Improvement 7)</h4>
 
 The <a>Proposal message</a> included in the Prepared-Certificates can be removed
 without impacting the <a>robustness</a> of the EBFT protocol. While this
@@ -1850,7 +1850,7 @@ Prepared-Certificate validation logic.
 
       <section id="remove-repeated-message-bodies">
 
-      <h4>Remove Repeated Message Bodies from the Prepared-Certificates in a Round Change Message</h4>
+      <h4>Remove Repeated Message Bodies from the Prepared-Certificates in a Round Change Message (Improvement 8)</h4>
 
 This improvement replaces the set of <a data-lt="proposal message">Proposal</a>
 and <a data-lt="prepare message">Prepare</a> messages included in a
@@ -1884,7 +1884,7 @@ Prepared-Certificate) over the <a>Prepare message</a> body.
 
       <section id="use-aggregate-signature-scheme">
 
-      <h4>Use an Aggregate Signature Scheme for the Prepared-Certificate</h4>
+      <h4>Use an Aggregate Signature Scheme for the Prepared-Certificate (Improvement 9)</h4>
 
 The size of the Prepared-Certificate can be further reduced by employing an
 aggregate signature scheme, which allows replacing the $Quorum(n_h) - 1$
@@ -1903,7 +1903,7 @@ structure, making it more efficient.
 
       <section id="disregard-round-number">
 
-      <h4>Disregard the Round Number when Computing the Block Hash in EBFT Messages</h4>
+      <h4>Disregard the Round Number when Computing the Block Hash in EBFT Messages (Improvement 10)</h4>
 
 As described in Section <a href="#ibft2-block-finalization-protocol"></a>, the
 block hash included in the EBFT messages is calculated over a tuple composed
@@ -2063,6 +2063,13 @@ var respecConfig = {
   },{
     name: "David Hyland-Wood",
     company: "PegaSys",
+  },{
+    name: "Sample Editor",
+    company: "Editor Co."
+  }],
+  formerEditors: [{
+    name: "Former Editor",
+    company: "Editor Co."
   }],
   github: "https://github.com/EntEthAlliance/enhanced-bft",
   shortName: "EEASpec",
