@@ -70,8 +70,8 @@ consortium networks to leverage on the capabilities of
 - Is <a>robust</a> in an <a>eventually synchronous network</a> model.
 - Features a <a>dynamic validator set</a>.
 
-The EBFT protocol builds on the IBFT protocol ([[IBFT]] and [[Quorum]]), it
-inherits all its properties while addressing the following limitations
+The EBFT protocol builds on the IBFT protocol ([[IBFT]] and [[Quorum]]), 
+inheriting all its properties while addressing the following limitations
 described by Saltini [[IBFT-Analysis]]:
 
   <ul>
@@ -362,7 +362,8 @@ function of the chain of blocks from the <a>genesis block</a> to the block with
 height $h-1$.
 
 Each instance of the EBFT-block-finalization-protocol is organized in
-<dfn data-lt="round">rounds</dfn>. In each round one of the <a>validators</a>
+<dfn data-lt="round">rounds</dfn>. In each round, one of the <a>validators</a> 
+(referred to as the <a>proposer</a>)
 is responsible for proposing an Ethereum block for the height associated with
 the specific instance of the EBFT-block-finalization-protocol that the
 <a>validators</a> is running. After agreement is reached, the
@@ -1087,7 +1088,7 @@ structure which hereafter is called <em>EBFT Block Structure</em>.
 
 The EBFT block structure is split between Header and Body.
 
-The body of the EBFT block structure is identical to the Ethereum block
+The body of the EBFT block structure is identical to the body of the Ethereum block
 structure.
 
 The header of the EBFT block structure is identical to the Ethereum header
@@ -2062,13 +2063,6 @@ var respecConfig = {
   },{
     name: "David Hyland-Wood",
     company: "PegaSys",
-  },{
-    name: "Sample Editor",
-    company: "Editor Co."
-  }],
-  formerEditors: [{
-    name: "Former Editor",
-    company: "Editor Co."
   }],
   github: "https://github.com/EntEthAlliance/enhanced-bft",
   shortName: "EEASpec",
