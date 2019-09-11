@@ -1,6 +1,6 @@
 The goal of this work is to agree on an interoperable consensus protocol that meets the following requirements:
 
-* MUST withstand a sigificant fraction of malfunctioning / malicious actors (around 1/3 of nodes);
+* MUST guarantee Optimal Byzantine Fault Tolerance for Partially Synchronous and Asynchronous Networks
 * MUST have a formal proof of correctness that we can show to regulators;
 * MUST guarantee timely finality;
 * MUST guarantee all of the requirements listed here when operating in eventually synchronous network
