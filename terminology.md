@@ -20,8 +20,8 @@ In order alphabetically by `Label` then by `Term`, or just `Term` if there is no
 || Global Stabalization Time (GST)     | "A time unknown to the processors, such that the message system respects the upper bound from time GST onward." (DLS Consensus in the Presence of Partial Synchrony) 
 || Linearizability                     | 
 |F | Fault Tolerance                     | A system / protocol can handle faults in system, where nodes die and never deliver messages. 
-|F | Byzantine Fault Tolerance           | Can handle faulty nodes including malicious (Byzantine nodes) that may collude, send arbibrary data, delay correct nodes, or not send data at all.
-|F | Optimally Byzantine Fault Tolerance | Can handle `n - 1/ 3` byzantine nodes, the minimum number of replicas in the network must be `3f + 1` where  up to `f` may be byzantine nodes. This is a proven upper bound.  
+|F | Byzantine Fault Tolerance           | Can handle faulty nodes including malicious (Byzantine nodes) that may collude, send arbitrary data, delay correct nodes, or not send data at all.
+|F | Consensus Protocol with Optimal Byzantine Fault Tolerance in Partially Synchronous and Asynchronous Networks | Consensus protocol that can withstand up to `floor((n - 1)/ 3)` Byzantine nodes when operating in either a partially synchronous or asynchronous network where `n` is the total number of the nodes participating in the consensus protocol. As a consequence of this, the number `n` of nodes participating in the consensus must be `n >= 3f + 1` where `f` corresponds to the maximum number of Byzantine nodes. This is a proven upper bound on the number of Byzantine nodes.  
 |N | Asynchronous Network                | No known bounds on message delivery.
 |N | Synchronous Network                 | Known bounds on message delivery, and processing time.
 |N | Partially Synchronous Network       | There exits a finite, but unknown, upper bound on the message latency [1].
