@@ -13,7 +13,7 @@ In order alphabetically by `Label` then by `Term`, or just `Term` if there is no
 
 |Label | Term                                | Definition      |
 |------| ----------------------------------  | --------------- |
-| CP | Chain Agreement with Immediate Finality |   At any point in time, for any two nodes `n1` and `n2`, either the blockchain of `n1` is a prefix of the blockchain of `n2` or the blockhain of `n2` is a prefix for the blockchain of `n1` |
+| CP | Chain Agreement with Immediate Finality |   At any point in time, for any two nodes `n1` and `n2`, either the blockchain of `n1` is a prefix of the blockchain of `n2` or the blockhain of `n2` is a prefix for the blockchain of `n1`. If two blockchains are identical, then each of them is a prefix of the other. |
 | CP | Honest Chain Growth  | For any point in time `t` and any node `n`, there exists a fine value `τ` such that the length of the blockchain of node `n` at time `t+τ` includes block proposed by honest nodes that were not included in the blockchain for node `n` at time `t`. |
 | CP | Robust Consensus Protocol with Immediate Finality | A consensus protocol with immediate finality is robust if and only if it guarantees all of the following properties: <ul><li>Chain Agreement with Immediate Finality<li>Honest Chain Growth</ul> |
 | CP | Liveness             | Every correct propsed value will eventually be accepted by correct nodes. aka something good happens. |  
