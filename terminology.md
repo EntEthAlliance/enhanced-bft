@@ -16,6 +16,7 @@ In order alphabetically by `Label` then by `Term`, or just `Term` if there is no
 | CP | Liveness             | Every correct propsed value will eventually be accepted by correct nodes. aka something good happens. | 
 | CP| Persistence         | ??
 | CP | Safety              | If a value is committed by a correct node, then that value will eventually be commited by all correct nodes. Two correct nodes will never commit to different values. aka nothing bad happens. 
+| CP | Robust Consensus Protocol with Immediate Finality | A consensus protocol with immediate finality is robust if and only if it guarantees all of the following properties: <ul><li>Chain Agreement with Immediate Finality<li>Honest Chain Growth</ul> |
 || Cryptographic Hash Function         | A collision resistant hash function that cannot feasibly be reversed by a computationally bound adversary.
 || Global Stabalization Time (GST)     | "A time unknown to the processors, such that the message system respects the upper bound from time GST onward." (DLS Consensus in the Presence of Partial Synchrony) 
 || Linearizability                     | 
