@@ -14,8 +14,8 @@ In order alphabetically by `Label` then by `Term`, or just `Term` if there is no
 |Label | Term                                | Definition      |
 |------| ----------------------------------  | --------------- |
 | CP | Liveness             | Every correct propsed value will eventually be accepted by correct nodes. aka something good happens. | 
-| CP| Persistence         | ??
 | CP | Safety              | If a value is committed by a correct node, then that value will eventually be commited by all correct nodes. Two correct nodes will never commit to different values. aka nothing bad happens. 
+| CP | Chain Agreement with Immediate Finality |   At any point in time, for any two honest nodes `n1` and `n2`, either the blockchain of `n1` is a prefix of the blockchain of `n2` or the blockhain of `n2` is a prefix for the blockchain of `n1`. If two blockchains are identical, then each of them is a prefix of the other. |
 || Cryptographic Hash Function         | A collision resistant hash function that cannot feasibly be reversed by a computationally bound adversary.
 || Global Stabalization Time (GST)     | "A time unknown to the processors, such that the message system respects the upper bound from time GST onward." (DLS Consensus in the Presence of Partial Synchrony) 
 || Linearizability                     | 
