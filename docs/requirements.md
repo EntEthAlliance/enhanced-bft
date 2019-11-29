@@ -6,7 +6,7 @@ The goal of this work is to agree on an interoperable consensus protocol that me
 * MUST guarantee all of the requirements listed here when operating in eventually synchronous network
 * SHOULD have a specification sufficient to enable implemetation without having to refer to someone else's code;
 * The consensus algorithm MUST support the following safety and liveness properties
-  - Agreement — Two different processes MUST decide the same block (no two processes decide different blocks).
-  - Validity — If a process decides on a block, then that block must have been proposed by some process. Secondly the proposal itself must be a valid block. 
-  - Integrity — A process MUST only decide for a block at most once (in a round)
-  - Termination — Each honest process MUST eventualy decide (ensuring progress)
+  - Agreement — Any two honest processes MUST decide the same block (no two honest processes decide different blocks).
+  - Validity — If an honest process decides on a block, then that block must have been proposed by some process. Secondly the proposal itself must be a valid block. 
+  - Integrity — An honest process MUST only decide for a block at most once (in a round)
+  - Termination — Any honest process MUST eventualy decide (ensuring progress)
